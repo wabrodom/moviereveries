@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  app:
+    image: my-app-front
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_URL: http://localhost:8989/api/
+        VITE_GRAPHQLWSLINK: ws://localhost:8989/api/
+    volumes:
+      - ./frontend/:/usr/src/app
+      - /usr/src/app/node_modules
+    expose:
+      - "80"
+    container_name: my-app-front
+    depends_on:
+      - server
+    networks:
+      - app-server
+    
+  server:
+    image: my-app-backend
+    build: 
+      context: ./backend/
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: my-app-backend
+    networks:
+    - app-server
+
+  nginx:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8989:80
+    container_name: my-app-reverse-proxy
+    depends_on:
+      - app
+      - server
+    networks:
+    - app-server
+
+
+networks:
+  app-server:
+    driver: bridge
+    
+# debug-helper:
+#   image: busybox

@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  app:
+    image: my-app-front-dev
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8888/api/
+      - VITE_GRAPHQLWSLINK=ws://localhost:8888/api/
+    volumes:
+      - ./frontend/:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: my-app-front-dev
+    depends_on:
+      - server
+    networks:
+      - app-server
+    
+  server:
+    image: my-app-backend-dev
+    build: 
+      context: ./backend/
+      dockerfile: dev.Dockerfile
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/:/usr/src/app
+      - /usr/src/app/node_modules
+    # whatever port nginx doesn't care, but it better to let others know port 4000 is server port
+    container_name: my-app-backend-dev
+    networks:
+    - app-server
+
+  nginx:
+    image: nginx:1.27
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8888:80
+    container_name: my-app-reverse-proxy
+    depends_on:
+      - app
+      - server
+    networks:
+    - app-server
+
+# why https://docs.docker.com/network/drivers/bridge/ provide a scoped network
+networks:
+  app-server:
+    driver: bridge
+# debug-helper:
+#   image: busybox

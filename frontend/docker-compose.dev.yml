@@ -1,0 +1,29 @@
+services:
+  app:
+    image: my-app-front-dev
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3939
+      - VITE_GRAPHQLWSLINK=ws://localhost:3939
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+      # to ensures the node_modules directory inside the container is not overwritten by the one on the host. 
+    expose:
+      - 5199
+    container_name: my-app-front-dev-onfront
+
+  nginx:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8888:80
+    container_name: reverse-proxy-onfront
+    depends_on:
+      - app # wait for the frontend container to be started
+
+# debug-helper:
+#   image: busybox
