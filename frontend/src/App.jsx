@@ -3,6 +3,7 @@ import {
   Navigate
 } from 'react-router-dom'
 import { useState } from 'react'
+import Header from './components/Header'
 import LogIn from './components/LogIn/LogIn'
 import Directors from './components/Directors'
 import Movies from './components/Movies'
@@ -13,6 +14,7 @@ import { useQuery, useApolloClient, useSubscription } from '@apollo/client'
 import { ALL_MOVIES, MOVIE_ADDED } from './queries';
 import Recommended from './components/Recommended';
 import SignUp from './components/SignUp/SignUp';
+import NavBar from './components/NavBar';
 
 const App = () => {
   const [errorMessage , setErrorMessage] = useState(null)
@@ -79,57 +81,16 @@ const App = () => {
 
   return (
       <div>
-        <div>
-          <Link to='/'>
-            <button>
-              directors
-            </button>
-          </Link>
-    
-          <Link to='/movies'>
-            <button>
-              movies
-            </button>
-          </Link>
-
-          {token ? 
-            <>
-            <Link to='/recommended'>
-              <button>
-                recommended
-              </button>
-            </Link>
-            <Link to='/add'>
-              <button>
-                add movie
-              </button>
-            </Link>
-            <button onClick={logOut}>log out</button>
-            </>
-          :
-            <>
-            <Link to='/login'>
-              <button> 
-                log in
-              </button>
-            </Link>
-            <Link to='/signup'>
-              <button>
-                sign up
-              </button>
-            </Link>
-            </>
-          }
-        </div>
-
+        <Header />
+        <NavBar logOut={logOut} token={token} />
         
         <Routes>
           <Route path='/' 
-            element={<Directors setError={notify} directorAndMovieCount={directorAndMovieCount}/>} 
+            element={<Movies/>}
           />
 
-          <Route path='/movies' 
-            element={<Movies/>}
+          <Route path='/directors' 
+            element={<Directors setError={notify} directorAndMovieCount={directorAndMovieCount}/>} 
           />
 
           <Route path='/add' 

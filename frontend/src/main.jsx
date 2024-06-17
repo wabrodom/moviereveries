@@ -15,8 +15,9 @@ import { createClient } from 'graphql-ws'
 
 
 import { setContext } from '@apollo/client/link/context'
-import { 
-  BrowserRouter as Router} from "react-router-dom"
+import { BrowserRouter as Router} from "react-router-dom"
+import { ThemeProvider } from '@mui/material'
+import theme from './assets/theme'
 
 const authLink = setContext((request, previousContext) => {
   const token = localStorage.getItem('moviereveries-user-token')
@@ -53,7 +54,9 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Router>
     <ApolloProvider client={client}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </ApolloProvider>
   </Router>
 )
