@@ -3,8 +3,8 @@ import {
   Navigate
 } from 'react-router-dom'
 import { useState } from 'react'
-import Header from './components/Header'
 import LogIn from './components/LogIn/LogIn'
+import SignUp from './components/SignUp/SignUp'
 import Directors from './components/Directors'
 import Movies from './components/Movies'
 import NewMovie from './components/NewMovie'
@@ -13,8 +13,7 @@ import Notification from './components/Notification'
 import { useQuery, useApolloClient, useSubscription } from '@apollo/client'
 import { ALL_MOVIES, MOVIE_ADDED } from './queries';
 import Recommended from './components/Recommended';
-import SignUp from './components/SignUp/SignUp';
-import NavBar from './components/NavBar';
+import HeadPart from './components/HeadPart'
 
 const App = () => {
   const [errorMessage , setErrorMessage] = useState(null)
@@ -81,8 +80,7 @@ const App = () => {
 
   return (
       <div>
-        <Header />
-        <NavBar logOut={logOut} token={token} />
+        <HeadPart logOut={ logOut } token={ token } />
         
         <Routes>
           <Route path='/' 

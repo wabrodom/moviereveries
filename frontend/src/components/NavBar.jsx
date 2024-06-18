@@ -1,22 +1,15 @@
 import { Link } from "react-router-dom"
 import {
-  AppBar, 
   Toolbar,
   Button,
 } from '@mui/material'
 
-const toolBarStyle = {
-  background: 'linear-gradient(to top left, primary.dark, primary.light)',
-  '&:hover': {
-    background: 'linear-gradient(to top left, primary.light, primary.main)',
-  },
-}
+
 
 const NavBar = ({ logOut, token }) => {
 
   return (
-    <AppBar position="static">
-      <Toolbar sx={toolBarStyle}>
+      <Toolbar>
         <div >
           <Button color="inherit" component={Link} to='/'>
             movies
@@ -54,8 +47,6 @@ const NavBar = ({ logOut, token }) => {
         </div>
 
       </Toolbar>
-
-    </AppBar>
   )
 }
 
