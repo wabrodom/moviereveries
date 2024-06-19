@@ -17,7 +17,9 @@ const NavBar = ({ logOut, token }) => {
           <Button color="inherit" component={Link} to='/directors'>
             directors
           </Button>
-
+          <Button color="inherit" component={Link} to='/find'>
+            find movies
+          </Button>
 
           {token ?
             <>

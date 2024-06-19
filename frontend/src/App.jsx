@@ -14,6 +14,7 @@ import { useQuery, useApolloClient, useSubscription } from '@apollo/client'
 import { ALL_MOVIES, MOVIE_ADDED } from './queries';
 import Recommended from './components/Recommended';
 import HeadPart from './components/HeadPart'
+import FindMovies from './components/FindMovies/FindMovies';
 
 const App = () => {
   const [errorMessage , setErrorMessage] = useState(null)
@@ -85,6 +86,10 @@ const App = () => {
         <Routes>
           <Route path='/' 
             element={<Movies/>}
+          />
+
+          <Route path='/find' 
+            element={<FindMovies/>}
           />
 
           <Route path='/directors' 
