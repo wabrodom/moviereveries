@@ -56,12 +56,20 @@ const resolvers = {
         return allMoviesPopulated
       }
       if (args.director && !args.genre) {
-        const foundDirector = await Director.findOne({ name : args.director })
+          const foundDirector = await Director
+            .findOne({ name : { "$regex": args.director , "$options": "i" } })
+          if (foundDirector === null) {
+            return []
+          }
         const directorMovies = await Movie.find({ director : foundDirector._id }).populate('director')
         return directorMovies
       }
       if (!args.director && args.genre ) {
-        const matchGenre = await Movie.find({ genres: args.genre }).populate('director')
+        const matchGenre = await Movie
+          .find({ genres: 
+            { "$regex": args.genre , "$options": "i" } 
+          })
+          .populate('director')
         return matchGenre
       }
 
