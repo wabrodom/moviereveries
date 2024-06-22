@@ -22,7 +22,7 @@ const HeadPart = ( props ) => {
   return (
     <Box sx={HeadPartStyle} onMouseMove={handleMouseMove}>
       <Header />
-      <NavBar logOut={props.logOut}/>
+      <NavBar logOut={props.logOut} token={props.token}/>
     </Box>
   )
 }

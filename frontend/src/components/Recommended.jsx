@@ -17,7 +17,6 @@ const Recommended = () => {
     onCompleted: (data) => setFilteredBooks(data.allMovies)
   })
 
-
   if (resultFilterMovies.loading || !currentUser || !filteredMovies) {
     return null
   } 
@@ -41,7 +40,7 @@ const Recommended = () => {
               <tr key={movie.id}>
                 <td>{movie.title}</td>
                 <td>{movie.director.name}</td>
-                <td>{movie.published}</td>
+                <td>{movie.released}</td>
               </tr>
             )
           })}

@@ -31,6 +31,7 @@ export const ALL_DIRECTORS = gql`
         title
       }
       movieCount
+      id
     }
   }
 `
@@ -47,6 +48,15 @@ export const ALL_MOVIES = gql`
 export const FIND_MOVIES = gql`
   query FindMovies($text: String) {
     findMovies(text: $text) {
+      ...MovieDetails
+    }
+  }
+  ${MOVIE_DETAILS}
+`
+
+export const FIND_DIRECTOR_MOVIES = gql`
+  query FindMoviesByDirectorId($directorId: String) {
+    findMoviesByDirectorId(directorId: $directorId) {
       ...MovieDetails
     }
   }

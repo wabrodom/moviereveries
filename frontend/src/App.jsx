@@ -9,6 +9,7 @@ import Directors from './components/Directors'
 import Movies from './components/Movies'
 import NewMovie from './components/NewMovie'
 import Notification from './components/Notification'
+import DirectorMovies from './components/DirectorMovies'
 
 import { useQuery, useApolloClient, useSubscription } from '@apollo/client'
 import { ALL_MOVIES, MOVIE_ADDED } from './queries';
@@ -96,6 +97,8 @@ const App = () => {
             element={<Directors setError={notify} directorAndMovieCount={directorAndMovieCount}/>} 
           />
 
+          <Route path='/directors/:id' element={<DirectorMovies />} />
+
           <Route path='/add' 
             element={token ? <NewMovie setError={notify}/> : <Navigate replace to ='/login'/>} 
           />
@@ -110,6 +113,10 @@ const App = () => {
 
           <Route path='/signup' 
             element={token ? <Navigate replace to ='/add'/> : <SignUp setToken={setToken} setError={notify} /> } 
+          />
+
+          <Route path='/logout' 
+            element={<Navigate replace to ='/login' /> } 
           />
 
 
