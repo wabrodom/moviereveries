@@ -11,6 +11,7 @@ const typeDef =`
     movieCount: Int!
     allMovies(director: String, genre: String): [Movie]!
     findMovies(text: String): [Movie]!
+    findMoviesByDirectorId(directorId: String): [Movie]!
   }
 
   extend type Mutation {
@@ -90,6 +91,12 @@ const resolvers = {
         { title: { "$regex": args.text , "$options": "i" } })
         .populate('director')
       return foundMovies
+    },
+
+    findMoviesByDirectorId: async (root, args) => {
+      if (!args.directorId) return [] 
+      const directorMoviesPopulated = await Movie.find({ director: args.directorId }).populate('director')
+        return directorMoviesPopulated
     }
   },
 

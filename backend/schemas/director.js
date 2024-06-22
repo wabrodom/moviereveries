@@ -4,7 +4,7 @@ const Director = require('../models/Director')
 const typeDef = `
   extend type Query {
     directorCount: Int!
-    allDirectors: [Director!]!
+    allDirectors: [Director]!
   }
 
   extend type Mutation {
@@ -21,6 +21,7 @@ const typeDef = `
     born: Int
     movies: [Movie]
     movieCount: Int
+    id: ID!
   }
 `
 
@@ -35,7 +36,8 @@ const resolvers ={
             name: 1,
             born: 1,
             movies: 1,
-            movieCount: {$size:"$movies"}
+            movieCount: {$size:"$movies"},
+            id: { $toString: "$_id" }
           } 
         }
       ])
