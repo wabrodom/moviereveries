@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { ALL_DIRECTORS } from '../queries'
+import { Link } from 'react-router-dom'
 
 import EditAuthorBirth from './EditDirectorBirth'
 
@@ -25,7 +26,11 @@ const Directors = ({ setError, directorAndMovieCount }) => {
           </tr>
           {directors.map((a) => (
             <tr key={a.name}>
-              <td>{a.name}</td>
+              <td>
+                <Link to={`/directors/${a.id}`}>
+                  {a.name}
+                </Link>
+              </td>
               <td>{a.born}</td>
               <td>{a.movieCount}</td>
             </tr>
