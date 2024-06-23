@@ -1,0 +1,10 @@
+GET http://localhost:8888/api/searchmoviestoadd/
+Content-Type: application/json
+
+{
+  "title": "god father",
+  "type": "",
+  "year": ""
+}
+
+
