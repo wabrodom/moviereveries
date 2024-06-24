@@ -16,6 +16,7 @@ import { ALL_MOVIES, MOVIE_ADDED } from './queries';
 import Recommended from './components/Recommended';
 import HeadPart from './components/HeadPart'
 import FindMovies from './components/FindMovies/FindMovies';
+import SearchMoviesToAdd from './components/SearchMoviesToAdd/SearchMoviesToAdd';
 
 const App = () => {
   const [errorMessage , setErrorMessage] = useState(null)
@@ -85,13 +86,11 @@ const App = () => {
         <HeadPart logOut={ logOut } token={ token } />
         
         <Routes>
-          <Route path='/' 
-            element={<Movies/>}
-          />
+          <Route path='/' element={<Movies/>} />
 
-          <Route path='/find' 
-            element={<FindMovies/>}
-          />
+          <Route path='/find' element={<FindMovies/>} />
+
+          <Route path='/searchtoadd' element={<SearchMoviesToAdd/> } />
 
           <Route path='/directors' 
             element={<Directors setError={notify} directorAndMovieCount={directorAndMovieCount}/>} 

@@ -45,6 +45,18 @@ export const ALL_MOVIES = gql`
   ${MOVIE_DETAILS}
 `
 
+export const FETCH_MOVIES = gql`
+  query FetchMovies($year: String, $type: String, $title: String!) {
+    fetchMovies(year: $year, type: $type, title: $title) {
+      Title
+      Year
+      imdbID
+      Type
+      Poster
+    }
+  }
+`
+
 export const FIND_MOVIES = gql`
   query FindMovies($text: String) {
     findMovies(text: $text) {

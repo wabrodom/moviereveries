@@ -31,6 +31,10 @@ const NavBar = ({ logOut, token }) => {
                   add movie
               </Button>
 
+              <Button color="inherit" component={Link} to='/searchtoadd'>
+                  search to add movie
+              </Button>
+
               <Button color="inherit" component={Link} to='/logout' onClick={logOut}>
                 log out
               </Button>
