@@ -2,7 +2,6 @@ const { ApolloServer } = require('@apollo/server')
 const  { expressMiddleware } = require('@apollo/server/express4')
 const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer')
 const { makeExecutableSchema } = require("@graphql-tools/schema")
-const omdbApiRouter = require('./controllers/omdbApi')
 const express =require('express')
 const cors = require('cors')
 const http = require('http')
@@ -32,13 +31,9 @@ mongoose
     console.log('error connect to mongoDB', error.message)
   } )
 
-const app = express();
-app.use(cors())
-app.use(express.json())
-app.use('/searchmoviestoadd', omdbApiRouter)
   
 const start =  async () => {
-  // const app = express()
+  const app = express()
   const httpServer = http.createServer(app)
 
   const wsServer = new WebSocketServer({

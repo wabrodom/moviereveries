@@ -4,6 +4,7 @@ const { merge } = require('lodash')
 const { typeDef: Director,resolvers: directorResolvers } =require('./director')
 const { typeDef: Movie, resolvers: movieResolvers } =require('./movie')
 const { typeDef: User, resolvers: userResolvers } = require('./user')
+const { typeDef: MovieFetched, resolvers: MovieFetchedResolvers } = require('./movieFetched')
 
 const typeDefs = `
   // type Director {
@@ -85,8 +86,8 @@ const Query = `
 `
 
 const schema = makeExecutableSchema({
-  typeDefs: [ Query, Director, Movie, User ],
-  resolvers: merge(directorResolvers, movieResolvers, userResolvers)
+  typeDefs: [ Query, Director, Movie, User, MovieFetched ],
+  resolvers: merge(directorResolvers, movieResolvers, userResolvers, MovieFetchedResolvers)
 })
 
 module.exports = schema
