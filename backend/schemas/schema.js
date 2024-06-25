@@ -4,7 +4,7 @@ const { merge } = require('lodash')
 const { typeDef: Director,resolvers: directorResolvers } =require('./director')
 const { typeDef: Movie, resolvers: movieResolvers } =require('./movie')
 const { typeDef: User, resolvers: userResolvers } = require('./user')
-const { typeDef: MovieFetched, resolvers: MovieFetchedResolvers } = require('./movieFetched')
+const { typeDef: MovieFetched, resolvers: MovieFetchedResolvers } = require('./movie_omdb_api')
 
 const typeDefs = `
   // type Director {
