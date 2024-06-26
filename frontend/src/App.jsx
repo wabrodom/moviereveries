@@ -16,7 +16,9 @@ import { ALL_MOVIES, MOVIE_ADDED } from './queries';
 import Recommended from './components/Recommended';
 import HeadPart from './components/HeadPart'
 import FindMovies from './components/FindMovies/FindMovies';
+
 import SearchMoviesToAdd from './components/SearchMoviesToAdd/SearchMoviesToAdd';
+import NewMovieToAdd from './components/NewMovieToAdd/NewMovieToAdd'
 
 const App = () => {
   const [errorMessage , setErrorMessage] = useState(null)
@@ -91,6 +93,8 @@ const App = () => {
           <Route path='/find' element={<FindMovies/>} />
 
           <Route path='/searchtoadd' element={<SearchMoviesToAdd/> } />
+          
+          <Route path='/movie/:imdbid' element={<NewMovieToAdd /> } />
 
           <Route path='/directors' 
             element={<Directors setError={notify} directorAndMovieCount={directorAndMovieCount}/>} 

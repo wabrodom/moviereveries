@@ -75,6 +75,42 @@ export const FIND_DIRECTOR_MOVIES = gql`
   ${MOVIE_DETAILS}
 `
 
+export const NEW_MOVIE_DETAILS = gql`
+   query ($titleId: ID!) {
+    title(id: $titleId) {
+      id
+      original_title
+      primary_title
+      genres
+      plot
+      is_adult
+      rating {
+        aggregate_rating
+        votes_count
+      }
+      runtime_minutes
+      spoken_languages {
+        code
+        name
+      }
+      start_year
+      end_year
+      type
+      posters {
+        url
+      }
+      origin_countries {
+        code
+        name
+      }
+      critic_review {
+        review_count
+        score
+      }
+    }
+  }
+`
+
 export const ALL_DIRECTOR_MOVIES = gql`
   query($director: String) {
     allMovies(director: $director) {

@@ -36,7 +36,7 @@ const SingleMovie = ({ movie }) => {
         padding: 2,
         margin: 2,
         maxWidth: '100%',
-        width: matchesXs ? '100%' : matchesSm ? '80%' : matchesMd ? '60%' : '40%',
+        width: matchesXs ? '100%' : matchesSm ? '70%' : matchesMd ? '60%' : '50%',
         boxShadow: '0 3 5 rgba(0,0,0,0.2)',
       }}
     >
