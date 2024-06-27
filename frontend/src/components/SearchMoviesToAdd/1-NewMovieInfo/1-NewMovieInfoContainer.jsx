@@ -1,6 +1,19 @@
 import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { useNavigate} from 'react-router-dom'
+import { useSearchMovieToAdd } from '../../../contexts/SearchMovieToAddContext'
 
-const NewMovieInfo = ({ movieDetails }) => {
+const NewMovieInfoContainer = ({ movieDetails }) => {
+  const navigate = useNavigate()
+  const { searchQuery } = useSearchMovieToAdd()
+
+  const handleGoBack = () => {
+    navigate(-1, { state: { remember: searchQuery } })
+    navigate("..", { 
+      relative: "path" ,
+      state: { remember: searchQuery }
+    });
+  }
+
   const {
     id,
     original_title,
@@ -21,7 +34,9 @@ const NewMovieInfo = ({ movieDetails }) => {
 
   return (
     <Paper sx={{ padding: 2, margin: 2 }}>
-
+      <>
+        <button onClick={handleGoBack}>go back</button>
+      </>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <img 
           src={posters[0]?.url} 
@@ -107,7 +122,7 @@ const NewMovieInfo = ({ movieDetails }) => {
   )
 }
 
-export default NewMovieInfo
+export default NewMovieInfoContainer
 
 
 /* 

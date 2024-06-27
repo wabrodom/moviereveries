@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
-import { NEW_MOVIE_DETAILS } from '../../queries'
+import { NEW_MOVIE_DETAILS } from '../../../queries'
 import { useParams } from 'react-router-dom'
-import NewMovieInfo from './NewMovieInfo'
+import NewMovieInfoContainer from './1-NewMovieInfoContainer'
  
 const NewMovieToAdd = () => {
   const imdbid = useParams().imdbid
@@ -20,7 +20,7 @@ const NewMovieToAdd = () => {
 
   return (
     <div>
-      <NewMovieInfo movieDetails={newMovieDetails} />
+      <NewMovieInfoContainer movieDetails={newMovieDetails} />
     </div>
   )
 }

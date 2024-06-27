@@ -31,7 +31,7 @@ const NavBar = ({ logOut, token }) => {
                   add movie
               </Button>
 
-              <Button color="inherit" component={Link} to='/searchtoadd'>
+              <Button color="inherit" component={Link} to='/movie'>
                   search to add movie
               </Button>
 

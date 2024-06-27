@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom'
   ]
 */
 
-const SingleMovie = ({ movie }) => {
+const SingleMovieResult = ({ movie }) => {
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down('xs'));
   const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -76,4 +76,4 @@ const SingleMovie = ({ movie }) => {
   )
 }
 
-export default SingleMovie
+export default SingleMovieResult

@@ -1,10 +1,10 @@
 
 import { Formik } from 'formik';
-import FormikInput from './FormikInput';
+import FormikInput from '../FormikInput';
 import * as yup from 'yup';
 import { useState } from 'react';
 
-const SearchMoviesToAddContainer =  ( { onSubmit }) => {
+const SearchMoviesContainer =  ( { onSubmit }) => {
   const [showLink ,setShowLink] = useState('')
 
   const initialValues = {
@@ -45,4 +45,4 @@ const SearchMoviesForm = ({onSubmit}) => {
   )
 }
 
-export default SearchMoviesToAddContainer
+export default SearchMoviesContainer

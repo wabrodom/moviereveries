@@ -1,4 +1,4 @@
-import SingleMovie from "./SingleMovie"
+import SingleMovieResult from "./3-SingleMovieResult"
 
 const SearchResult = ({ fetchMovies, searchTitle }) => {
   const resultLength = fetchMovies.length
@@ -12,7 +12,7 @@ const SearchResult = ({ fetchMovies, searchTitle }) => {
       <div>
         {fetchMovies.map(movie => {
           return (
-            <SingleMovie movie={movie} key={movie.imdbID} />
+            <SingleMovieResult movie={movie} key={movie.imdbID} />
           )
         })}
       </div>
