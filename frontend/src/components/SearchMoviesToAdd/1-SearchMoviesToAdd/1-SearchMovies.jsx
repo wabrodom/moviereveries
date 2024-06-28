@@ -5,9 +5,14 @@ import { useLazyQuery } from '@apollo/client'
 import { useSearchMovieToAdd } from "../../../contexts/SearchMovieToAddContext"
 
 
-const SearchMovies = () => {
-  const {searchQuery, setSearchQuery } = useSearchMovieToAdd()
-  const [fetchMovies, { loading, data }] = useLazyQuery(FETCH_MOVIES)
+const SearchMovies = ( { hasToken }) => {
+  const {searchQuery, setSearchQuery, searchResults, setSearchResults} = useSearchMovieToAdd()
+  const [fetchMovies, { loading, data }] = useLazyQuery(FETCH_MOVIES, {
+    onCompleted: (data) => {
+      console.log('onCompleted data', data)
+      setSearchResults(data.fetchMovies)
+    }
+  })
 
 
   const onSubmit = async (values) => {
@@ -22,10 +27,23 @@ const SearchMovies = () => {
   
   return (
     <div>
-      <SearchMoviesContainer onSubmit={onSubmit}/>
-      { data === undefined 
+      <SearchMoviesContainer 
+        onSubmit={onSubmit} 
+        oldSearchQuery={searchQuery} 
+      />
+
+      {!hasToken && <span>please login to use Search</span>}
+      { data === undefined && searchResults.length === 0
         ? null 
-        : <SearchResult fetchMovies={data.fetchMovies} searchTitle={searchQuery.title} />
+        : data === undefined 
+        ? <SearchResult 
+            movies={searchResults} 
+            searchTitle={searchQuery.title}
+          />
+        : <SearchResult 
+            movies={data.fetchMovies} 
+            searchTitle={searchQuery.title}
+          />
       }
     </div>
   )

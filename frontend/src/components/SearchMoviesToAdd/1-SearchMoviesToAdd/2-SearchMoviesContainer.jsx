@@ -2,15 +2,13 @@
 import { Formik } from 'formik';
 import FormikInput from '../FormikInput';
 import * as yup from 'yup';
-import { useState } from 'react';
 
-const SearchMoviesContainer =  ( { onSubmit }) => {
-  const [showLink ,setShowLink] = useState('')
+const SearchMoviesContainer =  ( { onSubmit, oldSearchQuery }) => {
 
   const initialValues = {
-    title: '',
-    type: '',
-    year: '',
+    title: oldSearchQuery.title || '',
+    type: oldSearchQuery.type ||'',
+    year: oldSearchQuery.year ||'',
   }
 
   const validationSchema = yup.object().shape({
@@ -21,7 +19,6 @@ const SearchMoviesContainer =  ( { onSubmit }) => {
 
   return (
     <div>
-        <a href={showLink}>{showLink}</a>
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}

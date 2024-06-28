@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { NEW_MOVIE_DETAILS } from '../../../queries'
 import { useParams } from 'react-router-dom'
-import NewMovieInfoContainer from './1-NewMovieInfoContainer'
+import NewMovieInfoContainer from './2-NewMovieInfoContainer'
  
 const NewMovieToAdd = () => {
   const imdbid = useParams().imdbid
@@ -10,9 +10,25 @@ const NewMovieToAdd = () => {
     variables: { titleId: imdbid }
   })
 
-  if (loading) return null;
+  if (loading) {
+    return (
+      <p>
+        loading details...
+      </p>
+    )
+  } ;
   if (error) {
-    console.log(error)
+    return (
+      <div>
+        <p>
+          {error.message}
+        </p>
+        <p>
+          NetworkError when attempting to fetch resource. 
+          Please try again later.
+        </p>
+      </div>
+    )
   }
 
   const newMovieDetails = data.title

@@ -1,7 +1,7 @@
 import SingleMovieResult from "./3-SingleMovieResult"
 
-const SearchResult = ({ fetchMovies, searchTitle }) => {
-  const resultLength = fetchMovies.length
+const SearchResult = ({ movies, searchTitle }) => {
+  const resultLength = movies.length
   return  (
     <div>
 
@@ -10,7 +10,7 @@ const SearchResult = ({ fetchMovies, searchTitle }) => {
       </h3>
 
       <div>
-        {fetchMovies.map(movie => {
+        {movies.map(movie => {
           return (
             <SingleMovieResult movie={movie} key={movie.imdbID} />
           )
