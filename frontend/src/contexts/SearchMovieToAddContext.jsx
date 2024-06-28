@@ -11,9 +11,10 @@ export const SearchMovieToAddContextProvider = ({ children }) => {
     year: ''
   }
   const [searchQuery, setSearchQuery] = useState(initialState)
+  const [searchResults, setSearchResults] = useState([]);
 
   return (
-    <SearchMovieToAddContext.Provider value={{ searchQuery, setSearchQuery }}>
+    <SearchMovieToAddContext.Provider value={{ searchQuery, setSearchQuery, searchResults, setSearchResults }}>
       {children}
     </SearchMovieToAddContext.Provider>
   )

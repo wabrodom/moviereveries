@@ -18,6 +18,7 @@ import HeadPart from './components/HeadPart'
 import FindMovies from './components/FindMovies/FindMovies';
 
 import SearchMoviesToAddMain from './components/SearchMoviesToAdd/0-SearchMoviesToAddMain';
+import { SearchMovieToAddContextProvider } from './contexts/SearchMovieToAddContext'
 
 const App = () => {
   const [errorMessage , setErrorMessage] = useState(null)
@@ -85,13 +86,15 @@ const App = () => {
   return (
       <div>
         <HeadPart logOut={ logOut } token={ token } />
+        <SearchMovieToAddContextProvider>
+
         
         <Routes>
           <Route path='/' element={<Movies/>} />
 
           <Route path='/find' element={<FindMovies/>} />
 
-          <Route path='/movie/*' element={<SearchMoviesToAddMain/> } />
+          <Route path='/movie/*' element={<SearchMoviesToAddMain hasToken={token !== null} /> } />
 
           <Route path='/directors' 
             element={<Directors setError={notify} directorAndMovieCount={directorAndMovieCount}/>} 
@@ -121,6 +124,7 @@ const App = () => {
 
 
         </Routes>
+        </SearchMovieToAddContextProvider>
         <Notification message={errorMessage}/>
       </div>
 
