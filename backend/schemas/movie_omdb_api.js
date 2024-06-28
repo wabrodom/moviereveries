@@ -17,7 +17,15 @@ const typeDef = `
 
 const resolvers = {
   Query: {
-    fetchMovies: async (root, args) => {
+    fetchMovies: async (root, args, { currentUser }) => {
+      if ( !currentUser) { 
+        throw new GraphQLError('User is not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
       const { title, type, year } = args;
       const OMDB_API_KEY = process.env.OMDB_API_KEY;
 
