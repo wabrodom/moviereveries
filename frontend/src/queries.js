@@ -107,6 +107,55 @@ export const NEW_MOVIE_DETAILS = gql`
         review_count
         score
       }
+
+      directors: credits(first: 10, categories: ["director"]) {
+        name {
+          id
+          display_name
+          avatars {
+            url
+            width
+            height
+          }
+        }
+      }
+
+      writers: credits(first: 10, categories: ["writer"]) {
+        name {
+          id
+          display_name
+          avatars {
+            url
+            width
+            height
+          }
+        }
+      }
+
+      directorsAdded {
+        name {
+          id
+          display_name
+          avatars {
+            url
+            width
+            height
+          }
+        }
+      }
+
+      writersAdded {
+        name {
+          id
+          display_name
+          avatars {
+            url
+            width
+            height
+          }
+        }
+      }
+
     }
   }
 `

@@ -7,11 +7,23 @@ const NewMovieInfoContainer = ({ movieDetails }) => {
   const { searchQuery } = useSearchMovieToAdd()
 
   const handleGoBack = () => {
-    navigate(-1, { state: { remember: searchQuery } })
     navigate("..", { 
       relative: "path" ,
       state: { remember: searchQuery }
     });
+  }
+
+  const handleAddMovie = () => {
+    console.log('I will add this movie to db')
+  }
+
+  if (movieDetails === null) {
+    return (
+      <div>
+        <button onClick={handleGoBack}>go back</button>
+        <p>information is not available for this movie</p>
+      </div>
+    )
   }
 
   const {
@@ -28,16 +40,21 @@ const NewMovieInfoContainer = ({ movieDetails }) => {
     type = '',
     posters = [],
     origin_countries = [],
-    critic_review = ''
+    critic_review = '',
+    directorsAdded = [],
+    writersAdded = [],
   } = movieDetails || {};
 
   const posterUrl = posters !== null && posters.length > 0 ? posters[0]?.url : ''
+  const manyDirectors = directorsAdded !== null && directorsAdded.length > 1
+  const manyWriters = writersAdded !== null && writersAdded.length > 1
 
   console.log('in new movie info container')
   return (
     <Paper sx={{ padding: 2, margin: 2 }}>
       <>
         <button onClick={handleGoBack}>go back</button>
+        <button onClick={handleAddMovie}>Add to Db</button>
       </>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {posters && 
@@ -75,14 +92,17 @@ const NewMovieInfoContainer = ({ movieDetails }) => {
                 <TableCell>Genres</TableCell>
                 <TableCell>{genres && genres.join(', ')}</TableCell>
               </TableRow>
+
               <TableRow>
                 <TableCell>Type</TableCell>
                 <TableCell>{type}</TableCell>
               </TableRow>
+
               <TableRow>
-                <TableCell>Start Year</TableCell>
+                <TableCell>{end_year ? <span>Start Year</span> : <span>Release year</span>}</TableCell>
                 <TableCell>{start_year}</TableCell>
               </TableRow>
+
               {end_year && 
                 <TableRow>
                   <TableCell>End Year</TableCell>
@@ -93,6 +113,25 @@ const NewMovieInfoContainer = ({ movieDetails }) => {
                 <TableCell>Runtime</TableCell>
                 <TableCell>{runtime_minutes} minutes</TableCell>
               </TableRow>
+
+              <TableRow>
+                <TableCell>Director{manyDirectors && <span>s</span>}</TableCell>
+                <TableCell>{directorsAdded ? directorsAdded.map(p => (
+                  <div key={p.name.id}>{p.name.display_name}</div>))
+                  : <span>No data</span>
+                  }
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell>Writer{manyWriters && <span>s</span>}</TableCell>
+                <TableCell>{writersAdded ? writersAdded.map(p =>(
+                  <div key={p.name.id}>{p.name.display_name}</div>)) 
+                  : <span>No data</span>
+                  }
+                </TableCell>
+              </TableRow>
+
               {is_adult !== null && 
                 <TableRow>
                   <TableCell>Adult</TableCell>
@@ -111,14 +150,20 @@ const NewMovieInfoContainer = ({ movieDetails }) => {
                   <TableCell>{critic_review.score} ({critic_review.review_count} reviews)</TableCell>
                 </TableRow>
               )}
-              <TableRow>
-                <TableCell>Spoken Languages</TableCell>
-                <TableCell>{spoken_languages && spoken_languages.map(lang => lang.name).join(', ')}</TableCell>
-              </TableRow>
+              { spoken_languages &&(
+                <TableRow>
+                  <TableCell>Spoken Languages</TableCell>
+                  <TableCell>{ spoken_languages.map(lang => lang.name).join(', ')}</TableCell>
+                </TableRow>
+              )}
+
               <TableRow>
                 <TableCell>Origin Countries</TableCell>
                 <TableCell>{origin_countries && origin_countries.map(country => country.name).join(', ')}</TableCell>
               </TableRow>
+
+    
+
             </TableBody>
           </Table>
         </TableContainer>
