@@ -41,7 +41,7 @@ const endpoint = 'https://graph.imdbapi.dev/v1'
 
 const client = new GraphQLClient(endpoint)
 
-const titleById = async (id) => {
+export const titleById = async (id) => {
 
     const query = gql`
       query ($titleId: ID!) {
@@ -75,11 +75,38 @@ const titleById = async (id) => {
             review_count
             score
           }
+
+          directors: credits(first: 10, categories: ["director"]) {
+            name {
+              id
+              display_name
+              avatars {
+                url
+                width
+                height
+              }
+            }
+          }
+
+          writers: credits(first: 10, categories: ["writer"]) {
+            name {
+              id
+              display_name
+              avatars {
+                url
+                width
+                height
+              }
+            }
+          }
+          
         }
       }
     `
 
-    const variables = { titleId: id }
+    const variables = { 
+      titleId: id,
+    }
 
     try {
       const response = await client.request(query, variables);
@@ -96,5 +123,3 @@ const titleById = async (id) => {
       })
     }
 }
-
-export { titleById }
