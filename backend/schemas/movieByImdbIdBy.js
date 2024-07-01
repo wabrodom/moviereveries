@@ -1,7 +1,6 @@
 const { GraphQLError } = require('graphql')
 const DirectorNew = require('../models/DirectorNew')
-const User = require('../models/User')
-const movieByImdbId = require('../models/movieByImdb')
+const MovieByImdbId = require('../models/MovieByImdbId')
 
 const { PubSub } = require('graphql-subscriptions')
 const pubsub = new PubSub()
@@ -80,7 +79,6 @@ const typeDef =`
   }
 
 
-
   type MovieByTitleById {
     imdb_id: ID!
     original_title: String
@@ -99,7 +97,7 @@ const typeDef =`
     critic_review: CriticReview
     credits(first: Int, categories: [String!]): [Credit]
     directorsAdded: [Credit]
-    writersAdded: [Credit]
+
   }
 
   extend type Mutation {
@@ -120,139 +118,115 @@ const typeDef =`
       origin_countries: [OriginCountryInput]
       critic_review: CriticReviewInput
       directorsAdded: [CreditInput]
-      writersAdded: [CreditInput]
     ): MovieByImdbId!
 
     clearmovieByImdbId: Int!
   }
-
-  extend type Subscription {
-    movieByImdbIdAdded: movieByImdbId!
-  }
 `
 
 const resolvers = {
-  MovieByTitleById: {
-    directorsAdded : (root) => {
-      return root.directors
-    },
-    writersAdded: (root) => {
-      return root.writers
-    }
-  },
+  // MovieByTitleById: {
+  //   directorsAdded : (root) => {
+  //     return root.directorsAdded
+  //   },
+  //   writersAdded: (root) => {
+  //     return root.writersAdded
+  //   }
+  // },
   
 
   Mutation: {
     addmovieByImdbId: async (root, args, { currentUser }) => {
-      const { imdb_id, directorNames } = args
-      if ( !currentUser) { 
-        throw new GraphQLError('not authenticated', {
+      // if ( !currentUser) { 
+      //   throw new GraphQLError('not authenticated', {
+      //     extensions: {
+      //       code: 'BAD_USER_INPUT'
+      //     }
+      //   })
+      // }
+
+      const duplicatedImdbId = await MovieByImdbId.findOne({ imdb_id: args.id })
+      if (duplicatedImdbId) {
+        throw new GraphQLError('movieByImdbId name must be unqiue', {
           extensions: {
-            code: 'BAD_USER_INPUT'
+            code: 'BAD_USER_INPUT',
+            inValidArgs: args.id
           }
         })
       }
 
-      for (const name of directorNames) {
-        const duplicatedImdbId = await movieByImdbId.findOne({ imdb_id: imdb_id })
-  
-        if (duplicatedImdbId) {
-          throw new GraphQLError('movieByImdbId name must be unqiue', {
-            extensions: {
-              code: 'BAD_USER_INPUT',
-              inValidArgs: args.imdb_id
-            }
-          })
-        }
-  
-        const foundDirector = await DirectorNew.find({ name: name })
+      const {
+        id,
+        original_title,
+        primary_title,
+        genres,
+        plot,
+        is_adult,
+        rating,
+        runtime_minutes,
+        spoken_languages,
+        start_year,
+        end_year,
+        type,
+        posters,
+        origin_countries,
+        critic_review,
+        directorsAdded,
+        writersAdded
+      } = args
+      const movieByImdbId = new MovieByImdbId({
+        imdb_id: id,
+        original_title,
+        primary_title,
+        genres,
+        plot,
+        is_adult,
+        rating,
+        runtime_minutes,
+        spoken_languages,
+        start_year,
+        end_year,
+        type,
+        posters,
+        origin_countries,
+        critic_review,
+        directorsAdded,
+        writersAdded
+       })
+       try {
+        await movieByImdbId.save()
+        console.log('Movie saved successfully');
+      } catch (error) {
+        console.error('Error saving movie:', error);
+      }
 
-        const postUser = await User.findById(currentUser._id)
-  
-        if ( !foundDirector ) {
-          const newDirector = new DirectorNew({ name, movies: [imdb_id] })
-          try {
-            await newDirector.save()
-          } catch (error) {
-            throw new GraphQLError('new director name saved failed', {
-              extensions: {
-                code: 'BAD_USER_INPUT',
-                inValidArgs: args.director,
-                error
-              }
-            })
-          }
-  
-          const movieByImdbId = new movieByImdbId({
-             title: args.title,
-             director: args.director,
-             released: args.released,
-             genres: args.genres,
-             director: newDirector._id,
-             user: currentUser._id
-            })
-  
-          try {
-            await movieByImdbId.save()
-            newDirector.movieByImdbIds = newDirector.movieByImdbIds.concat(movieByImdbId._id)
-            postUser.movieByImdbIds = postUser.movieByImdbIds.concat(movieByImdbId._id)
-            await newDirector.save()
-            await postUser.save()
-          } catch (error) {
-            throw new GraphQLError('save movieByImdbId failed', {
-              extensions: {
-                code: 'BAD_USER_INPUT',
-                inValidArgs: args,
-                error
-              }
-            })
-          }
-  
-          const populated = await movieByImdbId.populate('director')
-  
-          pubsub.publish('movieByImdbId_ADDED', { movieByImdbIdAdded: populated })
-  
-          return populated
-  
-        }
-  
-        const movieByImdbId = new movieByImdbId({ ...args, director: foundDirector._id })
-  
-        try {
-          await movieByImdbId.save()
-          foundDirector.movieByImdbIds = foundDirector.movieByImdbIds.concat(movieByImdbId._id)
-          postUser.movieByImdbIds = postUser.movieByImdbIds.concat(movieByImdbId._id)
-          await foundDirector.save()
-          await postUser.save()
-        } catch (error) {
-          throw new GraphQLError('save movieByImdbId falied, The movieByImdbId name is at least 5 characters', {
-            extensions: {
-              code: 'BAD_USER_INPUT',
-              inValidArgs: args,
-              error
-            }
+      for (const name of directorsAdded) {
+        let director = await DirectorNew.find({ nameId: director.name.id })
+
+        if ( !director ) {
+          director = new DirectorNew({ 
+            name, 
+            movies: [movieByImdbId.id] ,
+            moviesImdb: [imdb_id] 
           })
+        } else if (!director.movies.includes(imdb_id)) {
+          director.movies = director.movies.concat(movieByImdbId.id)
+          director.movies = director.moviesImdb.concat(imdb_id)
         }
         
+        await director.save()
       }
-      const populated = await movieByImdbId.populate('director')
-      // console.log('In the list author', populated)
-      return populated
+
+      const populated = await movieByImdbId.populate('directorsAdded')
+      console.log('In the list author', populated)
+      return movieByImdbId
     },
     
     clearmovieByImdbId: async() => {
-      await movieByImdbId.deleteMany({})
-      return movieByImdbId.collection.countDocuments()
+      await MovieByImdbId.deleteMany({})
+      return MovieByImdbId.collection.countDocuments()
     },
   },
-
-  Subscription: {
-    movieByImdbIdAdded: {
-      subscribe: () => pubsub.asyncIterator('movieByImdbId_ADDED')
-      // return AsyncIterator obj, its name is 'movieByImdbId_ADDED'. the job is to listen to "movieByImdbId_ADDED event label"
-      // or it save info about client that do the  subscriptions
-    }
-  }
 
 }
 
