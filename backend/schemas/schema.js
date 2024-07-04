@@ -6,6 +6,8 @@ const { typeDef: Movie, resolvers: movieResolvers } =require('./movie')
 const { typeDef: User, resolvers: userResolvers } = require('./user')
 const { typeDef: Movie_Omdb_Api_Fetched, resolvers: Movie_Omdb_Api_FetchedResolvers } = require('./movie_omdb_api')
 const { typeDef: Movie_Imdb_Api_queried, resolvers: Movie_Imdb_Api_queriedResolvers } = require('./movie_imdb_api/movie_imdb_api')
+const { typeDef: MovieByImdbId, resolvers: movieByImdbIdResolvers } = require('./movieByImdbIdBy')
+
 
 const typeDefs = `
   // type Director {
@@ -94,6 +96,7 @@ const schema = makeExecutableSchema({
     User, 
     Movie_Omdb_Api_Fetched,
     Movie_Imdb_Api_queried,
+    MovieByImdbId,
   ],
   resolvers: merge(
     directorResolvers, 
@@ -101,6 +104,7 @@ const schema = makeExecutableSchema({
     userResolvers, 
     Movie_Omdb_Api_FetchedResolvers,
     Movie_Imdb_Api_queriedResolvers,
+    movieByImdbIdResolvers,
   )
 })
 

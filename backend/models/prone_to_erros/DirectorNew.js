@@ -1,6 +1,12 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
+const AvatarSchema = new Schema({
+  url: { type: String, default: '' },
+  width: { type: Number, default: 0 },
+  height: { type: Number, default: 0 }
+})
+
 const schema = new mongoose.Schema({
   nameId: {
     type: String,
@@ -11,15 +17,14 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  avatars: { type: [AvatarSchema], default: [] },
   movies: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'MovieByTitleById'
     }
   ],
-  moviesImdb : [
-    { type: String }
-  ]
+  moviesImdb : [{ type: String }]
 })
 
 schema.plugin(uniqueValidator)
