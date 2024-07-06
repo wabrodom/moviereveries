@@ -1,6 +1,6 @@
 const { GraphQLError } = require('graphql')
-const DirectorNew = require('../models/DirectorNew')
-const MovieByImdbId = require('../models/MovieByImdbId')
+const DirectorImdb = require('../models/DirectorImdb')
+const MovieImdb = require('../models/MovieImdb')
 
 
 const typeDef =`
@@ -23,7 +23,8 @@ const typeDef =`
     moviesImdb: [String]
   }
 
-  type MovieByTitleById {
+
+  type MovieImdb {
     imdb_id: ID!
     original_title: String
     primary_title: String
@@ -42,12 +43,14 @@ const typeDef =`
   }
 
   extend type Query {
-    movieByImdbCount: Int!
-    findMoviesByDirectorImdbId(directorId: String): [MovieByTitleById]!
+    movieImdbCount: Int!
+    allMoviesImdb(director: String, genre: String): [MovieImdb]!
+    findMoviesImdb(text: String): [MovieImdb]!
+    findMoviesImdbByDirectorId(directorId: String): [MovieImdb]!
   }
 
   extend type Mutation {
-    addmovieByImdbId(
+    addmovieImdb(
       imdb_id: String!
       original_title: String
       primary_title: String
@@ -60,28 +63,92 @@ const typeDef =`
       type: String
       postersUse: [PosterInput]
       directorsAddedUse: [DirectorsAddedUseInput]
-    ): MovieByTitleById!
+    ): MovieImdb!
 
-    clearmovieByImdbId: Int!
-    clearDirectorNew: Int!
+    clearmovieImdb: Int!
+    clearDirectorImdb: Int!
   }
 `
 
 const resolvers = {
   Query: {
-    movieByImdbCount: async () => MovieByImdbId.collection.countDocuments(),
+    movieImdbCount: async () => MovieImdb.collection.countDocuments(),
 
-    findMoviesByDirectorImdbId: async (root, args) => {
+    allMoviesImdb: async (root, args) => {
+
+      if (!args.director && !args.genre) {
+        const allMoviesPopulated = await MovieImdb.find({}).populate('directorsAddedUse')
+        return allMoviesPopulated
+      }
+      if (args.director && !args.genre) {
+          const foundDirector = await DirectorImdb
+            .findOne({ display_name : { "$regex": args.director , "$options": "i" } })
+          if (foundDirector === null) {
+            return []
+          }
+        const directorMovies = await MovieImdb
+          .find({ directorsAddedUse : foundDirector._id })
+          .populate('directorsAddedUse')
+        return directorMovies
+      }
+      if (!args.director && args.genre ) {
+        const matchGenre = await MovieImdb
+          .find({ genres: 
+            { "$regex": args.genre , "$options": "i" } 
+          })
+          .populate('directorsAddedUse')
+        return matchGenre
+      }
+
+      const matchDirector = await DirectorImdb.findOne({ display_name : args.director })
+      const matchDirectorAndGenre = await MovieImdb
+        .find({ directorsAddedUse : matchDirector._id })
+        .find({ genres: args.genre })
+        .populate('directorsAddedUse')
+      
+      return matchDirectorAndGenre
+    },
+
+    findMoviesImdb: async (root, args) => {
+      if (!args.text) {
+        const allMoviesImdbPopulated = await MovieImdb.find({}).populate('directorsAddedUse')
+        return allMoviesImdbPopulated
+      }
+
+      const foundMovies = await MovieImdb
+        .find({ 
+          primary_title: 
+            { "$regex": args.text , "$options": "i" } 
+        })
+        .populate('directorsAddedUse')
+
+      if (foundMovies.length === 0) {
+        const findOriginalTitle = await MovieImdb
+          .find({ 
+            original_title: 
+              { "$regex": args.text , "$options": "i" } 
+          })
+          .populate('directorsAddedUse')
+        return findOriginalTitle
+      }
+
+      return foundMovies
+    },
+
+    findMoviesImdbByDirectorId: async (root, args) => {
       if (!args.directorId) return [] 
 
-      const directorMoviesPopulated = await MovieByImdbId.find({ directorsAddedUse: args.directorId }).populate('directorsAddedUse')
-        return directorMoviesPopulated
+      const directorMoviesPopulated = await MovieImdb
+        .find({ directorsAddedUse: args.directorId })
+        .populate('directorsAddedUse')
+
+      return directorMoviesPopulated
     }
   },
 
 
   Mutation: {
-    addmovieByImdbId: async (root, args) => {
+    addmovieImdb: async (root, args) => {
       // if ( !currentUser) { 
       //   throw new GraphQLError('not authenticated', {
       //     extensions: {
@@ -90,7 +157,7 @@ const resolvers = {
       //   })
       // }
 
-      const duplicatedImdbId = await MovieByImdbId.findOne({ imdb_id: args.id })
+      const duplicatedImdbId = await MovieImdb.findOne({ imdb_id: args.id })
       if (duplicatedImdbId) {
         throw new GraphQLError('movieByImdbId name must be unqiue', {
           extensions: {
@@ -136,7 +203,7 @@ const resolvers = {
   
       } = args
       
-      const movieByImdbId = new MovieByImdbId({
+      const movieByImdbId = new MovieImdb({
         imdb_id,
         original_title,
         primary_title,
@@ -160,33 +227,13 @@ const resolvers = {
       } catch (error) {
         console.error('Error saved to get id: ', error);
       }
-      /* 
-        // too complicated for now
-        for (const name of directorsAdded) {
-          let director = await DirectorNew.find({ nameId: director.name.id })
-
-          if ( !director ) {
-            director = new DirectorNew({ 
-              name, 
-              movies: [movieByImdbId.id] ,
-              moviesImdb: [imdb_id] 
-            })
-          } else if (!director.movies.includes(imdb_id)) {
-            director.movies = director.movies.concat(movieByImdbId.id)
-            director.movies = director.moviesImdb.concat(imdb_id)
-          }
-          
-          await director.save()
-        }
-      */
-      
 
       for (const obj of directorsAddedUse) {
         const { nameId, display_name } = obj
-        let director = await DirectorNew.findOne({ nameId: nameId })
+        let director = await DirectorImdb.findOne({ nameId: nameId })
   
         if (director === null) {
-          director = new DirectorNew({ 
+          director = new DirectorImdb({ 
             nameId: nameId,
             display_name: display_name, 
             movies: [movieByImdbId.id],
@@ -223,13 +270,13 @@ const resolvers = {
       return populated
     },
     
-    clearmovieByImdbId: async() => {
-      await MovieByImdbId.deleteMany({})
-      return MovieByImdbId.collection.countDocuments()
+    clearmovieImdb: async() => {
+      await MovieImdb.deleteMany({})
+      return MovieImdb.collection.countDocuments()
     },
-    clearDirectorNew: async() => {
-      await DirectorNew.deleteMany({})
-      return DirectorNew.collection.countDocuments()
+    clearDirectorImdb: async() => {
+      await DirectorImdb.deleteMany({})
+      return DirectorImdb.collection.countDocuments()
     },
   },
 
