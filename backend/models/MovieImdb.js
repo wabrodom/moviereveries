@@ -24,7 +24,7 @@ const NewMovieByImdbId = new Schema({
   directorsAddedUse: [
     { 
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'DirectorNew'
+      ref: 'DirectorImdb'
     }
   ],
 });
@@ -39,5 +39,5 @@ NewMovieByImdbId.set('toJSON', {
   }
 })
 
-const MovieByImdbId = mongoose.model('MovieByTitleById', NewMovieByImdbId)
+const MovieByImdbId = mongoose.model('MovieImdb', NewMovieByImdbId)
 module.exports = MovieByImdbId

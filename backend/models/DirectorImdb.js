@@ -32,4 +32,4 @@ schema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('DirectorNew', schema)
+module.exports = mongoose.model('DirectorImdb', schema)
