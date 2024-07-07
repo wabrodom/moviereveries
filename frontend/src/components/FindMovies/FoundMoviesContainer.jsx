@@ -15,10 +15,10 @@ const FoundMoviesContainer = ({ foundMoviesFiltered }) => {
             <th>released</th> 
           </tr>
           {foundMoviesFiltered.map((movie) => (
-            <tr key={movie.id}>
-              <td>{movie.title}</td>
-              <td>{movie.director.name}</td>
-              <td>{movie.released}</td>
+            <tr key={movie.imdb_id}>
+              <td>{movie.primary_title}</td>
+              <td>{movie.directorsAddedUse.display_name}</td>
+              <td>{movie.start_year}</td>
             </tr>
           ))}
         </tbody>

@@ -2,7 +2,7 @@ import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, Ta
 import { useNavigate} from 'react-router-dom'
 import { useSearchMovieToAdd } from '../../../contexts/SearchMovieToAddContext'
 
-const NewMovieInfoContainer = ({ movieDetails }) => {
+const NewMovieInfoContainer = ({ movieDetails, addMovie }) => {
   const navigate = useNavigate()
   const { searchQuery } = useSearchMovieToAdd()
 
@@ -13,9 +13,9 @@ const NewMovieInfoContainer = ({ movieDetails }) => {
     });
   }
 
-  const handleAddMovie = () => {
-    console.log('I will add this movie to db')
-  }
+  // const handleAddMovie = () => {
+  //   console.log('I will add this movie to db')
+  // }
 
   if (movieDetails === null) {
     return (
@@ -54,7 +54,7 @@ const NewMovieInfoContainer = ({ movieDetails }) => {
     <Paper sx={{ padding: 2, margin: 2 }}>
       <>
         <button onClick={handleGoBack}>go back</button>
-        <button onClick={handleAddMovie}>Add to Db</button>
+        <button onClick={addMovie}>Add to Db</button>
       </>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {posters && 

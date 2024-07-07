@@ -26,18 +26,16 @@ const App = () => {
 
   const client = useApolloClient()
 
-  const result = useQuery(ALL_MOVIES)
-
   useSubscription(MOVIE_ADDED, {
     onData: ( ({ data, client }) => {
-      const addedMovie = data.data.movieAdded
-      const title = data.data.movieAdded.title
-      const director = data.data.movieAdded.director.name
+      const addedMovie = data.data.movieImdbAdded
+      const title = data.data.movieImdbAdded.primaryTitle
+      const director = data.data.movieImdbAdded.directorsAddedUse.display_name
       window.alert(`'${title}' by ${director} added`)
 
-      client.cache.updateQuery({ query: ALL_MOVIES}, data => {
+      client.cache.updateQuery({ query: ALL_MOVIES }, data => {
         return {
-          allMovies: data.allMovies.concat(addedMovie)
+          allMoviesImdb: data.allMoviesImdb.concat(addedMovie)
         }
       })
     })
@@ -56,32 +54,6 @@ const App = () => {
     client.resetStore()
   }
 
-  if (result.loading) {
-    return <div>loading...</div>
-  }
-
-  const allMovies = result.data.allMovies
-
-  const directorMap  = (movies) => {
-    const map = new Map()
-    for (let movie of movies) {
-      const currentAuthor = movie.director.name
-      const currentCount = map.get(currentAuthor) || 0
-      map.set(currentAuthor, currentCount + 1)
-    }
-    return map
-  }
-  const getDirectorAndMovieCount =() => {
-    const map = directorMap(allMovies)
-    const directorsAndMovies = []
-    for (let pair of map.entries()) {
-      const currentAuthor = { name: pair[0], movieCount: pair[1] }
-      directorsAndMovies.push(currentAuthor)
-    }
-    return directorsAndMovies
-  }
-
-  const directorAndMovieCount = getDirectorAndMovieCount()
 
   return (
       <div>
@@ -96,9 +68,7 @@ const App = () => {
 
           <Route path='/movie/*' element={<SearchMoviesToAddMain hasToken={token !== null} /> } />
 
-          <Route path='/directors' 
-            element={<Directors setError={notify} directorAndMovieCount={directorAndMovieCount}/>} 
-          />
+          <Route path='/directors' element={<Directors setError={notify} />} />
 
           <Route path='/directors/:id' element={<DirectorMovies />} />
 

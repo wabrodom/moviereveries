@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { ALL_MOVIES } from '../queries'
+import { ALL_MOVIES } from '../graphql/queries'
 import GenreDisplay from './GenreDisplay'
 
 
@@ -15,9 +15,12 @@ const Movies = () => {
     return <div>loading...</div>
   }
 
-  const allMoviesFiltered = resultFilter.data.allMovies
+  const allMoviesFiltered = resultFilter.data.allMoviesImdb
 
   const triggerRefetch = () =>  resultFilter.refetch()
+
+  console.log("Movies rendered")
+
 
   return (
     <div>
@@ -31,10 +34,10 @@ const Movies = () => {
             <th>released</th> 
           </tr>
           {allMoviesFiltered.map((movie) => (
-            <tr key={movie.id}>
-              <td>{movie.title}</td>
-              <td>{movie.director.name}</td>
-              <td>{movie.released}</td>
+            <tr key={movie.imdb_id}>
+              <td>{movie.primary_title}</td>
+              <td>{movie.directorsAddedUse.display_name}</td>
+              <td>{movie.start_year}</td>
             </tr>
           ))}
         </tbody>

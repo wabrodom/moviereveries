@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client"
 import { useState } from "react"
 import Select from 'react-select'
 
-import { ALL_DIRECTORS, EDIT_DIRECTOR } from "../queries"
+import { ALL_DIRECTORS, EDIT_DIRECTOR } from "../graphql/queries"
 
 const EditDirectorBirth = ({ directors, setError }) => {
   const [year, setYear] = useState('')
@@ -25,7 +25,7 @@ const EditDirectorBirth = ({ directors, setError }) => {
   } 
 
   const options = directors.map(obj => {
-    return { value: obj.name, label: obj.name }
+    return { value: obj.display_name, label: obj.display_name }
   })
   const inputStyle ={ marginTop: '1rem'}
 
@@ -49,31 +49,6 @@ const EditDirectorBirth = ({ directors, setError }) => {
     </div>
   )
 
-  return (
-    <div>
-      <h3>Edit director birth year</h3>
-      <form onSubmit={handleSubmit}>
-        <label>
-            director
-          <select name='selectAuthor'>
-            {directors.map(obj => {
-              return (
-                <option value={obj.name} key={obj.name}>
-                  {obj.name}
-                </option>
-              )
-            })}
-        </select>
-
-        </label>
-        <input 
-          value={year}
-          onChange={({target}) => setYear(target.value)}
-        />    
-        <button type='submit'>update director</button>
-      </form>
-    </div>
-  )
 } 
 
 export default EditDirectorBirth

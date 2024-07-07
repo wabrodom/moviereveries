@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { ALL_DIRECTORS } from '../queries'
+import { ALL_DIRECTORS } from '../graphql/queries'
 import { Link } from 'react-router-dom'
 
 import EditAuthorBirth from './EditDirectorBirth'
@@ -11,7 +11,7 @@ const Directors = ({ setError, directorAndMovieCount }) => {
   if (result.loading) {
     return <div>loading...</div>
   }
-  const directors = result.data.allDirectors
+  const directors = result.data.allDirectorsImdb
 
   return (
     <div>
@@ -25,10 +25,10 @@ const Directors = ({ setError, directorAndMovieCount }) => {
             <th>movies</th>
           </tr>
           {directors.map((a) => (
-            <tr key={a.name}>
+            <tr key={a.nameId}>
               <td>
                 <Link to={`/directors/${a.id}`}>
-                  {a.name}
+                  {a.display_name}
                 </Link>
               </td>
               <td>{a.born}</td>

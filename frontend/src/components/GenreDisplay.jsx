@@ -1,4 +1,4 @@
-import { ALL_MOVIES } from "../queries"
+import { ALL_MOVIES } from "../graphql/queries"
 import { useQuery } from "@apollo/client"
 
 
@@ -9,7 +9,7 @@ const GenreDisplay = ( { setGenre, refetch } ) => {
     return <div>loading...</div>
   }
 
-  const allMovies = result.data.allMovies
+  const allMovies = result.data.allMoviesImdb
 
   const allGenresHelper = (movies) => {
     const set = new Set()
