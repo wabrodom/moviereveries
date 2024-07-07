@@ -11,10 +11,13 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  born: {
+    type: Number,
+  },
   movies: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'MovieByTitleById'
+      ref: 'MovieImdb'
     }
   ],
   moviesImdb : [

@@ -1,9 +1,42 @@
 const { GraphQLError } = require('graphql')
 const DirectorImdb = require('../models/DirectorImdb')
 const MovieImdb = require('../models/MovieImdb')
+const User = require('../models/User')
 
+const { PubSub } = require('graphql-subscriptions')
+const movieImdbPubsub = new PubSub()
 
 const typeDef =`
+  extend type Query {
+    movieImdbCount: Int!
+    allMoviesImdb(director: String, genre: String): [MovieImdb]!
+    findMoviesImdb(text: String): [MovieImdb]!
+    findMoviesImdbByDirectorId(directorId: String): [MovieImdb]!
+  }
+
+  extend type Mutation {
+    addMovieImdb(
+      imdb_id: String!
+      original_title: String
+      primary_title: String
+      genres: [String]
+      plot: String
+      is_adult: Boolean
+      runtime_minutes: Int
+      start_year: Int
+      end_year: Int
+      type: String
+      postersUse: [PosterInput]
+      directorsAddedUse: [DirectorsAddedUseInput]
+    ): MovieImdb!
+
+    clearMovieImdb: Int!
+  }
+
+  extend type Subscription {
+    movieImdbAdded: MovieImdb!
+  }
+  
   input PosterInput {
     url: String
   }
@@ -42,32 +75,7 @@ const typeDef =`
     directorsAddedUse: [DirectorsAddedUse]
   }
 
-  extend type Query {
-    movieImdbCount: Int!
-    allMoviesImdb(director: String, genre: String): [MovieImdb]!
-    findMoviesImdb(text: String): [MovieImdb]!
-    findMoviesImdbByDirectorId(directorId: String): [MovieImdb]!
-  }
 
-  extend type Mutation {
-    addmovieImdb(
-      imdb_id: String!
-      original_title: String
-      primary_title: String
-      genres: [String]
-      plot: String
-      is_adult: Boolean
-      runtime_minutes: Int
-      start_year: Int
-      end_year: Int
-      type: String
-      postersUse: [PosterInput]
-      directorsAddedUse: [DirectorsAddedUseInput]
-    ): MovieImdb!
-
-    clearmovieImdb: Int!
-    clearDirectorImdb: Int!
-  }
 `
 
 const resolvers = {
@@ -148,7 +156,7 @@ const resolvers = {
 
 
   Mutation: {
-    addmovieImdb: async (root, args) => {
+    addMovieImdb: async (root, args, { currentUser }) => {
       // if ( !currentUser) { 
       //   throw new GraphQLError('not authenticated', {
       //     extensions: {
@@ -157,9 +165,9 @@ const resolvers = {
       //   })
       // }
 
-      const duplicatedImdbId = await MovieImdb.findOne({ imdb_id: args.id })
+      const duplicatedImdbId = await MovieImdb.findOne({ imdb_id: args.imdb_id })
       if (duplicatedImdbId) {
-        throw new GraphQLError('movieByImdbId name must be unqiue', {
+        throw new GraphQLError('movie Imdb Id must be unqiue', {
           extensions: {
             code: 'BAD_USER_INPUT',
             inValidArgs: args.id
@@ -267,19 +275,26 @@ const resolvers = {
       console.log(movieByImdbId)
       const populated = movieByImdbId.populate('directorsAddedUse')
       console.log(populated)
+
+      movieImdbPubsub.publish('MOVIE_IMDB_ADDED', { movieImdbAdded: populated }) 
+
       return populated
     },
     
-    clearmovieImdb: async() => {
+    clearMovieImdb: async() => {
       await MovieImdb.deleteMany({})
       return MovieImdb.collection.countDocuments()
     },
-    clearDirectorImdb: async() => {
-      await DirectorImdb.deleteMany({})
-      return DirectorImdb.collection.countDocuments()
-    },
   },
 
+  Subscription: {
+    movieImdbAdded: {
+      subscribe: () => movieImdbPubsub.asyncIterator('MOVIE_IMDB_ADDED')
+      // return AsyncIterator obj, its name is 'MOVIE_IMDB_ADDED'. 
+      // the job is to listen to "MOVIE_IMDB_ADDED event label"
+      // or it save info about client that do the  subscriptions
+    }
+  }
 }
 
 module.exports = { typeDef, resolvers }
