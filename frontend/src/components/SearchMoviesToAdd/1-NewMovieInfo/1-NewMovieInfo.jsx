@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import { 
   NEW_MOVIE_DETAILS,
@@ -11,6 +12,14 @@ import NewMovieInfoContainer from './2-NewMovieInfoContainer'
  
 const NewMovieToAdd = () => {
   const imdbid = useParams().imdbid
+  const [notification, setNotification] = useState(null)
+  
+  const notify = (severity, message) => {
+    setNotification([severity, message])
+    setTimeout(()=> {
+      setNotification(null)
+    }, 5000)
+  }
 
   const { loading, data, error} = useQuery(NEW_MOVIE_DETAILS, {
     variables: { titleId: imdbid }
@@ -21,13 +30,12 @@ const NewMovieToAdd = () => {
     onError: (error) => {
       console.log(error)
       console.log(error.graphQLErrors[0].message)
-      // setError(error.graphQLErrors[0].message)
+      notify('error', error.graphQLErrors[0].message)
     },
-    onCompleted: (data) => {
-      console.log('added new movie', data)
-    },
+    onCompleted: () => notify('success', 'Added a new movie to DB'),
     update: (cache, response) => {
       cache.updateQuery({ query: ALL_MOVIES }, (data) => {
+        console.log('the data', data)
         return {
           allMoviesImdb: data.allMoviesImdb.concat(response.data.addMovieImdb)
           // allMovies: allMovies.concat(response.data.addMovie) // destructure { allMovies }
@@ -83,7 +91,6 @@ const NewMovieToAdd = () => {
       url: obj.url
     }
   })
-  console.log(posters, postersModify)
 
   const directorAddedModify = directorsAdded.map(obj => {
     return {
@@ -115,7 +122,11 @@ const NewMovieToAdd = () => {
 
   return (
     <div>
-      <NewMovieInfoContainer movieDetails={newMovieDetails} addMovie={handleAddMovie} />
+      <NewMovieInfoContainer 
+        movieDetails={newMovieDetails} 
+        addMovie={handleAddMovie}
+        notification={notification}
+      />
     </div>
   )
 }

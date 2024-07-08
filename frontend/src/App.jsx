@@ -12,7 +12,7 @@ import Notification from './components/Notification'
 import DirectorMovies from './components/DirectorMovies'
 
 import { useQuery, useApolloClient, useSubscription } from '@apollo/client'
-import { ALL_MOVIES, MOVIE_ADDED } from './queries';
+import { ALL_MOVIES, MOVIE_ADDED } from './graphql/queries';
 import Recommended from './components/Recommended';
 import HeadPart from './components/HeadPart'
 import FindMovies from './components/FindMovies/FindMovies';
@@ -27,18 +27,23 @@ const App = () => {
   const client = useApolloClient()
 
   useSubscription(MOVIE_ADDED, {
-    onData: ( ({ data, client }) => {
+    onData: ({ data, client }) => {
+      console.log('on App', data)
       const addedMovie = data.data.movieImdbAdded
-      const title = data.data.movieImdbAdded.primaryTitle
-      const director = data.data.movieImdbAdded.directorsAddedUse.display_name
-      window.alert(`'${title}' by ${director} added`)
 
-      client.cache.updateQuery({ query: ALL_MOVIES }, data => {
+      // const title = addedMovie.primary_title
+      // const director = addedMovie.directorsAddedUse[0].display_name
+      // window.alert(`'${title}' by ${director}... added`)
+
+      // ****// this component don't use ALL_MOVIES query yet, so have no cache will read null
+      client.cache.updateQuery({ query: ALL_MOVIES }, (data) => {
+        console.log(data)
         return {
           allMoviesImdb: data.allMoviesImdb.concat(addedMovie)
         }
       })
-    })
+
+    }
   })
 
   const notify  = message => {

@@ -4,6 +4,11 @@ const FoundMoviesContainer = ({ foundMoviesFiltered }) => {
       <p>movie title not found</p>    
     )
   }
+
+  const allDirectorsName = (arr) => {
+    const names = arr.map(obj => obj.display_name)
+    return names.join('')
+  }
   
   return (
     <div>
@@ -17,7 +22,7 @@ const FoundMoviesContainer = ({ foundMoviesFiltered }) => {
           {foundMoviesFiltered.map((movie) => (
             <tr key={movie.imdb_id}>
               <td>{movie.primary_title}</td>
-              <td>{movie.directorsAddedUse.display_name}</td>
+              <td>{allDirectorsName(movie.directorsAddedUse)}</td>
               <td>{movie.start_year}</td>
             </tr>
           ))}

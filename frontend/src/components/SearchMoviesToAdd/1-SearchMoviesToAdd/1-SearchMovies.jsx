@@ -9,7 +9,7 @@ const SearchMovies = ( { hasToken }) => {
   const {searchQuery, setSearchQuery, searchResults, setSearchResults} = useSearchMovieToAdd()
   const [fetchMovies, { loading, data }] = useLazyQuery(FETCH_MOVIES, {
     onCompleted: (data) => {
-      console.log('onCompleted data', data)
+      // console.log('onCompleted data', data)
       setSearchResults(data.fetchMovies)
     }
   })

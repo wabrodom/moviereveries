@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useQuery, useLazyQuery } from "@apollo/client"
-import { ALL_MOVIES, CURRENT_USER } from "../queries"
+import { ALL_MOVIES, CURRENT_USER } from "../graphql/queries"
 
 const Recommended = () => {
   const [currentUser, setCurrentUser] = useState(null)
@@ -14,7 +14,7 @@ const Recommended = () => {
   })
 
   const [getFilterMovies, resultFilterMovies] = useLazyQuery(ALL_MOVIES, {
-    onCompleted: (data) => setFilteredBooks(data.allMovies)
+    onCompleted: (data) => setFilteredBooks(data.allMoviesImdb)
   })
 
   if (resultFilterMovies.loading || !currentUser || !filteredMovies) {
@@ -22,6 +22,8 @@ const Recommended = () => {
   } 
 
   resultFilterMovies.refetch()
+
+  const allDirectorsName = (arr) => arr.map(obj => obj.display_name).join(', ')
 
   return (
     <div>
@@ -37,10 +39,10 @@ const Recommended = () => {
           </tr>
           {filteredMovies.map(movie => {
             return (
-              <tr key={movie.id}>
-                <td>{movie.title}</td>
-                <td>{movie.director.name}</td>
-                <td>{movie.released}</td>
+              <tr key={movie.imdb_id}>
+                <td>{movie.primary_title}</td>
+                <td>{allDirectorsName(movie.directorsAddedUse)}</td>
+                <td>{movie.start_year}</td>
               </tr>
             )
           })}
