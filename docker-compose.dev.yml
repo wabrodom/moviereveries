@@ -6,8 +6,8 @@ services:
       context: ./frontend
       dockerfile: dev.Dockerfile
     environment:
-      - VITE_BACKEND_URL=http://localhost:8888/api/
-      - VITE_GRAPHQLWSLINK=ws://localhost:8888/api/
+      - VITE_BACKEND_URL=http://localhost:8080/api/
+      - VITE_GRAPHQLWSLINK=ws://localhost:8080/api/
     volumes:
       - ./frontend/:/usr/src/app
       - /usr/src/app/node_modules
@@ -22,6 +22,15 @@ services:
     build: 
       context: ./backend/
       dockerfile: dev.Dockerfile
+    develop:
+       watch:
+          - action: sync
+            path: ./backend/
+            target: /usr/src/app
+            ignore:
+              - node_modules/
+          - action: rebuild
+            path: package.json
     env_file:
       - ./backend/.env
     volumes:
@@ -37,7 +46,7 @@ services:
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
     ports:
-      - 8888:80
+      - 8080:80
     container_name: my-app-reverse-proxy
     depends_on:
       - app
