@@ -5,13 +5,12 @@ import {
 } from '@mui/material'
 
 
-
 const NavBar = ({ logOut, token }) => {
-
-  return (
+  
+    return (
       <Toolbar>
         <div >
-          <Button color="inherit" component={Link} to='/'>
+          <Button color="inherit" component={Link} to='/' >
             movies
           </Button>
           <Button color="inherit" component={Link} to='/directors'>

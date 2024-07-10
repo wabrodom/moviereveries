@@ -26,25 +26,21 @@ const App = () => {
 
   const client = useApolloClient()
 
-  useSubscription(MOVIE_ADDED, {
-    onData: ({ data, client }) => {
-      console.log('on App', data)
-      const addedMovie = data.data.movieImdbAdded
+  // useSubscription(MOVIE_ADDED, {
+  //   onData: ({ data, client }) => {
+  //     console.log('on App', data)
+  //     const addedMovie = data.data.movieImdbAdded
 
-      // const title = addedMovie.primary_title
-      // const director = addedMovie.directorsAddedUse[0].display_name
-      // window.alert(`'${title}' by ${director}... added`)
+  //     // ****// this component don't use ALL_MOVIES query yet, so have no cache will read null
+  //     client.cache.updateQuery({ query: ALL_MOVIES }, (data) => {
+  //       console.log('client cache', data)
+  //       return {
+  //         allMoviesImdb: data.allMoviesImdb.concat(addedMovie)
+  //       }
+  //     })
 
-      // ****// this component don't use ALL_MOVIES query yet, so have no cache will read null
-      client.cache.updateQuery({ query: ALL_MOVIES }, (data) => {
-        console.log(data)
-        return {
-          allMoviesImdb: data.allMoviesImdb.concat(addedMovie)
-        }
-      })
-
-    }
-  })
+  //   }
+  // })
 
   const notify  = message => {
     setErrorMessage(message)

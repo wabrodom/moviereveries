@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { ALL_MOVIES } from '../graphql/queries'
 import GenreDisplay from './GenreDisplay'
@@ -11,6 +11,14 @@ const Movies = () => {
     variables: { genre }, 
   })
 
+  useEffect(() => {
+    resultFilter.refetch()
+    /*
+      this component will mount again by the route element, 
+      useEffect will run for the first time again
+    */ 
+  }, [])
+
   if (resultFilter.loading) {
     return <div>loading...</div>
   }
@@ -19,7 +27,7 @@ const Movies = () => {
 
   const triggerRefetch = () =>  resultFilter.refetch()
 
-  console.log("Movies rendered")
+  console.log("Movies rendered.")
 
 
   return (
