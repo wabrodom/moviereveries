@@ -7,7 +7,6 @@ import LogIn from './components/LogIn/LogIn'
 import SignUp from './components/SignUp/SignUp'
 import Directors from './components/Directors'
 import Movies from './components/Movies'
-import NewMovie from './components/NewMovie'
 import Notification from './components/Notification'
 import DirectorMovies from './components/DirectorMovies'
 
@@ -73,20 +72,20 @@ const App = () => {
 
           <Route path='/directors/:id' element={<DirectorMovies />} />
 
-          <Route path='/add' 
+          {/* <Route path='/add' 
             element={token ? <NewMovie setError={notify}/> : <Navigate replace to ='/login'/>} 
-          />
+          /> */}
 
           <Route path='/recommended' 
             element={token ? <Recommended/> : <Navigate replace to ='/login'/>} 
           />
 
           <Route path='/login' 
-            element={token ? <Navigate replace to ='/add'/> : <LogIn setToken={setToken} setError={notify} /> } 
+            element={token ? <Navigate replace to ='/' /> : <LogIn setToken={setToken} setError={notify} /> } 
           />
 
           <Route path='/signup' 
-            element={token ? <Navigate replace to ='/add'/> : <SignUp setToken={setToken} setError={notify} /> } 
+            element={token ? <Navigate replace to ='/' /> : <SignUp setToken={setToken} setError={notify} /> } 
           />
 
           <Route path='/logout' 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
-import { ADD_MOVIE, ALL_MOVIES, ALL_DIRECTORS } from '../queries'
+import { ADD_MOVIE, ALL_MOVIES, ALL_DIRECTORS } from '../../queries'
 
 const NewMovie = ({ setError }) => {
   const [title, setTitle] = useState('')
