@@ -2,8 +2,9 @@ const { GraphQLError } = require('graphql')
 const DirectorImdb = require('../models/DirectorImdb')
 const MovieImdb = require('../models/MovieImdb')
 const User = require('../models/User')
+const Genre = require('../models/Genre')
 
-const { PubSub } = require('graphql-subscriptions')
+const { PubSub } = require('graphql-subscriptions');
 const movieImdbPubsub = new PubSub()
 
 const typeDef =`
@@ -236,6 +237,14 @@ const resolvers = {
         console.error('Error saved to get id: ', error);
       }
 
+      for (const genre of genres) {
+        const genreLowerCase = genre.toLowerCase()
+        const toAddGenre = await Genre.findOne({ genre: genreLowerCase })
+        if (toAddGenre === null) {
+          await Genre.create({ genre : genreLowerCase })
+        }
+      }
+
       for (const obj of directorsAddedUse) {
         const { nameId, display_name } = obj
         let director = await DirectorImdb.findOne({ nameId: nameId })
@@ -272,9 +281,9 @@ const resolvers = {
         console.error('Error saving movie:', error);
       }
 
-      console.log(movieByImdbId)
+      // console.log(movieByImdbId)
       const populated = movieByImdbId.populate('directorsAddedUse')
-      console.log(populated)
+      // console.log(populated)
 
       movieImdbPubsub.publish('MOVIE_IMDB_ADDED', { movieImdbAdded: populated }) 
 
