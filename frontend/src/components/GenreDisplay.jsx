@@ -1,30 +1,15 @@
-import { ALL_MOVIES } from "../graphql/queries"
+import { ALL_GENRES } from "../graphql/queries"
 import { useQuery } from "@apollo/client"
 
 
 const GenreDisplay = ( { setGenre, refetch } ) => {
-  const result = useQuery(ALL_MOVIES)
+  const result = useQuery(ALL_GENRES)
 
   if (result.loading) {
     return <div>loading...</div>
   }
 
-  const allMovies = result.data.allMoviesImdb
-
-  const allGenresHelper = (movies) => {
-    const set = new Set()
-    for (let movie of movies) {
-      const currentGenres = movie.genres
-      if (Array.isArray(currentGenres)){
-        currentGenres.forEach(elem => set.add(elem))
-      } else {
-        set.add(...currentGenres)
-      }
-    }
-    return [...set]
-  }
-
-  const genres = allGenresHelper(allMovies)
+  const genres = result.data.allGenres
 
   const selectGenre = (event) => { 
     setGenre(event.target.value)
@@ -40,8 +25,8 @@ const GenreDisplay = ( { setGenre, refetch } ) => {
     <div>
       Genres
       {genres.map(genre => 
-        <button onClick={selectGenre} value={genre} key={genre}>
-          {genre}
+        <button onClick={selectGenre} value={genre.genre} key={genre.id}>
+          {genre.genre}
         </button>
       )}
       <button onClick={clearGenre} style={colorSalmon}>clear filter</button>

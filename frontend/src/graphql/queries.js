@@ -47,6 +47,15 @@ export const ALL_MOVIES = gql`
   ${MOVIE_IMDB_DETAILS}
 `
 
+export const ALL_GENRES = gql`
+  query AllGenres {
+    allGenres {
+      genre
+      id
+    }
+  }
+`
+
 export const FETCH_MOVIES = gql`
   query FetchMovies($year: String, $type: String, $title: String!) {
     fetchMovies(year: $year, type: $type, title: $title) {
