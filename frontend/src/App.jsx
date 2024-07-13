@@ -18,6 +18,7 @@ import FindMovies from './components/FindMovies/FindMovies';
 
 import SearchMoviesToAddMain from './components/SearchMoviesToAdd/0-SearchMoviesToAddMain';
 import { SearchMovieToAddContextProvider } from './contexts/SearchMovieToAddContext'
+import MovieInfo from './components/MovieInfo/MovieInfo';
 
 const App = () => {
   const [errorMessage , setErrorMessage] = useState(null)
@@ -67,6 +68,8 @@ const App = () => {
           <Route path='/find' element={<FindMovies/>} />
 
           <Route path='/movie/*' element={<SearchMoviesToAddMain hasToken={token !== null} /> } />
+
+          <Route path='/movies/:imdbid' element={<MovieInfo /> } />
 
           <Route path='/directors' element={<Directors setError={notify} />} />
 

@@ -77,6 +77,15 @@ export const FIND_MOVIES = gql`
   ${MOVIE_IMDB_DETAILS}
 `
 
+export const FIND_MOVIE_BY_IMDB = gql`
+  query FindMoviesImdbByImdb($imdbId: String) {
+    findMoviesImdbByImdb(imdb_id: $imdbId) {
+      ...MovieImdbDetails
+    }
+  }
+  ${MOVIE_IMDB_DETAILS}
+`
+
 export const FIND_DIRECTOR_MOVIES = gql`
   query ($directorId: String) {
     findMoviesImdbByDirectorId(directorId: $directorId) {

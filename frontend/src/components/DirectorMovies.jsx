@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { useNavigate} from 'react-router-dom'
 import { FIND_DIRECTOR_MOVIES } from '../graphql/queries'
 import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const DirectorMovies = () => {
   const directorId = useParams().id
@@ -41,7 +42,11 @@ const DirectorMovies = () => {
           </tr>
           {directorMovies.map((movie) => (
             <tr key={movie.imdb_id}>
-              <td>{movie.primary_title}</td>
+              <td>
+                <Link to={`/movies/${movie.imdb_id}`}>
+                  {movie.primary_title}
+                </Link>
+              </td>
               <td>{movie.start_year}</td>
               <td>{movie.type}</td>
               <td>{movie.genres.join(', ')}</td>

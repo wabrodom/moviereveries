@@ -34,8 +34,16 @@ const Movies = () => {
   return (
     <div>
       <h2>movies</h2>
-      <GenreDisplay setGenre={setGenre} refetch={triggerRefetch} />
-      <MoviesTable movies={allMoviesFiltered} />
+
+      <GenreDisplay 
+        setGenre={setGenre} 
+        refetch={triggerRefetch} 
+      />
+
+      <MoviesTable 
+        movies={allMoviesFiltered} 
+      />
+
     </div>
   )
 }

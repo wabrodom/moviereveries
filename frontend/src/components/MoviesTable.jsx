@@ -6,6 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import { Link } from 'react-router-dom'
 import TogglableSpan from "./TogglableSpan"
 
 const MoviesTable = ({ movies }) => {
@@ -29,7 +30,11 @@ const MoviesTable = ({ movies }) => {
       <TableBody>
           {movies.map((movie) => (
             <TableRow key={movie.imdb_id}>
-              <TableCell sx={titleCellStyle}>{movie.primary_title}</TableCell>
+              <TableCell sx={titleCellStyle}>
+                <Link to={`/movies/${movie.imdb_id}`}>
+                  {movie.primary_title}
+                </Link>
+              </TableCell>
               <TableCell sx={directorCellStyle}>
                 {
                   movie.directorsAddedUse.length < 2 
