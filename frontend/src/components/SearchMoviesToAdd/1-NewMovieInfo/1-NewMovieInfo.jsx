@@ -86,18 +86,20 @@ const NewMovieToAdd = () => {
     writersAdded = [],
   } = newMovieDetails || {};
 
-  const postersModify = posters.map(obj => {
-    return {
-      url: obj.url
-    }
-  })
+  const postersModify = posters !== null 
+    ? posters.map(obj => { 
+      return {
+        url: obj.url
+      }})
+    : null
 
-  const directorAddedModify = directorsAdded.map(obj => {
-    return {
-      display_name: obj.name.display_name,
-      nameId: obj.name.id
-    }
-  })
+  const directorAddedModify = directorsAdded !== null 
+   ? directorsAdded.map(obj => {
+      return {
+        display_name: obj.name.display_name,
+        nameId: obj.name.id
+      }})
+    : null
 
   const handleAddMovie = async (event) => {
     event.preventDefault()
