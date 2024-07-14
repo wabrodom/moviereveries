@@ -12,6 +12,7 @@ const typeDef =`
     movieImdbCount: Int!
     allMoviesImdb(director: String, genre: String): [MovieImdb]!
     findMoviesImdb(text: String): [MovieImdb]!
+    findMoviesImdbByImdb(imdb_id: String): MovieImdb
     findMoviesImdbByDirectorId(directorId: String): [MovieImdb]!
   }
 
@@ -142,6 +143,13 @@ const resolvers = {
       }
 
       return foundMovies
+    },
+
+    findMoviesImdbByImdb: async (root, args) => {
+      const FoundMovie = await MovieImdb
+        .findOne({ imdb_id: args.imdb_id })
+        .populate('directorsAddedUse')
+      return FoundMovie
     },
 
     findMoviesImdbByDirectorId: async (root, args) => {
