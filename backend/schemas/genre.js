@@ -109,10 +109,23 @@ const resolvers ={
       }
 
       const genresResult = allGenresHelper(allMovies)
-      const allNewGenres = await Genre.insertMany(genresResult.map(text => { 
-        return { "genre": text } 
-      }))
-      return allNewGenres
+      try {
+        for (const genre of genresResult) {
+          const genreLowerCase = genre.toLowerCase()
+          const toAddGenre = await Genre.findOne({ genre: genreLowerCase })
+          if (toAddGenre === null) {
+            await Genre.create({ genre : genreLowerCase })
+          }
+        }
+        return await Genre.find({})
+
+      } catch (error) {
+        throw new GraphQLError('failed to save some genre to genres', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+          }
+        })
+      }
     },
 
     deleteGenre: async (root, args, { currentUser }) => {
