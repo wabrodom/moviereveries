@@ -9,6 +9,7 @@ const { typeDef: Movie_Omdb_Api_Fetched, resolvers: Movie_Omdb_Api_FetchedResolv
 const { typeDef: Movie_Imdb_Api_queried, resolvers: Movie_Imdb_Api_queriedResolvers } = require('./movie_imdb_api/movie_imdb_api')
 const { typeDef: MovieImdb, resolvers: movieImdbResolvers } = require('./movieImdb')
 const { typeDef: DirectorImdb, resolvers: directorImdbResolvers } = require('./directorImdb')
+const { typeDef: MovieList, resolvers: movieListResolvers } = require('./movieList')
 
 const typeDefs = `
   // type Director {
@@ -100,6 +101,7 @@ const schema = makeExecutableSchema({
     Movie_Imdb_Api_queried,
     MovieImdb,
     DirectorImdb,
+    MovieList,
   ],
   resolvers: merge(
     directorResolvers, 
@@ -110,6 +112,7 @@ const schema = makeExecutableSchema({
     Movie_Imdb_Api_queriedResolvers,
     movieImdbResolvers,
     directorImdbResolvers,
+    movieListResolvers,
   )
 })
 
