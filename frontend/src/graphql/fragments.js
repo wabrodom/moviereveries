@@ -21,7 +21,24 @@ export const MOVIE_IMDB_DETAILS = gql`
       moviesImdb
       nameId
     } 
+    id
+  }
+`
 
+
+export const MOVIE_LIST_DETAILS = gql`
+  fragment MovieListDetails on MovieList {
+    listName
+    description
+    list {
+      movieId
+      primary_title
+      original_title
+      imdb_id
+      impression
+    }
+    id
+    
   }
 `
 

@@ -55,6 +55,22 @@ export const ALL_GENRES = gql`
     }
   }
 `
+export const ALL_MOVIES_LIST = gql`
+  query allMovieLists {
+    allMovieLists {
+      listName
+      description
+      list {
+        movieId
+        primary_title
+        original_title
+        imdb_id
+        impression
+      }
+      id
+    }
+  }
+`
 
 export const FETCH_MOVIES = gql`
   query FetchMovies($year: String, $type: String, $title: String!) {
