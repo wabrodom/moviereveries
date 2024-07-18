@@ -33,7 +33,7 @@ const Movies = () => {
 
   return (
     <div>
-      <h2>movies</h2>
+      <h2>Movies In Database</h2>
 
       <GenreDisplay 
         setGenre={setGenre} 

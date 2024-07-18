@@ -2,7 +2,18 @@ import { Link } from "react-router-dom"
 import {
   Toolbar,
   Button,
+  Box,
 } from '@mui/material'
+import theme from '../../assets/theme'
+
+const groupNavBarStyle = {
+  m: 1,
+  borderRadius: 1,
+  bgcolor: theme.palette.primary.main,
+  '&:hover': {
+    bgcolor: theme.palette.primary.light,
+  },
+} 
 
 
 const NavBar = ({ logOut, token }) => {
@@ -10,40 +21,47 @@ const NavBar = ({ logOut, token }) => {
     return (
       <Toolbar>
         <div >
-          <Button color="inherit" component={Link} to='/' >
-            movies
-          </Button>
-          <Button color="inherit" component={Link} to='/directors'>
-            directors
-          </Button>
-          <Button color="inherit" component={Link} to='/find'>
-            find movies
-          </Button>
+          <Box sx={groupNavBarStyle}>
+            <Button color="inherit" component={Link} to='/' >
+              movies
+            </Button>
+            <Button color="inherit" component={Link} to='/directors'>
+              directors
+            </Button>
+            <Button color="inherit" component={Link} to='/find'>
+              find movies
+            </Button>
 
-          <Button color="inherit" component={Link} to='/movielist'>
-            movie lists
-          </Button>
+            <Button color="inherit" component={Link} to='/movielist'>
+              movie lists
+            </Button>
 
-          <Button color="inherit" component={Link} to='/addlist'>
-            add movie list
-          </Button>
+            <Button color="inherit" component={Link} to='/addlist'>
+              add movie list
+            </Button>
 
 
-          {token ?
-            <>
-              <Button color="inherit" component={Link} to='/recommended'>
-                recommended
+            {token &&
+                <Button color="inherit" component={Link} to='/recommended'>
+                  recommended
+                </Button>
+            }
+ 
+          </Box>
+          
+          {token &&
+              <Button color="inherit" component={Link} to='/movie-outer-api'>
+                  search movies from outside api
               </Button>
+          }
 
-              <Button color="inherit" component={Link} to='/movie'>
-                  search to add movie
-              </Button>
-
-              <Button color="inherit" component={Link} to='/logout' onClick={logOut}>
+          { token && 
+            <Button color="inherit" component={Link} to='/logout' onClick={logOut}>
                 log out
-              </Button>
-            </>
-          :
+            </Button>
+          }
+
+          {token === null &&
             <>
               <Button color="inherit" component={Link} to='/login'>
                 log in

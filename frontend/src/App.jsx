@@ -71,7 +71,7 @@ const App = () => {
 
           <Route path='/find' element={<FindMovies/>} />
 
-          <Route path='/movie/*' element={<SearchMoviesToAddMain hasToken={token !== null} /> } />
+          <Route path='/movie-outer-api/*' element={<SearchMoviesToAddMain hasToken={token !== null} /> } />
 
           <Route path='/movies/:imdbid' element={<MovieInfo /> } />
 

@@ -1,7 +1,12 @@
 
 import { Formik } from 'formik';
-import FormikInput from '../../Common/FormikInput';
-import * as yup from 'yup';
+import FormikInput from '../../Common/FormikInput'
+import * as yup from 'yup'
+import {Box} from '@mui/material'
+
+const searchMovieStyle = {
+  p: 1, m: 1
+}
 
 const SearchMoviesContainer =  ( { onSubmit, oldSearchQuery }) => {
 
@@ -18,7 +23,10 @@ const SearchMoviesContainer =  ( { onSubmit, oldSearchQuery }) => {
   });
 
   return (
-    <div>
+    <Box sx={searchMovieStyle}>
+      <h3>
+        Search movie from omdbapi.com & imdbapi.dev
+      </h3>
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
@@ -27,7 +35,7 @@ const SearchMoviesContainer =  ( { onSubmit, oldSearchQuery }) => {
           {({ handleSubmit }) => <SearchMoviesForm onSubmit={handleSubmit} /> }
         </Formik>
 
-    </div>
+    </Box>
   )
 }
 

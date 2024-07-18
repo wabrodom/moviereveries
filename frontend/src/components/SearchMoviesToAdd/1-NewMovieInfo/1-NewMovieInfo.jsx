@@ -28,14 +28,14 @@ const NewMovieToAdd = () => {
   const [ addMovieImdb ]  = useMutation(ADD_MOVIE, {
     refetchQueries: [ { query: ALL_DIRECTORS, }],
     onError: (error) => {
-      console.log(error)
-      console.log(error.graphQLErrors[0].message)
+      // console.log(error)
+      // console.log(error.graphQLErrors[0].message)
       notify('error', error.graphQLErrors[0].message)
     },
     onCompleted: () => notify('success', 'Added a new movie to DB'),
     update: (cache, response) => {
       cache.updateQuery({ query: ALL_MOVIES }, (data) => {
-        console.log('the data', data)
+        // console.log('the data', data)
         return {
           allMoviesImdb: data.allMoviesImdb.concat(response.data.addMovieImdb)
           // allMovies: allMovies.concat(response.data.addMovie) // destructure { allMovies }
@@ -117,7 +117,7 @@ const NewMovieToAdd = () => {
       "postersUse": postersModify,
       "directorsAddedUse": directorAddedModify
     } 
-    console.log(variables)
+    // console.log(variables)
     addMovieImdb({ variables })
   }
 

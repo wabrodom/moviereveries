@@ -31,6 +31,7 @@ const AddMovieListContainer = ({ handleAddMovie }) => {
   const [trigger, setTrigger] = useState(0)
   const { movieList } = useAddMovieList()
   
+  //state change in parent -> child useState watch the change
   const handleTrigger = () =>  setTrigger(trigger + 1) 
 
   const ListNameAndDescription = ['listName', 'description']

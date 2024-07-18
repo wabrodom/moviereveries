@@ -68,7 +68,7 @@ const SingleMovieResult = ({ movie }) => {
         <Typography variant="body1" color="textSecondary">
           Released Year: {movie.Year}
         </Typography>
-        <Typography component={Link} to={`/movie/${movie.imdbID}`} >
+        <Typography component={Link} to={`/movie-outer-api/${movie.imdbID}`} >
           more detail
         </Typography>
       </Box>
