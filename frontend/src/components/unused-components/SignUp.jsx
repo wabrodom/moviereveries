@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useMutation } from "@apollo/client"
-import { SIGNUP } from "../queries"
+import { SIGNUP } from "../../queries"
 
 
 /* 

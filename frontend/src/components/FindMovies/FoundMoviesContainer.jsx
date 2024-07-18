@@ -1,4 +1,4 @@
-import MoviesTable from "../MoviesTable";
+import MoviesTable from "../Common/MoviesTable";
 
 const FoundMoviesContainer = ({ foundMoviesFiltered }) => {
   if (foundMoviesFiltered.length === 0 ) {

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Box } from '@mui/material'
-import theme from '../assets/theme'
+import theme from '../../assets/theme'
 import Header from "./Header";
 import NavBar from "./NavBar";
 

@@ -1,7 +1,6 @@
 import { useMutation } from "@apollo/client"
 import { LOGIN } from "../../queries"
-import LogInContainer from "./LogInContainer";
-import PropTypes from 'prop-types';
+import LogInContainer from "./LogInContainer"
 
 const LogIn = ( { setToken, setError }) => {
   const [ login ] = useMutation(LOGIN, {
@@ -31,10 +30,6 @@ const LogIn = ( { setToken, setError }) => {
 
 export default LogIn
 
-LogIn.propTypes = {
-  setToken: PropTypes.func,
-  setError: PropTypes.func
-}
 
 /*
 // useEffect(() => {

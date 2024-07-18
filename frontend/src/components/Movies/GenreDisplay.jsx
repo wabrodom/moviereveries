@@ -1,4 +1,4 @@
-import { ALL_GENRES } from "../graphql/queries"
+import { ALL_GENRES } from "../../graphql/queries"
 import { useQuery } from "@apollo/client"
 
 

@@ -1,6 +1,6 @@
 
 import { Formik } from 'formik';
-import FormikInput from '../FormikInput';
+import FormikInput from '../../Common/FormikInput';
 import * as yup from 'yup';
 
 const SearchMoviesContainer =  ( { onSubmit, oldSearchQuery }) => {

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
-import { ALL_MOVIES } from '../graphql/queries'
+import { ALL_MOVIES } from '../../graphql/queries'
 import GenreDisplay from './GenreDisplay'
-import MoviesTable from './MoviesTable';
+import MoviesTable from '../Common/MoviesTable';
 
 
 const Movies = () => {

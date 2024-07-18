@@ -1,10 +1,10 @@
 import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom'
+import ButtonAddMovieToList from './ButtonAddMovieToList';
 
 const MovieInfoContainer = ({ movieDetails }) => {
   const navigate = useNavigate()
-
   const handleGoBack = () => navigate(-1)
 
   if (movieDetails === null) {
@@ -17,6 +17,8 @@ const MovieInfoContainer = ({ movieDetails }) => {
   }
 
   const {
+    imdb_id,
+    id,
     original_title = '',
     primary_title = '',
     genres = [],
@@ -33,10 +35,18 @@ const MovieInfoContainer = ({ movieDetails }) => {
   const posterUrl     = postersUse !== null && postersUse.length > 0 ? postersUse[0]?.url : ''
   const manyDirectors = directorsAddedUse !== null && directorsAddedUse.length > 1
 
+  const movieInfoForList = {
+    movieId: id,
+    imdb_id,
+    original_title,
+    primary_title
+  }
+
   return (
     <Paper sx={{ padding: 2, margin: 2 }}>
       <>
         <button onClick={handleGoBack}>go back</button>
+        <ButtonAddMovieToList movieInfo={movieInfoForList} />
       </>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {postersUse && 

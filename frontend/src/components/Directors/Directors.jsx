@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { ALL_DIRECTORS } from '../graphql/queries'
+import { ALL_DIRECTORS } from '../../graphql/queries'
 import { Link } from 'react-router-dom'
 
 import EditAuthorBirth from './EditDirectorBirth'

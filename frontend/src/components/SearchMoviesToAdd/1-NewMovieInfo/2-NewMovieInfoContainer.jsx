@@ -1,7 +1,7 @@
 import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useNavigate} from 'react-router-dom'
 import { useSearchMovieToAdd } from '../../../contexts/SearchMovieToAddContext'
-import Notification from '../../Notification/Notification';
+import Notification from '../../Common/Notification';
 
 const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
   const navigate = useNavigate()

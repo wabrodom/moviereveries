@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client"
 import { useState } from "react"
 import Select from 'react-select'
 
-import { ALL_DIRECTORS, EDIT_DIRECTOR } from "../graphql/queries"
+import { ALL_DIRECTORS, EDIT_DIRECTOR } from '../../graphql/queries' 
 
 const EditDirectorBirth = ({ directors, setError }) => {
   const [year, setYear] = useState('')

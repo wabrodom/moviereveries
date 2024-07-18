@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { useNavigate} from 'react-router-dom'
-import { FIND_DIRECTOR_MOVIES } from '../graphql/queries'
+import { FIND_DIRECTOR_MOVIES } from '../../graphql/queries'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 

@@ -5,20 +5,23 @@ import {
 import { useState } from 'react'
 import LogIn from './components/LogIn/LogIn'
 import SignUp from './components/SignUp/SignUp'
-import Directors from './components/Directors'
-import Movies from './components/Movies'
-import Notification from './components/Notification'
-import DirectorMovies from './components/DirectorMovies'
+import Directors from './components/Directors/Directors'
+import Movies from './components/Movies/Movies'
+import DirectorMovies from './components/Directors/DirectorMovies'
 
 import { useQuery, useApolloClient, useSubscription } from '@apollo/client'
 import { ALL_MOVIES, MOVIE_ADDED } from './graphql/queries';
-import Recommended from './components/Recommended';
-import HeadPart from './components/HeadPart'
+import Recommended from './components/User/Recommended';
+import HeadPart from './components/HeadPart/HeadPart'
 import FindMovies from './components/FindMovies/FindMovies';
 
 import SearchMoviesToAddMain from './components/SearchMoviesToAdd/0-SearchMoviesToAddMain';
 import { SearchMovieToAddContextProvider } from './contexts/SearchMovieToAddContext'
 import MovieInfo from './components/MovieInfo/MovieInfo';
+import AddMovieList from './components/AddMovieList/AddMovieList';
+import { AddMovieListContextProvider } from './contexts/AddMovieListContext';
+import { ListInfoContextProvider } from './contexts/ListInfoContext';
+import MovieListDisplay from './components/MovieListDisplay/MovieListDisplay';
 
 const App = () => {
   const [errorMessage , setErrorMessage] = useState(null)
@@ -57,10 +60,11 @@ const App = () => {
 
 
   return (
-      <div>
-        <HeadPart logOut={ logOut } token={ token } />
-        <SearchMovieToAddContextProvider>
-
+    <div>
+      <HeadPart logOut={ logOut } token={ token } />
+      <SearchMovieToAddContextProvider>
+      <AddMovieListContextProvider>
+      <ListInfoContextProvider>
         
         <Routes>
           <Route path='/' element={<Movies/>} />
@@ -74,6 +78,11 @@ const App = () => {
           <Route path='/directors' element={<Directors setError={notify} />} />
 
           <Route path='/directors/:id' element={<DirectorMovies />} />
+
+          <Route path='/addlist' element={<AddMovieList />} />
+
+          <Route path='/movielist' element={<MovieListDisplay />} />
+
 
           {/* <Route path='/add' 
             element={token ? <NewMovie setError={notify}/> : <Navigate replace to ='/login'/>} 
@@ -97,9 +106,13 @@ const App = () => {
 
 
         </Routes>
-        </SearchMovieToAddContextProvider>
-        <Notification message={errorMessage}/>
-      </div>
+        
+      </ListInfoContextProvider>
+      </AddMovieListContextProvider>
+      </SearchMovieToAddContextProvider>
+
+     
+    </div>
 
   )
 }
