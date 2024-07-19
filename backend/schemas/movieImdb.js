@@ -75,6 +75,7 @@ const typeDef =`
     postersUse: [PosterUse]
 
     directorsAddedUse: [DirectorsAddedUse]
+    id: ID!
   }
 
 
@@ -176,7 +177,7 @@ const resolvers = {
 
       const duplicatedImdbId = await MovieImdb.findOne({ imdb_id: args.imdb_id })
       if (duplicatedImdbId) {
-        throw new GraphQLError('movie Imdb Id must be unqiue', {
+        throw new GraphQLError('the movie already in the database', {
           extensions: {
             code: 'BAD_USER_INPUT',
             inValidArgs: args.id

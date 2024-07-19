@@ -1,7 +1,18 @@
 require('dotenv').config()
 
-const PORT = process.env.PORT
-const MONGODB_URI = process.env.MONGODB_URI
+const PORT = process.env.NODE_ENV === 'test'
+  ? process.env.PORT_FOR_TEST
+  : process.env.NODE_ENV === 'production'
+    ? process.env.PORT
+    : process.env.PORT_FOR_DEV
+
+
+const MONGODB_URI = process.env.NODE_ENV === 'test'
+  ? process.env.TEST_MONGODB_URI
+  : process.env.NODE_ENV === 'production'
+    ? process.env.MONGODB_URI
+    : process.env.MONGODB_URI_FOR_DEV
+
 const JWT_SECRET= process.env.JWT_SECRET
 
 module.exports = {
@@ -9,4 +20,3 @@ module.exports = {
   MONGODB_URI,
   JWT_SECRET,
 }
-

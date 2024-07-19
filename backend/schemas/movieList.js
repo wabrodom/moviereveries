@@ -84,6 +84,7 @@ const resolvers ={
 
       try {
         await newMovieList.save()
+        console.log(JSON.stringify(newMovieList, null,2 ))
         return newMovieList
       } catch(error) {
         throw new GraphQLError('failed to save a new movie list', {
