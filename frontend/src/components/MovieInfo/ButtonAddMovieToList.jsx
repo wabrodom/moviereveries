@@ -1,6 +1,6 @@
-import { useAddMovieList } from "../../contexts/AddMovieListContext"
+import { useAddMovieList } from '../../contexts/AddMovieListContext'
 
-/* 
+/*
   movieInfo ={
     movieId: id,
     imdb_id,
@@ -11,15 +11,15 @@ import { useAddMovieList } from "../../contexts/AddMovieListContext"
 
 const ButtonAddMovieToList = ({ movieInfo }) => {
   const { movieList, setMovieList } = useAddMovieList()
-  
+
   const handleClick = () => {
     const persistList = [...movieList]
     const persistListId = persistList.map(e => e.movieId)
     const { movieId } = movieInfo
 
     if (persistListId.indexOf(movieId) === -1) {
-      persistList.push({...movieInfo, impression: '' })
-      console.log('push new, does it changed', movieList)
+      persistList.push({ ...movieInfo, impression: '' })
+      // console.log('push obj to context', movieList)
       setMovieList(persistList)
     }
   }

@@ -1,12 +1,11 @@
-import React from 'react';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { Link } from 'react-router-dom'
 
-/* 
+/*
   [
     {
       Title: "Inside Out",
@@ -19,14 +18,14 @@ import { Link } from 'react-router-dom'
 */
 
 const SingleMovieResult = ({ movie }) => {
-  const theme = useTheme();
-  const matchesXs = useMediaQuery(theme.breakpoints.down('xs'));
-  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+  const theme = useTheme()
+  const matchesXs = useMediaQuery(theme.breakpoints.down('xs'))
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'))
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'))
 
-  const noPoster = movie.Poster === "N/A"
-  const isMovie = movie.Type === "movie"
-  const movieTypeStyle = { "fontStyle": "italic" }
+  const noPoster = movie.Poster === 'N/A'
+  const isMovie = movie.Type === 'movie'
+  const movieTypeStyle = { 'fontStyle': 'italic' }
   return  (
     <Paper
       elevation={3}
@@ -40,7 +39,7 @@ const SingleMovieResult = ({ movie }) => {
         boxShadow: '0 3 5 rgba(0,0,0,0.2)',
       }}
     >
-      {!noPoster && 
+      {!noPoster &&
         <Box
           component="img"
           src={movie.Poster}
@@ -62,7 +61,7 @@ const SingleMovieResult = ({ movie }) => {
         }}
       >
         <Typography variant="h6" component="h2">
-          {movie.Title} 
+          {movie.Title}
           {!isMovie && <span style={movieTypeStyle}> ({movie.Type})</span>}
         </Typography>
         <Typography variant="body1" color="textSecondary">

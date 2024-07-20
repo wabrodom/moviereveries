@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 import { useListInfo } from '../../contexts/ListInfoContext'
 
 /*
   listInfo = [
-    { 
+    {
       name: "listName",
       value: ''
     },
-    { 
+    {
       name: "description",
-      value: '' 
+      value: ''
     }
   ]
 */
@@ -17,27 +17,28 @@ const ListInfoInput = ({ name, label, trigger }) => {
   const [text, setText] = useState('')
 
   const { listInfo, setListInfo } = useListInfo()
-  
-  useEffect(()=> {
+
+  useEffect(() => {
     const newListInfo  = listInfo.map(obj => {
-      if (obj.name == name) {
+      if (obj.name === name) {
         obj.value = text
         return obj
-      } 
+      }
       return obj
     })
 
     setListInfo(newListInfo)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger])
-  
+
 
   return (
     <label>
-       { label }:  <input 
-         type="text" 
-         onChange={(e) => setText(e.target.value) }
-       />
+      { label }:  <input
+        type="text"
+        onChange={(e) => setText(e.target.value) }
+      />
     </label>
   )
 }

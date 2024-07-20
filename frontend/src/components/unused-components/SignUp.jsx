@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
-import { useMutation } from "@apollo/client"
-import { SIGNUP } from "../../queries"
+import { useState } from 'react'
+import { useMutation } from '@apollo/client'
+import { SIGNUP } from '../../queries'
 
 
-/* 
+/*
   "username": "bombom",
-  "name": "bom",  
+  "name": "bom",
   "favoriteGenre": "mystery",
   "password": "123456"
 */
@@ -17,7 +17,7 @@ const SignUp = ( { setError }) => {
   const [favoriteGenre, setFavoriteGenre] = useState([])
   const [password, setPassword] = useState('')
 
-  const [signup, result] = useMutation(SIGNUP, {
+  const [signup] = useMutation(SIGNUP, {
     onError: (error) => {
       setError(error.graphQLErrors[0].message)
     }
@@ -33,7 +33,7 @@ const SignUp = ( { setError }) => {
 
   const submit = async event => {
     event.preventDefault()
-    signup({ variables: { username, password, name, favoriteGenre} })
+    signup({ variables: { username, password, name, favoriteGenre } })
 
     setName('')
     setUsername('')
@@ -41,48 +41,48 @@ const SignUp = ( { setError }) => {
     setFavoriteGenre([])
   }
 
-  
+
   return (
     <div>
       <form onSubmit={submit}>
 
-      <div>
+        <div>
         username
-        <input 
-          type="text"
-          value={username}
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
+          <input
+            type="text"
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
 
-      <div>
+        <div>
         name
-        <input 
-          type="text"
-          value={name}
-          onChange={({ target }) => setName(target.value)}
-        />
-      </div>
+          <input
+            type="text"
+            value={name}
+            onChange={({ target }) => setName(target.value)}
+          />
+        </div>
 
-      <div>
+        <div>
         password
-        <input 
-         type="password"
-         value={password}
-         onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
+          <input
+            type="password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
 
-      <div>
+        <div>
         favoriteGenre
-        <input 
-         type="favoriteGenre"
-         value={favoriteGenre}
-         onChange={({ target }) => setFavoriteGenre([target.value])}
-        />
-      </div>
+          <input
+            type="favoriteGenre"
+            value={favoriteGenre}
+            onChange={({ target }) => setFavoriteGenre([target.value])}
+          />
+        </div>
 
-      <button type='submit'>signup</button>
+        <button type='submit'>signup</button>
 
       </form>
     </div>

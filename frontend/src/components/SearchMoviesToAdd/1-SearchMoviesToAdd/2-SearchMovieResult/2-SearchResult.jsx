@@ -1,4 +1,4 @@
-import SingleMovieResult from "./3-SingleMovieResult"
+import SingleMovieResult from './3-SingleMovieResult'
 
 const SearchResult = ({ movies, searchTitle }) => {
   const resultLength = movies.length
@@ -6,7 +6,7 @@ const SearchResult = ({ movies, searchTitle }) => {
     <div>
 
       <h3>
-        "{searchTitle}" found {resultLength} movie{resultLength > 0 && <span>s</span>}
+        {searchTitle} found {resultLength} movie{resultLength > 0 && <span>s</span>}
       </h3>
 
       <div>

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { FIND_DIRECTOR_MOVIES } from '../../graphql/queries'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ const DirectorMovies = () => {
   const navigate = useNavigate()
 
   const allDirectorMovies = useQuery(FIND_DIRECTOR_MOVIES, {
-    variables: { "directorId" : directorId }
+    variables: { 'directorId' : directorId }
   })
 
   if (allDirectorMovies.loading) {
@@ -19,7 +19,7 @@ const DirectorMovies = () => {
   const directorName = directorMovies[0].directorsAddedUse.display_name
 
   const handleGoBack = () => {
-    navigate("..", { relative: "path" })
+    navigate('..', { relative: 'path' })
   }
 
   return (
@@ -35,10 +35,10 @@ const DirectorMovies = () => {
         <tbody>
           <tr>
             <th>Title</th>
-            <th>released</th> 
-            <th>work type</th> 
-            <th>genres</th> 
-            <th>plot</th> 
+            <th>released</th>
+            <th>work type</th>
+            <th>genres</th>
+            <th>plot</th>
           </tr>
           {directorMovies.map((movie) => (
             <tr key={movie.imdb_id}>

@@ -7,10 +7,10 @@ import NewMovieInfo from './1-NewMovieInfo/1-NewMovieInfo'
 const SearchMoviesToAddMain = ({ hasToken }) => {
 
   return (
-      <Routes>
-        <Route path='/' element={<SearchMovies hasToken={hasToken} />} />
-        <Route path='/:imdbid' element={<NewMovieInfo />} />
-      </Routes>
+    <Routes>
+      <Route path='/' element={<SearchMovies hasToken={hasToken} />} />
+      <Route path='/:imdbid' element={<NewMovieInfo />} />
+    </Routes>
   )
 }
 

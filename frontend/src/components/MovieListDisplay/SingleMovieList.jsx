@@ -8,7 +8,7 @@ import {
   Paper,
   Typography,
   Box
-} from '@mui/material';
+} from '@mui/material'
 
 
 const SingleMovieList = ({ data }) => {

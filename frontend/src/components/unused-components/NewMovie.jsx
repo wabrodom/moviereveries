@@ -12,7 +12,7 @@ const NewMovie = ({ setError }) => {
   const [ addMovie ]  = useMutation(ADD_MOVIE, {
     refetchQueries: [ { query: ALL_DIRECTORS, }],
     onError: (error) => {
-      console.log(error)
+      // console.log(error)
       setError(error.graphQLErrors[0].message)
     },
     update: (cache, response) => {
@@ -28,11 +28,11 @@ const NewMovie = ({ setError }) => {
   const submit = async (event) => {
     event.preventDefault()
 
-    addMovie( { variables: { 
-      title, 
-      director, 
-      released: +released, 
-      genres 
+    addMovie( { variables: {
+      title,
+      director,
+      released: +released,
+      genres
     } })
 
     setTitle('')

@@ -2,20 +2,22 @@ import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 
 const Notification = ({ severity, text }) =>  {
-
+  if (text === null) {
+    return null
+  }
   return (
     <Stack sx={{ width: '100%' }} spacing={2}>
       <Alert severity={severity}>{text}</Alert>
     </Stack>
-  );
+  )
 }
 
 export default Notification
 
 
-/* 
+/*
   "success"
-  "info"  
-  "warning" 
+  "info"
+  "warning"
   "error"
 */

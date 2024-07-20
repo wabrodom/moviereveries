@@ -12,15 +12,15 @@ const FormikInput = ({ name, ...props }) => {
       />
       {showError && <span>{meta.error}</span>}
     </div>
-  );
-};
+  )
+}
 
-export default FormikInput;
+export default FormikInput
 
 // // field object already has the necessary [onChange, onBlur, value] props.
 // import { useField } from 'formik'
 
-// const FormikInput = ({ name, ...props }) => { 
+// const FormikInput = ({ name, ...props }) => {
 //   const [field, meta, helpers] = useField(name)
 //   const showError = meta.touched && meta.error
 
@@ -32,7 +32,7 @@ export default FormikInput;
 //         value={field.value}
 //         {...props}
 //       />
-//       {showError 
+//       {showError
 //         && <span> {meta.error} </span>
 //       }
 //     </div>

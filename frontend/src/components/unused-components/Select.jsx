@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import Select from 'react-select'
-
 
 const Select = (array, field) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null)
 
   const options = array.map(obj => {
     return { value: obj[field],  label: obj[field] }
@@ -17,7 +15,7 @@ const Select = (array, field) => {
         options={options}
       />
     </div>
-  );
+  )
 }
 
 export default Select

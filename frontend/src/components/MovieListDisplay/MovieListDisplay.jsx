@@ -1,9 +1,9 @@
-import { useQuery } from '@apollo/client' 
+import { useQuery } from '@apollo/client'
 import { ALL_MOVIES_LIST } from '../../graphql/queries'
-import SingleMovieList from './SingleMovieList';
+import SingleMovieList from './SingleMovieList'
 
 const MovieListDisplay = () => {
-  const { loading, data, error} = useQuery(ALL_MOVIES_LIST)
+  const { loading, data, error } = useQuery(ALL_MOVIES_LIST)
 
   if (loading) {
     return (
@@ -20,7 +20,7 @@ const MovieListDisplay = () => {
           {error.message}
         </p>
         <p>
-          NetworkError: failed to fetch movie list from db. 
+          NetworkError: failed to fetch movie list from db.
           Please try again later.
         </p>
       </div>
@@ -36,8 +36,8 @@ const MovieListDisplay = () => {
         )
       })}
     </div>
-  );
-};
+  )
+}
 
 
-export default MovieListDisplay;
+export default MovieListDisplay

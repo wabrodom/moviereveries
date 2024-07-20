@@ -1,16 +1,16 @@
 
 import { useFormik } from 'formik'
-import * as yup from 'yup';
+import * as yup from 'yup'
 
 const SingUpContainer = ({ handleSubmit }) => {
 
-  const initialValues = { 
+  const initialValues = {
     username: '',
     name: '',
     password: '',
     passwordConfirm: '',
     favoriteGenre: ''
-  };
+  }
 
 
   const validationSchema = yup.object().shape({
@@ -25,7 +25,7 @@ const SingUpContainer = ({ handleSubmit }) => {
       .oneOf([yup.ref('password'), null])
       .required('Password confirmation is required'),
     favoriteGenre: yup.string().required('please add your favorite genre')
-  });
+  })
 
   const onSubmit = (values, { resetForm }) => {
     handleSubmit(values)
@@ -36,7 +36,7 @@ const SingUpContainer = ({ handleSubmit }) => {
     initialValues,
     validationSchema,
     onSubmit
-  });
+  })
 
 
   return (
@@ -48,9 +48,9 @@ const SingUpContainer = ({ handleSubmit }) => {
             onChange={formik.handleChange('username')}
             value={formik.values.username}
           />
-            {formik.touched.username && formik.errors.username && (
-              <span >{formik.errors.username}</span>
-            )}
+          {formik.touched.username && formik.errors.username && (
+            <span >{formik.errors.username}</span>
+          )}
         </div>
 
         <div>
@@ -59,9 +59,9 @@ const SingUpContainer = ({ handleSubmit }) => {
             onChange={formik.handleChange('name')}
             value={formik.values.name}
           />
-            {formik.touched.name && formik.errors.name && (
-              <span >{formik.errors.name}</span>
-            )}
+          {formik.touched.name && formik.errors.name && (
+            <span >{formik.errors.name}</span>
+          )}
         </div>
 
         <div>
@@ -71,9 +71,9 @@ const SingUpContainer = ({ handleSubmit }) => {
             value={formik.values.password}
             type='password'
           />
-            {formik.touched.password && formik.errors.password && (
-              <span >{formik.errors.password}</span>
-            )}
+          {formik.touched.password && formik.errors.password && (
+            <span >{formik.errors.password}</span>
+          )}
         </div>
 
         <div>
@@ -83,11 +83,11 @@ const SingUpContainer = ({ handleSubmit }) => {
             value={formik.values.passwordConfirm}
             type='passwordConfirm'
           />
-            {formik.touched.passwordConfirm && formik.errors.passwordConfirm && (
-              <span >{formik.errors.passwordConfirm}</span>
-            )}
+          {formik.touched.passwordConfirm && formik.errors.passwordConfirm && (
+            <span >{formik.errors.passwordConfirm}</span>
+          )}
         </div>
-          
+
 
         <div>
           <input
@@ -96,22 +96,22 @@ const SingUpContainer = ({ handleSubmit }) => {
             value={formik.values.favoriteGenre}
             type='favoriteGenre'
           />
-            {formik.touched.favoriteGenre && formik.errors.favoriteGenre && (
-              <span >{formik.errors.favoriteGenre}</span>
-            )}
+          {formik.touched.favoriteGenre && formik.errors.favoriteGenre && (
+            <span >{formik.errors.favoriteGenre}</span>
+          )}
         </div>
 
         <button type="submit">
             Sign up
-        </button> 
+        </button>
 
       </form>
 
     </div>
-  );
-};
+  )
+}
 
-export default SingUpContainer;
+export default SingUpContainer
 
 
 

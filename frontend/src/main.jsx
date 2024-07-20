@@ -1,7 +1,6 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { 
+import {
   ApolloClient,
   ApolloProvider,
   InMemoryCache,
@@ -15,7 +14,7 @@ import { createClient } from 'graphql-ws'
 
 
 import { setContext } from '@apollo/client/link/context'
-import { BrowserRouter as Router} from "react-router-dom"
+import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material'
 import theme from './assets/theme'
 
@@ -35,7 +34,7 @@ const wsLink = new GraphQLWsLink(createClient({ url: import.meta.env.VITE_GRAPHQ
 
 const splitLink = split(
   ({ query }) => {
-    const definition = getMainDefinition(query);
+    const definition = getMainDefinition(query)
     return (
       definition.kind === 'OperationDefinition' &&
       definition.operation === 'subscription'

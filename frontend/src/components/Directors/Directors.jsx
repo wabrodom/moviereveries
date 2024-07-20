@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import EditAuthorBirth from './EditDirectorBirth'
 
-const Directors = ({ setError, directorAndMovieCount }) => {
+const Directors = () => {
   const result = useQuery(ALL_DIRECTORS)
 
 
@@ -39,7 +39,7 @@ const Directors = ({ setError, directorAndMovieCount }) => {
       </table>
 
 
-      <EditAuthorBirth directors={directors} setError={setError}/>
+      <EditAuthorBirth directors={directors} />
     </div>
   )
 }

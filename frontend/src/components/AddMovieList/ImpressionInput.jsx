@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useAddMovieList } from "../../contexts/AddMovieListContext"
+import { useState, useEffect } from 'react'
+import { useAddMovieList } from '../../contexts/AddMovieListContext'
 /*
   allImpressions = [
     {
@@ -11,9 +11,9 @@ import { useAddMovieList } from "../../contexts/AddMovieListContext"
 const ImpressionInput = ({ movieId, trigger }) => {
   const [impression, setImpression] = useState('')
   const { movieList, setMovieList } = useAddMovieList()
-  
-  
-  useEffect(()=> {
+
+
+  useEffect(() => {
     const modifyMovieList = movieList.map(obj => {
       if (obj.movieId === movieId) {
         obj.impression = impression
@@ -21,19 +21,20 @@ const ImpressionInput = ({ movieId, trigger }) => {
       }
       return obj
     })
-    
+
     setMovieList(modifyMovieList)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger])
-  
+
   // console.log('ImpressionInput render', movieList)
 
   return (
-   
-       <input 
-          type="text" 
-          onChange={(e) => setImpression(e.target.value) }
-        />
- 
+
+    <input
+      type="text"
+      onChange={(e) => setImpression(e.target.value) }
+    />
+
   )
 }
 

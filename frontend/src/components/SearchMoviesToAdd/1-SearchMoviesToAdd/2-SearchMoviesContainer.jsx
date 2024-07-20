@@ -1,8 +1,8 @@
 
-import { Formik } from 'formik';
+import { Formik } from 'formik'
 import FormikInput from '../../Common/FormikInput'
 import * as yup from 'yup'
-import {Box} from '@mui/material'
+import { Box } from '@mui/material'
 
 const searchMovieStyle = {
   p: 1, m: 1
@@ -20,26 +20,26 @@ const SearchMoviesContainer =  ( { onSubmit, oldSearchQuery }) => {
     title: yup.string().min(4).required('movie title is required'),
     type: yup.string(),
     year: yup.string(),
-  });
+  })
 
   return (
     <Box sx={searchMovieStyle}>
       <h3>
         Search movie from omdbapi.com & imdbapi.dev
       </h3>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
-        >
-          {({ handleSubmit }) => <SearchMoviesForm onSubmit={handleSubmit} /> }
-        </Formik>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        {({ handleSubmit }) => <SearchMoviesForm onSubmit={handleSubmit} /> }
+      </Formik>
 
     </Box>
   )
 }
 
-const SearchMoviesForm = ({onSubmit}) => {
+const SearchMoviesForm = ({ onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <FormikInput name='title' placeholder='title' />

@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client'
-import { FIND_MOVIE_BY_IMDB } from '../../graphql/queries' 
+import { FIND_MOVIE_BY_IMDB } from '../../graphql/queries'
 import { useParams } from 'react-router-dom'
 import MovieInfoContainer from './MovieInfoContainer'
- 
+
 const MovieInfo = () => {
   const imdbid = useParams().imdbid
-  
-  const { loading, data, error} = useQuery(FIND_MOVIE_BY_IMDB, {
+
+  const { loading, data, error } = useQuery(FIND_MOVIE_BY_IMDB, {
     variables: { imdbId: imdbid }
   })
 
@@ -16,7 +16,7 @@ const MovieInfo = () => {
         loading details...
       </p>
     )
-  } ;
+  }
   if (error) {
     return (
       <div>
@@ -24,7 +24,7 @@ const MovieInfo = () => {
           {error.message}
         </p>
         <p>
-          NetworkError: failed to fetch movie from db. 
+          NetworkError: failed to fetch movie from db.
           Please try again later.
         </p>
       </div>
@@ -35,8 +35,8 @@ const MovieInfo = () => {
 
   return (
     <div>
-      <MovieInfoContainer 
-        movieDetails={movieDetails} 
+      <MovieInfoContainer
+        movieDetails={movieDetails}
       />
     </div>
   )

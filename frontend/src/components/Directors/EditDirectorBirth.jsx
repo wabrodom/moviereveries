@@ -1,18 +1,20 @@
-import { useMutation } from "@apollo/client"
-import { useState } from "react"
+import { useMutation } from '@apollo/client'
+import { useState } from 'react'
 import Select from 'react-select'
 
-import { ALL_DIRECTORS, EDIT_DIRECTOR } from '../../graphql/queries' 
+import { ALL_DIRECTORS, EDIT_DIRECTOR } from '../../graphql/queries'
+import useNotification from '../../contexts/NotificationContext/useNotification'
 
-const EditDirectorBirth = ({ directors, setError }) => {
+const EditDirectorBirth = ({ directors }) => {
   const [year, setYear] = useState('')
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null)
+  const { notify } = useNotification()
 
   const [ editDirector ] = useMutation(EDIT_DIRECTOR, {
-    refetchQueries: [{query: ALL_DIRECTORS}],
-    onError: (error) => {
+    refetchQueries: [{ query: ALL_DIRECTORS }],
+    onError: () => {
       // const message = error.graphQLErrors.map(e => e.message).join('\n')
-      setError('years must be numbers')
+      notify('error', 'years must be numbers')
     }
   })
 
@@ -20,14 +22,14 @@ const EditDirectorBirth = ({ directors, setError }) => {
     event.preventDefault()
     // const currentSelect = event.target.selectAuthor.value
 
-    editDirector({variables: { name: selectedOption.value, setBornTo: +year} })
+    editDirector({ variables: { name: selectedOption.value, setBornTo: +year } })
     setYear('')
-  } 
+  }
 
   const options = directors.map(obj => {
     return { value: obj.display_name, label: obj.display_name }
   })
-  const inputStyle ={ marginTop: '1rem'}
+  const inputStyle ={ marginTop: '1rem' }
 
   return (
     <div>
@@ -39,16 +41,16 @@ const EditDirectorBirth = ({ directors, setError }) => {
           options={options}
         />
 
-        <input 
+        <input
           value={year}
-          onChange={({target}) => setYear(target.value)}
+          onChange={({ target }) => setYear(target.value)}
           style={inputStyle}
-        />    
+        />
         <button type='submit'>update director</button>
       </form>
     </div>
   )
 
-} 
+}
 
 export default EditDirectorBirth

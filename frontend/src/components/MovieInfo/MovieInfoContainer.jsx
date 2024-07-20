@@ -1,7 +1,7 @@
-import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 
 import { useNavigate } from 'react-router-dom'
-import ButtonAddMovieToList from './ButtonAddMovieToList';
+import ButtonAddMovieToList from './ButtonAddMovieToList'
 
 const MovieInfoContainer = ({ movieDetails }) => {
   const navigate = useNavigate()
@@ -30,7 +30,7 @@ const MovieInfoContainer = ({ movieDetails }) => {
     type = '',
     postersUse = [],
     directorsAddedUse = [],
-  } = movieDetails || {};
+  } = movieDetails || {}
 
   const posterUrl     = postersUse !== null && postersUse.length > 0 ? postersUse[0]?.url : ''
   const manyDirectors = directorsAddedUse !== null && directorsAddedUse.length > 1
@@ -49,24 +49,24 @@ const MovieInfoContainer = ({ movieDetails }) => {
         <ButtonAddMovieToList movieInfo={movieInfoForList} />
       </>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {postersUse && 
-          <img 
-            src={posterUrl} 
-            alt={primary_title} 
-            style={{ width: '100%', maxWidth: '300px', borderRadius: 4 }} 
+        {postersUse &&
+          <img
+            src={posterUrl}
+            alt={primary_title}
+            style={{ width: '100%', maxWidth: '300px', borderRadius: 4 }}
           />
         }
-        
+
         <Typography variant="h4" sx={{ marginTop: 2 }}>
           {primary_title}
         </Typography>
 
-        {original_title && 
+        {original_title &&
           <Typography variant="subtitle1" sx={{ fontStyle: 'italic' }}>
             {original_title}
           </Typography>
         }
-        
+
         <Typography variant="body1">
           {plot}
         </Typography>
@@ -95,7 +95,7 @@ const MovieInfoContainer = ({ movieDetails }) => {
                 <TableCell>{start_year}</TableCell>
               </TableRow>
 
-              {end_year && 
+              {end_year &&
                 <TableRow>
                   <TableCell>End Year</TableCell>
                   <TableCell>{end_year}</TableCell>
@@ -111,23 +111,23 @@ const MovieInfoContainer = ({ movieDetails }) => {
                 <TableCell>{directorsAddedUse ? directorsAddedUse.map(p => (
                   <div key={p.nameId}>{p.display_name}</div>))
                   : <span>No data</span>
-                  }
+                }
                 </TableCell>
               </TableRow>
 
-              {is_adult !== null && 
+              {is_adult !== null &&
                 <TableRow>
                   <TableCell>Adult</TableCell>
                   <TableCell>{is_adult === true ? 'Yes' : 'No'}</TableCell>
                 </TableRow>
               }
-    
+
 
             </TableBody>
           </Table>
         </TableContainer>
 
-   
+
       </Box>
 
     </Paper>
@@ -137,7 +137,7 @@ const MovieInfoContainer = ({ movieDetails }) => {
 export default MovieInfoContainer
 
 
-/* 
+/*
 {
   "data": {
     "findMoviesImdbByImdb": {

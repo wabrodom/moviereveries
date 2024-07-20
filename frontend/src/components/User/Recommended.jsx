@@ -1,16 +1,16 @@
-import { useState } from "react"
-import { useQuery, useLazyQuery } from "@apollo/client"
+import { useState } from 'react'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import { Link } from 'react-router-dom'
-import { ALL_MOVIES, CURRENT_USER } from "../../graphql/queries"
+import { ALL_MOVIES, CURRENT_USER } from '../../graphql/queries'
 
 const Recommended = () => {
   const [currentUser, setCurrentUser] = useState(null)
   const [filteredMovies, setFilteredBooks] = useState(null)
-  
+
   useQuery(CURRENT_USER, {
     onCompleted: (data) => {
       setCurrentUser(data.me)
-      getFilterMovies({ variables: { genre: data.me.favoriteGenre }})
+      getFilterMovies({ variables: { genre: data.me.favoriteGenre } })
     }
   })
 
@@ -20,7 +20,7 @@ const Recommended = () => {
 
   if (resultFilterMovies.loading || !currentUser || !filteredMovies) {
     return null
-  } 
+  }
 
   resultFilterMovies.refetch()
 
@@ -51,7 +51,7 @@ const Recommended = () => {
               </tr>
             )
           })}
-       
+
 
 
         </tbody>

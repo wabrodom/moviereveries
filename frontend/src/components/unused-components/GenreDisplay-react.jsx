@@ -1,5 +1,5 @@
 
-const GenreDisplay = ( {books , setGenre} ) => {
+const GenreDisplay = ( { books , setGenre } ) => {
 
 
   const allGenres = (books) => {
@@ -16,12 +16,12 @@ const GenreDisplay = ( {books , setGenre} ) => {
   const selectGenre = (event) =>  setGenre( event.target.value )
   const clearGenre = () => setGenre(null)
 
-  const colorSalmon = { backgroundColor: 'salmon'}
+  const colorSalmon = { backgroundColor: 'salmon' }
 
   return (
     <div>
       Genres
-      {genres.map(genre => 
+      {genres.map(genre =>
         <button onClick={selectGenre} value={genre} key={genre}>
           {genre}
         </button>

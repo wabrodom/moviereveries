@@ -1,17 +1,17 @@
-import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { useNavigate} from 'react-router-dom'
+import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { useSearchMovieToAdd } from '../../../contexts/SearchMovieToAddContext'
-import Notification from '../../Common/Notification';
+import Notification from '../../Common/Notification'
 
 const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
   const navigate = useNavigate()
   const { searchQuery } = useSearchMovieToAdd()
 
   const handleGoBack = () => {
-    navigate("..", { 
-      relative: "path" ,
+    navigate('..', {
+      relative: 'path' ,
       state: { remember: searchQuery }
-    });
+    })
   }
 
   // const handleAddMovie = () => {
@@ -44,44 +44,44 @@ const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
     critic_review = '',
     directorsAdded = [],
     writersAdded = [],
-  } = movieDetails || {};
+  } = movieDetails || {}
 
   const posterUrl = posters !== null && posters.length > 0 ? posters[0]?.url : ''
   const manyDirectors = directorsAdded !== null && directorsAdded.length > 1
   const manyWriters = writersAdded !== null && writersAdded.length > 1
 
-  console.log('in new movie info container')
+  // console.log('in new movie info container')
   return (
     <Paper sx={{ padding: 2, margin: 2 }}>
       <>
         <button onClick={handleGoBack}>go back</button>
         <button onClick={addMovie}>Add to Db</button>
-        {notification && 
-          <Notification 
-            severity={notification[0]} 
-            text={notification[1]} 
-          /> 
+        {notification &&
+          <Notification
+            severity={notification[0]}
+            text={notification[1]}
+          />
         }
       </>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {posters && 
-          <img 
-            src={posterUrl} 
-            alt={primary_title} 
-            style={{ width: '100%', maxWidth: '300px', borderRadius: 4 }} 
+        {posters &&
+          <img
+            src={posterUrl}
+            alt={primary_title}
+            style={{ width: '100%', maxWidth: '300px', borderRadius: 4 }}
           />
         }
-        
+
         <Typography variant="h4" sx={{ marginTop: 2 }}>
           {primary_title}
         </Typography>
 
-        {original_title && 
+        {original_title &&
           <Typography variant="subtitle1" sx={{ fontStyle: 'italic' }}>
             {original_title}
           </Typography>
         }
-        
+
         <Typography variant="body1">
           {plot}
         </Typography>
@@ -110,7 +110,7 @@ const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
                 <TableCell>{start_year}</TableCell>
               </TableRow>
 
-              {end_year && 
+              {end_year &&
                 <TableRow>
                   <TableCell>End Year</TableCell>
                   <TableCell>{end_year}</TableCell>
@@ -126,26 +126,26 @@ const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
                 <TableCell>{directorsAdded ? directorsAdded.map(p => (
                   <div key={p.name.id}>{p.name.display_name}</div>))
                   : <span>No data</span>
-                  }
+                }
                 </TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell>Writer{manyWriters && <span>s</span>}</TableCell>
-                <TableCell>{writersAdded ? writersAdded.map(p =>(
-                  <div key={p.name.id}>{p.name.display_name}</div>)) 
+                <TableCell>{writersAdded ? writersAdded.map(p => (
+                  <div key={p.name.id}>{p.name.display_name}</div>))
                   : <span>No data</span>
-                  }
+                }
                 </TableCell>
               </TableRow>
 
-              {is_adult !== null && 
+              {is_adult !== null &&
                 <TableRow>
                   <TableCell>Adult</TableCell>
                   <TableCell>{is_adult === true ? 'Yes' : 'No'}</TableCell>
                 </TableRow>
               }
-              {rating && 
+              {rating &&
                 <TableRow>
                   <TableCell>Rating</TableCell>
                   <TableCell>{rating.aggregate_rating} ({rating.votes_count} votes)</TableCell>
@@ -169,13 +169,13 @@ const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
                 <TableCell>{origin_countries && origin_countries.map(country => country.name).join(', ')}</TableCell>
               </TableRow>
 
-    
+
 
             </TableBody>
           </Table>
         </TableContainer>
 
-   
+
       </Box>
 
     </Paper>
@@ -185,7 +185,7 @@ const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
 export default NewMovieInfoContainer
 
 
-/* 
+/*
 {
   "data": {
     "title": {
@@ -237,7 +237,7 @@ export default NewMovieInfoContainer
 */
 
 
-/* 
+/*
       <Typography variant="body2">
         {`Genres: ${genres.join(', ')}`}
       </Typography>
@@ -271,6 +271,6 @@ export default NewMovieInfoContainer
 
       <Typography variant="body2">
         {`Origin Countries: ${origin_countries.map(country => country.name).join(', ')}`}
-      </Typography> 
-      
+      </Typography>
+
 */

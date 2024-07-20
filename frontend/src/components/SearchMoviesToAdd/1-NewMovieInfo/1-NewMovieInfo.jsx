@@ -1,27 +1,27 @@
 import { useState } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
-import { 
+import {
   NEW_MOVIE_DETAILS,
-  ADD_MOVIE, 
-  ALL_MOVIES, 
+  ADD_MOVIE,
+  ALL_MOVIES,
   ALL_DIRECTORS
- } from '../../../graphql/queries'
+} from '../../../graphql/queries'
 import { useParams } from 'react-router-dom'
 import NewMovieInfoContainer from './2-NewMovieInfoContainer'
 
- 
+
 const NewMovieToAdd = () => {
   const imdbid = useParams().imdbid
   const [notification, setNotification] = useState(null)
-  
+
   const notify = (severity, message) => {
     setNotification([severity, message])
-    setTimeout(()=> {
+    setTimeout(() => {
       setNotification(null)
     }, 5000)
   }
 
-  const { loading, data, error} = useQuery(NEW_MOVIE_DETAILS, {
+  const { loading, data, error } = useQuery(NEW_MOVIE_DETAILS, {
     variables: { titleId: imdbid }
   })
 
@@ -50,7 +50,7 @@ const NewMovieToAdd = () => {
         loading details...
       </p>
     )
-  } ;
+  }
   if (error) {
     return (
       <div>
@@ -58,7 +58,7 @@ const NewMovieToAdd = () => {
           {error.message}
         </p>
         <p>
-          NetworkError when attempting to fetch resource. 
+          NetworkError when attempting to fetch resource.
           Please try again later.
         </p>
       </div>
@@ -73,28 +73,28 @@ const NewMovieToAdd = () => {
     genres = [],
     plot = '',
     is_adult = false,
-    rating = 0,
+    // rating = 0,
     runtime_minutes = 0,
-    spoken_languages = [],
+    // spoken_languages = [],
     start_year = '',
     end_year = '',
     type = '',
     posters = [],
-    origin_countries = [],
-    critic_review = '',
+    // origin_countries = [],
+    // critic_review = '',
     directorsAdded = [],
-    writersAdded = [],
-  } = newMovieDetails || {};
+    // writersAdded = [],
+  } = newMovieDetails || {}
 
-  const postersModify = posters !== null 
-    ? posters.map(obj => { 
+  const postersModify = posters !== null
+    ? posters.map(obj => {
       return {
         url: obj.url
       }})
     : null
 
-  const directorAddedModify = directorsAdded !== null 
-   ? directorsAdded.map(obj => {
+  const directorAddedModify = directorsAdded !== null
+    ? directorsAdded.map(obj => {
       return {
         display_name: obj.name.display_name,
         nameId: obj.name.id
@@ -103,20 +103,20 @@ const NewMovieToAdd = () => {
 
   const handleAddMovie = async (event) => {
     event.preventDefault()
-    const variables = { 
-      "imdbId": imdbid,
-      "originalTitle": original_title,
-      "primaryTitle": primary_title,
-      "genres": genres,
-      "plot": plot,
-      "isAdult": is_adult,
-      "runtimeMinutes": runtime_minutes,
-      "startYear": start_year,
-      "endYear": end_year,
-      "type": type,
-      "postersUse": postersModify,
-      "directorsAddedUse": directorAddedModify
-    } 
+    const variables = {
+      'imdbId': imdbid,
+      'originalTitle': original_title,
+      'primaryTitle': primary_title,
+      'genres': genres,
+      'plot': plot,
+      'isAdult': is_adult,
+      'runtimeMinutes': runtime_minutes,
+      'startYear': start_year,
+      'endYear': end_year,
+      'type': type,
+      'postersUse': postersModify,
+      'directorsAddedUse': directorAddedModify
+    }
     // console.log(variables)
     addMovieImdb({ variables })
   }
@@ -124,8 +124,8 @@ const NewMovieToAdd = () => {
 
   return (
     <div>
-      <NewMovieInfoContainer 
-        movieDetails={newMovieDetails} 
+      <NewMovieInfoContainer
+        movieDetails={newMovieDetails}
         addMovie={handleAddMovie}
         notification={notification}
       />

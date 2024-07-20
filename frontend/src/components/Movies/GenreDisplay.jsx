@@ -1,5 +1,5 @@
-import { ALL_GENRES } from "../../graphql/queries"
-import { useQuery } from "@apollo/client"
+import { ALL_GENRES } from '../../graphql/queries'
+import { useQuery } from '@apollo/client'
 
 
 const GenreDisplay = ( { setGenre, refetch } ) => {
@@ -11,7 +11,7 @@ const GenreDisplay = ( { setGenre, refetch } ) => {
 
   const genres = result.data.allGenres
 
-  const selectGenre = (event) => { 
+  const selectGenre = (event) => {
     setGenre(event.target.value)
     result.refetch()
   }
@@ -19,12 +19,12 @@ const GenreDisplay = ( { setGenre, refetch } ) => {
     setGenre(null)
     refetch()
   }
-  const colorSalmon = { backgroundColor: 'salmon'}
+  const colorSalmon = { backgroundColor: 'salmon' }
 
   return (
     <div>
       Genres
-      {genres.map(genre => 
+      {genres.map(genre =>
         <button onClick={selectGenre} value={genre.genre} key={genre.id}>
           {genre.genre}
         </button>

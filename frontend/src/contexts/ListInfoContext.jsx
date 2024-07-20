@@ -2,20 +2,21 @@ import { createContext, useContext, useState } from 'react'
 
 const ListInfoContext = createContext()
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useListInfo = () => useContext(ListInfoContext)
 
 export const ListInfoContextProvider = ({ children }) => {
   const initialState = [
-    { 
-      name: "listName",
+    {
+      name: 'listName',
       value: ''
     },
-    { 
-      name: "description",
-      value: '' 
+    {
+      name: 'description',
+      value: ''
     }
   ]
-  
+
   const [listInfo, setListInfo] = useState(initialState)
 
   return (

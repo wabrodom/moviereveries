@@ -2,13 +2,14 @@ import { createContext, useContext, useState } from 'react'
 
 const ImpressionInputContext = createContext()
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useImpressionInput = () => useContext(ImpressionInputContext)
 
 export const ImpressionInputContextProvider = ({ children }) => {
   const initialState = [
     {
-      "movieId": "",
-      "impression": "",
+      'movieId': '',
+      'impression': '',
     }
   ]
 

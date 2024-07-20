@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import FoundMovies from './FoundMovies';
+import FoundMovies from './FoundMovies'
 
 const FindMovies = () => {
   const [text, setText] = useState('')
@@ -8,10 +8,10 @@ const FindMovies = () => {
   return (
     <div>
       <h2>movies</h2>
-      
+
       <div>
         Title to search
-        <input 
+        <input
           type="text"
           value={text}
           onChange={handleSearch}

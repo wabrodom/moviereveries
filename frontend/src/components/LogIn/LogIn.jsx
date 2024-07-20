@@ -1,11 +1,13 @@
-import { useMutation } from "@apollo/client"
-import { LOGIN } from "../../queries"
-import LogInContainer from "./LogInContainer"
+import { useMutation } from '@apollo/client'
+import { LOGIN } from '../../queries'
+import LogInContainer from './LogInContainer'
+import useNotification from '../../contexts/NotificationContext/useNotification'
 
-const LogIn = ( { setToken, setError }) => {
+const LogIn = ( { setToken }) => {
+  const { notify } = useNotification()
   const [ login ] = useMutation(LOGIN, {
     onError: (error) => {
-      setError(error.graphQLErrors[0].message)
+      notify('error', error.graphQLErrors[0].message)
     },
     onCompleted: (data) => {
       const token = data.login.value
@@ -20,10 +22,10 @@ const LogIn = ( { setToken, setError }) => {
     await login({ variables: { username, password } })
   }
 
-  
+
   return (
     <div>
-     <LogInContainer handleLogin={submit} />
+      <LogInContainer handleLogin={submit} />
     </div>
   )
 }

@@ -7,19 +7,19 @@ describe('Render LoginContainer', () => {
 
     render(<LoginContainer />)
 
-    screen.getByRole("button", {name: "Log In" })
+    screen.getByRole('button', { name: 'Log In' })
   })
 
   test('login button will call if user provide username & password', async () => {
     const mockClick = vi.fn()
-  
+
     render(<LoginContainer handleLogin={mockClick}/>)
 
     const user = userEvent.setup()
     const inputUsername = screen.getByPlaceholderText('Username')
     const inputPassword = screen.getByPlaceholderText('Password')
-    const loginButton = screen.getByRole('button', { name: "Log In" } )
-  
+    const loginButton = screen.getByRole('button', { name: 'Log In' } )
+
     await user.click(loginButton)
     expect(mockClick.mock.calls).toHaveLength(0)
 

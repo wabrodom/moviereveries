@@ -1,5 +1,5 @@
-import { gql } from "@apollo/client"
-import { MOVIE_DETAILS } from "./fragments"
+import { gql } from '@apollo/client'
+import { MOVIE_DETAILS } from './fragments'
 
 export const LOGIN = gql`
   mutation($username: String!, $password: String!){

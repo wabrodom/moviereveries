@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client'
 
 export const MOVIE_IMDB_DETAILS = gql`
   fragment MovieImdbDetails on MovieImdb {

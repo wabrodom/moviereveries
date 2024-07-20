@@ -1,7 +1,7 @@
-import { useAddMovieList } from "../../contexts/AddMovieListContext"
-import ImpressionInput from "./ImpressionInput"
-import { useState } from "react"
-import ListInfoInput from "./ListInfoInput";
+import { useAddMovieList } from '../../contexts/AddMovieListContext'
+import ImpressionInput from './ImpressionInput'
+import { useState } from 'react'
+import ListInfoInput from './ListInfoInput'
 
 
 /* conxtext structure
@@ -16,13 +16,13 @@ import ListInfoInput from "./ListInfoInput";
   ]
 
    listInfo = [
-    { 
+    {
       name: "listName",
       value: ''
     },
-    { 
+    {
       name: "description",
-      value: '' 
+      value: ''
     }
   ]
 */
@@ -30,9 +30,9 @@ import ListInfoInput from "./ListInfoInput";
 const AddMovieListContainer = ({ handleAddMovie }) => {
   const [trigger, setTrigger] = useState(0)
   const { movieList } = useAddMovieList()
-  
+
   //state change in parent -> child useState watch the change
-  const handleTrigger = () =>  setTrigger(trigger + 1) 
+  const handleTrigger = () =>  setTrigger(trigger + 1)
 
   const ListNameAndDescription = ['listName', 'description']
 
@@ -44,57 +44,57 @@ const AddMovieListContainer = ({ handleAddMovie }) => {
           {
             ListNameAndDescription.map(e => {
               return (
-    
+
                 <div key={e} >
-                    <ListInfoInput 
-                      name={e} 
-                      label={e}
-                      trigger={trigger} 
-                    />
+                  <ListInfoInput
+                    name={e}
+                    label={e}
+                    trigger={trigger}
+                  />
                 </div>
-    
+
               )
             })
 
           }
 
         </div>
-        
+
 
         <div>
-          
-            <table>
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Impression</th>
-                </tr>
-              </thead>
-              <tbody>
-                {movieList.map((movie) => (
-                  <tr key={movie.imdb_id}>
-                    <td>{movie.primary_title}</td>
-                    <td>
-                      <ImpressionInput 
-                        movieId={movie.movieId}
-                        trigger={trigger}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
 
-            <button type="button" onClick={handleTrigger}>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Impression</th>
+              </tr>
+            </thead>
+            <tbody>
+              {movieList.map((movie) => (
+                <tr key={movie.imdb_id}>
+                  <td>{movie.primary_title}</td>
+                  <td>
+                    <ImpressionInput
+                      movieId={movie.movieId}
+                      trigger={trigger}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <button type="button" onClick={handleTrigger}>
               save to cache
-            </button>
-        
-      
+          </button>
+
+
         </div>
-        
+
         <button type='submit'>Create new list</button>
       </form>
-  
+
 
     </div>
   )
@@ -103,7 +103,7 @@ const AddMovieListContainer = ({ handleAddMovie }) => {
 export default AddMovieListContainer
 
 /*
-  {  
+  {
   "listName": "bom list 4",
   "description": "good list that bom procured",
   "list": [
