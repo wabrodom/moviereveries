@@ -16,7 +16,7 @@ const AddMovieList = () => {
       // console.log(error.graphQLErrors[0].message)
       notify('error', error.graphQLErrors[0].message)
     },
-    // onCompleted: () => notify('success', 'Added a new movie to DB'),
+    onCompleted: () => notify('success', `Added your new list "${listName}" to DB`),
     update: (cache, response) => {
       cache.updateQuery({ query: ALL_MOVIES_LIST }, (data) => {
         return {

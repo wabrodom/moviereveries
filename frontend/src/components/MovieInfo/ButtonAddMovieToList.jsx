@@ -1,5 +1,5 @@
 import { useAddMovieList } from '../../contexts/AddMovieListContext'
-
+import useNotification from '../../contexts/NotificationContext/useNotification'
 /*
   movieInfo ={
     movieId: id,
@@ -11,6 +11,7 @@ import { useAddMovieList } from '../../contexts/AddMovieListContext'
 
 const ButtonAddMovieToList = ({ movieInfo }) => {
   const { movieList, setMovieList } = useAddMovieList()
+  const { notify } = useNotification()
 
   const handleClick = () => {
     const persistList = [...movieList]
@@ -21,6 +22,9 @@ const ButtonAddMovieToList = ({ movieInfo }) => {
       persistList.push({ ...movieInfo, impression: '' })
       // console.log('push obj to context', movieList)
       setMovieList(persistList)
+      notify('success', `added "${movieInfo.primary_title}" to cache list`)
+    } else {
+      notify('info', `already added "${movieInfo.primary_title}" to the cache`)
     }
   }
 

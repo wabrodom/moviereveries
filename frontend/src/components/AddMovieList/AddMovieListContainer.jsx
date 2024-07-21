@@ -2,7 +2,7 @@ import { useAddMovieList } from '../../contexts/AddMovieListContext'
 import ImpressionInput from './ImpressionInput'
 import { useState } from 'react'
 import ListInfoInput from './ListInfoInput'
-
+import useNotification from '../../contexts/NotificationContext/useNotification'
 
 /* conxtext structure
   movieList = [
@@ -30,9 +30,13 @@ import ListInfoInput from './ListInfoInput'
 const AddMovieListContainer = ({ handleAddMovie }) => {
   const [trigger, setTrigger] = useState(0)
   const { movieList } = useAddMovieList()
+  const { notify } = useNotification()
 
   //state change in parent -> child useState watch the change
-  const handleTrigger = () =>  setTrigger(trigger + 1)
+  const handleTrigger = () => {
+    setTrigger(trigger + 1)
+    notify('info' , 'save current data to all the list contexts cache')
+  }
 
   const ListNameAndDescription = ['listName', 'description']
 
