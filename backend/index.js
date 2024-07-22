@@ -1,25 +1,24 @@
 const { ApolloServer } = require('@apollo/server')
-const  { expressMiddleware } = require('@apollo/server/express4')
+const { expressMiddleware } = require('@apollo/server/express4')
 const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer')
-const { makeExecutableSchema } = require("@graphql-tools/schema")
-const express =require('express')
-const cors = require('cors')
-const http = require('http')
-
+const { ApolloServerPluginLandingPageDisabled } = require('@apollo/server/plugin/disabled')
+const { ApolloServerPluginLandingPageLocalDefault } = require('@apollo/server/plugin/landingPage/default')
 const { WebSocketServer } = require('ws')
 const { useServer } = require('graphql-ws/lib/use/ws')
 
+const express =require('express')
+const cors = require('cors')
+const http = require('http')
 const jwt = require('jsonwebtoken')
-
+const helmet = require('helmet')
 const config = require('./utils/config')
-
 const mongoose = require('mongoose')
+const User = require('./models/User')
+const schema = require('./schemas/schema')
+const { IS_NOT_PRODUCTION } = require('./utils/config')
 
 mongoose.set('strictQuery', false)
 
-const User = require('./models/User')
-
-const schema = require('./schemas/schema')
 
 console.log('connecting to ... ')
 
@@ -34,6 +33,9 @@ mongoose
   
 const start =  async () => {
   const app = express()
+  app.disable('x-powered-by')
+  !IS_NOT_PRODUCTION && app.use(helmet())
+
   const httpServer = http.createServer(app)
 
   const wsServer = new WebSocketServer({
@@ -47,6 +49,9 @@ const start =  async () => {
   const server = new ApolloServer({
     schema,
     plugins: [
+      IS_NOT_PRODUCTION
+        ? ApolloServerPluginLandingPageLocalDefault({ footer: false })
+        : ApolloServerPluginLandingPageDisabled(),
       ApolloServerPluginDrainHttpServer( { httpServer } ),
       {
         async serverWillStart() {
@@ -62,9 +67,17 @@ const start =  async () => {
 
   await server.start()
 
+  const corsOptions = IS_NOT_PRODUCTION 
+    ? { origin: '*', credentials: true } 
+    : { 
+        origin: ['https://movie-reveries.fly.dev'], 
+        optionsSuccessStatus: 200,
+        credentials: true
+      }
+
   app.use(
     '/',
-    cors(),
+    cors(corsOptions),
     express.json(),
     expressMiddleware(server, {
       context: async ({ req, res }) => {

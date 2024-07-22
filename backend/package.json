@@ -6,7 +6,10 @@
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon -L --inspect=0.0.0.0 index.js",
-    "test": "NODE_ENV=test node --test"
+    "test": "NODE_ENV=test node --test",
+    "build:ui": "rm -rf dist && cd ../frontend/ && npm run build && cp -r dist ../backend",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy"
   },
   "author": "wabrodom",
   "license": "ISC",
@@ -24,6 +27,7 @@
     "graphql-subscriptions": "^2.0.0",
     "graphql-ws": "^5.15.0",
     "hash-wasm": "^4.11.0",
+    "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mongoose": "^8.2.1",

@@ -15,8 +15,11 @@ const MONGODB_URI = process.env.NODE_ENV === 'test'
 
 const JWT_SECRET= process.env.JWT_SECRET
 
+const IS_NOT_PRODUCTION =  process.env.NODE_ENV !== 'production'
+
 module.exports = {
   PORT,
   MONGODB_URI,
   JWT_SECRET,
+  IS_NOT_PRODUCTION,
 }
