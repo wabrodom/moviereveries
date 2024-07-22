@@ -1,9 +1,8 @@
 import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useSearchMovieToAdd } from '../../../contexts/SearchMovieToAddContext'
-import Notification from '../../Common/Notification'
 
-const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
+const NewMovieInfoContainer = ({ movieDetails, addMovie }) => {
   const navigate = useNavigate()
   const { searchQuery } = useSearchMovieToAdd()
 
@@ -56,12 +55,6 @@ const NewMovieInfoContainer = ({ movieDetails, addMovie, notification }) => {
       <>
         <button onClick={handleGoBack}>go back</button>
         <button onClick={addMovie}>Add to Db</button>
-        {notification &&
-          <Notification
-            severity={notification[0]}
-            text={notification[1]}
-          />
-        }
       </>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {posters &&
