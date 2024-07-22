@@ -63,3 +63,5 @@ typings/
 # persisting data test
 mongo_data
 redis_data
+
+dist

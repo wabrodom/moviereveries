@@ -7,22 +7,18 @@ import AllRoutes from './AllRoutes'
 const App = () => {
 
   return (
-    <div>
 
-      <SearchMovieToAddContextProvider>
-        <AddMovieListContextProvider>
-          <ListInfoContextProvider>
-            <NotificationProvider>
+    <SearchMovieToAddContextProvider>
+      <AddMovieListContextProvider>
+        <ListInfoContextProvider>
+          <NotificationProvider>
 
-              <AllRoutes />
+            <AllRoutes />
 
-            </NotificationProvider>
-          </ListInfoContextProvider>
-        </AddMovieListContextProvider>
-      </SearchMovieToAddContextProvider>
-
-
-    </div>
+          </NotificationProvider>
+        </ListInfoContextProvider>
+      </AddMovieListContextProvider>
+    </SearchMovieToAddContextProvider>
 
   )
 }

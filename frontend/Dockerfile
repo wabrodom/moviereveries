@@ -5,11 +5,14 @@ WORKDIR /usr/src/app
 
 COPY --chown=node:node . .
 
-ARG VITE_BACKEND_URL
-ARG VITE_GRAPHQLWSLINK
+# ARG VITE_BACKEND_URL
+# ARG VITE_GRAPHQLWSLINK
 
-ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
-ENV VITE_GRAPHQLWSLINK=${VITE_GRAPHQLWSLINK}
+# ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
+# ENV VITE_GRAPHQLWSLINK=${VITE_GRAPHQLWSLINK}
+
+ENV VITE_BACKEND_URL=https://moviereveries.fly.dev/
+ENV VITE_GRAPHQLWSLINK=ws://moviereveries.fly.dev/
 
 RUN npm ci
 RUN npm run test
@@ -21,4 +24,4 @@ FROM nginx:1.27-alpine AS production-stage
 
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
 
-# CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]

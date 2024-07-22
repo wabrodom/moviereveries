@@ -17,6 +17,7 @@ export const AddMovieListContextProvider = ({ children }) => {
 
 
 /*
+  array of obj movie
     const initialState = [
     {
       'movieId': '',
