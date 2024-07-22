@@ -37,6 +37,7 @@ const AllRoutes = () => {
   return (
     <div>
       <HeadPart logOut={ logOut } token={ token } />
+      <Notification severity={notification.severity} text={notification.text} />
 
       <Routes>
         <Route path='/' element={<Movies/>} />
@@ -72,9 +73,10 @@ const AllRoutes = () => {
           element={<Navigate replace to ='/login' /> }
         />
 
+        <Route path='*' element={<Navigate replace to ='/' />} />
 
       </Routes>
-      <Notification severity={notification.severity} text={notification.text} />
+
     </div>
   )
 }
