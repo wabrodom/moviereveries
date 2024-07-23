@@ -9,37 +9,47 @@ import theme from '../../assets/theme'
 const groupNavBarStyle = {
   m: 1,
   borderRadius: 1,
+}
+
+const groupNavBarDb = {
+  ...groupNavBarStyle,
   bgcolor: theme.palette.primary.main,
   '&:hover': {
     bgcolor: theme.palette.primary.light,
   },
 }
 
-
 const NavBar = ({ logOut, token }) => {
 
   return (
     <Toolbar>
-      <div >
-        <Box sx={groupNavBarStyle}>
-          <Button color="inherit" component={Link} to='/' >
+
+      <Box sx={groupNavBarDb}>
+        <Button color="inherit" component={Link} to='/' >
               movies
-          </Button>
-          <Button color="inherit" component={Link} to='/directors'>
-              directors
-          </Button>
-          <Button color="inherit" component={Link} to='/find'>
-              find movies
-          </Button>
+        </Button>
 
-          <Button color="inherit" component={Link} to='/movielist'>
+        <Button color="inherit" component={Link} to='/movielist'>
               movie lists
-          </Button>
+        </Button>
 
+        <Button color="inherit" component={Link} to='/directors'>
+              directors
+        </Button>
+
+        <Button color="inherit" component={Link} to='/find'>
+              find movies
+        </Button>
+
+
+        {token &&
           <Button color="inherit" component={Link} to='/addlist'>
-              add movie list
+                add movie list
           </Button>
+        }
 
+
+        <Box>
 
           {token &&
                 <Button color="inherit" component={Link} to='/recommended'>
@@ -47,8 +57,16 @@ const NavBar = ({ logOut, token }) => {
                 </Button>
           }
 
+          {token &&
+                <Button color="inherit" component={Link} to='/account'>
+                  Your account
+                </Button>
+          }
         </Box>
 
+      </Box>
+
+      <Box sx={groupNavBarStyle}>
         {token &&
               <Button color="inherit" component={Link} to='/movie-outer-api'>
                   search movies from outside api
@@ -72,9 +90,8 @@ const NavBar = ({ logOut, token }) => {
               </Button>
             </>
         }
+      </Box>
 
-
-      </div>
 
     </Toolbar>
   )

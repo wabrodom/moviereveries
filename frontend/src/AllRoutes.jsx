@@ -23,6 +23,8 @@ import MovieListDisplay from './components/MovieListDisplay/MovieListDisplay'
 import Notification from './components/Common/Notification'
 
 import useNotification from './contexts/NotificationContext/useNotification'
+import Account from './components/User/Account'
+import ResponsiveDrawer from './components/HeadPart/ResponsiveDrawer'
 
 const AllRoutes = () => {
   const [token, setToken] = useState(null)
@@ -36,47 +38,57 @@ const AllRoutes = () => {
   }
   return (
     <div>
-      <HeadPart logOut={ logOut } token={ token } />
-      <Notification severity={notification.severity} text={notification.text} />
-
-      <Routes>
-        <Route path='/' element={<Movies/>} />
-
-        <Route path='/find' element={<FindMovies/>} />
-
-        <Route path='/movie-outer-api/*' element={<SearchMoviesToAddMain hasToken={token !== null} /> } />
-
-        <Route path='/movies/:imdbid' element={<MovieInfo /> } />
-
-        <Route path='/directors' element={<Directors />} />
-
-        <Route path='/directors/:id' element={<DirectorMovies />} />
-
-        <Route path='/addlist' element={<AddMovieList />} />
-
-        <Route path='/movielist' element={<MovieListDisplay />} />
+      <ResponsiveDrawer logOut={ logOut } token={ token }>
 
 
-        <Route path='/recommended'
-          element={token ? <Recommended/> : <Navigate replace to ='/login'/>}
-        />
+        {/* <HeadPart logOut={ logOut } token={ token } /> */}
+        <Notification severity={notification.severity} text={notification.text} />
 
-        <Route path='/login'
-          element={token ? <Navigate replace to ='/' /> : <LogIn setToken={setToken} /> }
-        />
+        <Routes>
+          <Route path='/' element={<Movies/>} />
 
-        <Route path='/signup'
-          element={token ? <Navigate replace to ='/' /> : <SignUp setToken={setToken} /> }
-        />
+          <Route path='/find' element={<FindMovies/>} />
 
-        <Route path='/logout'
-          element={<Navigate replace to ='/login' /> }
-        />
+          <Route path='/movie-outer-api/*' element={<SearchMoviesToAddMain hasToken={token !== null} /> } />
 
-        <Route path='*' element={<Navigate replace to ='/' />} />
+          <Route path='/movies/:imdbid' element={<MovieInfo /> } />
 
-      </Routes>
+          <Route path='/directors' element={<Directors />} />
 
+          <Route path='/directors/:id' element={<DirectorMovies />} />
+
+          <Route path='/addlist'
+            element={token ? <AddMovieList /> : <Navigate replace to ='/login'/>}
+          />
+
+          <Route path='/movielist' element={<MovieListDisplay />} />
+
+          <Route path='/account'
+            element={token ? <Account /> : <Navigate replace to ='/login'/>}
+          />
+
+
+          <Route path='/recommended'
+            element={token ? <Recommended/> : <Navigate replace to ='/login'/>}
+          />
+
+          <Route path='/login'
+            element={token ? <Navigate replace to ='/' /> : <LogIn setToken={setToken} /> }
+          />
+
+          <Route path='/signup'
+            element={token ? <Navigate replace to ='/' /> : <SignUp setToken={setToken} /> }
+          />
+
+          <Route path='/logout'
+            element={<Navigate replace to ='/login' /> }
+          />
+
+          <Route path='*' element={<Navigate replace to ='/' />} />
+
+        </Routes>
+
+      </ResponsiveDrawer>
     </div>
   )
 }
