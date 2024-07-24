@@ -10,6 +10,7 @@ const config = require('../utils/config')
 const typeDef = `
   extend type Query {
     me: User
+    meFull: FullUser
     allUser: [ExposableUser]!
   }
 
@@ -25,6 +26,8 @@ const typeDef = `
       username: String!
       password: String!
     ): Token
+
+    changeFavoriteGenre(genre: String!): String!
 
     clearUser: Int!
   }
@@ -43,8 +46,17 @@ const typeDef = `
     username: String!
     name: String
     favoriteGenre: String!
-    passwordHash: String!
-    movies: [String]!
+
+    movieLists: [String]!
+    id: ID!
+  }
+
+  type FullUser implements BasedUser {
+    username: String!
+    name: String
+    favoriteGenre: String!
+ 
+    movieLists: [MovieList]!
     id: ID!
   }
 
@@ -58,6 +70,13 @@ const resolvers = {
     me: (root, args, context) => {
       return context.currentUser
     },
+
+    meFull: async (root, args, { currentUser }) => {
+      const userFullPopulated = await User.findById(currentUser.id).populate('movieLists')
+      return userFullPopulated
+    },
+
+
     allUser: async () => {
       const users =  await User.find({}, {
         name: 1,
@@ -129,6 +148,23 @@ const resolvers = {
       const userForToken = { username: user.username, id: user._id}
       return { value: jwt.sign(userForToken, config.JWT_SECRET)}
     },
+
+    changeFavoriteGenre: async (root, args, { currentUser }) => {
+      if ( !currentUser) { 
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+    
+      const user = await User.findById(currentUser.id)
+      user.favoriteGenre = args.genre
+      
+      await user.save()
+      return user.favoriteGenre
+    },
+
     clearUser: async() => {
       await User.deleteMany({})
       return User.collection.countDocuments()
@@ -138,3 +174,17 @@ const resolvers = {
 }
 
 module.exports = { typeDef,  resolvers }
+
+
+/*
+  remove  passwordHash: String!
+    type User implements BasedUser {
+      username: String!
+      name: String
+      favoriteGenre: String!
+      passwordHash: String!
+      movieLists: [String]!
+      id: ID!
+    }
+
+*/

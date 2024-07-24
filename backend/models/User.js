@@ -19,11 +19,15 @@ const userSchema = new mongoose.Schema({
     default: 'memoir',
     minLengh: 3
   },
-  passwordHash : String,
-  movies: [
+  passwordHash : {
+    type: String,
+    require: true
+  },
+  
+  movieLists: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Movie'
+      ref: 'MovieList'
     }
   ]
 
@@ -42,3 +46,15 @@ userSchema.set('toJSON', {
 
 const User = mongoose.model('User', userSchema)
 module.exports = User
+
+
+/*
+  before change to movieList, the old attribure is movies
+    movies: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Movie'
+    }
+  ]
+
+*/

@@ -82,8 +82,13 @@ const resolvers ={
         user: currentUser._id
       })
 
+
       try {
         await newMovieList.save()
+
+        currentUser.movieLists.push(newMovieList._id)
+        
+        await currentUser.save()
         console.log(JSON.stringify(newMovieList, null,2 ))
         return newMovieList
       } catch(error) {
@@ -95,6 +100,8 @@ const resolvers ={
           }
         })
       }
+
+      
 
     },
 
