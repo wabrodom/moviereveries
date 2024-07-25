@@ -6,7 +6,7 @@ import {
 
 import { useApolloClient } from '@apollo/client'
 
-import HeadPart from './components/HeadPart/HeadPart'
+import ResponsiveDrawer from './components/HeadPart/ResponsiveDrawer/0-ResponsiveDrawer'
 import LogIn from './components/LogIn/LogIn'
 import SignUp from './components/SignUp/SignUp'
 import Directors from './components/Directors/Directors'
@@ -24,7 +24,8 @@ import Notification from './components/Common/Notification'
 
 import useNotification from './contexts/NotificationContext/useNotification'
 import Account from './components/User/Account'
-import ResponsiveDrawer from './components/HeadPart/ResponsiveDrawer'
+import GoTopButton from './components/Common/GoToTopButton'
+
 
 const AllRoutes = () => {
   const [token, setToken] = useState(null)
@@ -39,7 +40,7 @@ const AllRoutes = () => {
   return (
     <div>
       <ResponsiveDrawer logOut={ logOut } token={ token }>
-
+        <GoTopButton />
 
         {/* <HeadPart logOut={ logOut } token={ token } /> */}
         <Notification severity={notification.severity} text={notification.text} />

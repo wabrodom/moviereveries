@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
 import { MOVIE_IMDB_DETAILS } from './fragments'
+import { MOVIE_LIST_DETAILS } from './fragments'
 
 export const LOGIN = gql`
   mutation($username: String!, $password: String!){
@@ -205,7 +206,7 @@ export const ALL_DIRECTOR_MOVIES = gql`
   ${MOVIE_IMDB_DETAILS}
 `
 
-export const  ADD_MOVIE = gql`
+export const ADD_MOVIE = gql`
   ${MOVIE_IMDB_DETAILS}
   mutation (
     $imdbId: String!, 
@@ -258,6 +259,24 @@ export const CURRENT_USER = gql`
     }
   }
 `
+export const CURRENT_USER_FULL = gql`
+  query MeFull {
+    meFull {
+      username
+      id
+      favoriteGenre
+      name
+
+      movieLists {
+        ...MovieListDetails
+      }
+        
+    }
+  }
+  ${MOVIE_LIST_DETAILS}
+`
+
+
 
 export const MOVIE_ADDED = gql`
   subscription {

@@ -5,7 +5,7 @@ import { ALL_MOVIES, CURRENT_USER } from '../../graphql/queries'
 
 const Recommended = () => {
   const [currentUser, setCurrentUser] = useState(null)
-  const [filteredMovies, setFilteredBooks] = useState(null)
+  const [filteredMovies, setFilteredMovies] = useState(null)
 
   useQuery(CURRENT_USER, {
     onCompleted: (data) => {
@@ -15,7 +15,7 @@ const Recommended = () => {
   })
 
   const [getFilterMovies, resultFilterMovies] = useLazyQuery(ALL_MOVIES, {
-    onCompleted: (data) => setFilteredBooks(data.allMoviesImdb)
+    onCompleted: (data) => setFilteredMovies(data.allMoviesImdb)
   })
 
   if (resultFilterMovies.loading || !currentUser || !filteredMovies) {

@@ -9,6 +9,10 @@ export const ADD_MOVIE_LIST = gql`
   }
   ${MOVIE_LIST_DETAILS}
 `
-
+export const CHANGE_FAVORITE_GENRE = gql`
+  mutation Mutation($genre: String!) {
+    changeFavoriteGenre(genre: $genre)
+}
+`
 
 
