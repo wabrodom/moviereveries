@@ -19,7 +19,7 @@ import SearchMoviesToAddMain from './components/SearchMoviesToAdd/0-SearchMovies
 import MovieInfo from './components/MovieInfo/MovieInfo'
 import AddMovieList from './components/AddMovieList/AddMovieList'
 
-import MovieListDisplay from './components/MovieListDisplay/MovieListDisplay'
+import MovieListDisplay from './components/MovieListDisplay/0-MovieListDisplay'
 import Notification from './components/Common/Notification'
 
 import useNotification from './contexts/NotificationContext/useNotification'

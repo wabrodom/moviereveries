@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { ALL_MOVIES_LIST } from '../../graphql/queries'
-import SingleMovieList from './SingleMovieList'
+import MovieListDisplayContainer from './1-MovieListDisplayContainer'
 
 const MovieListDisplay = () => {
   const { loading, data, error } = useQuery(ALL_MOVIES_LIST)
@@ -30,11 +30,7 @@ const MovieListDisplay = () => {
 
   return (
     <div>
-      {allMovieLists.map(obj => {
-        return (
-          <SingleMovieList data={obj} key={obj.id}/>
-        )
-      })}
+      <MovieListDisplayContainer allMovieLists={allMovieLists} />
     </div>
   )
 }
