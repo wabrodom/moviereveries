@@ -37,8 +37,10 @@ const listSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   }
-
-})
+  
+},
+  { timestamps: true }
+)
 
 listSchema.plugin(uniqueValidator)
 

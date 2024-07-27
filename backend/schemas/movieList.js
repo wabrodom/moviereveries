@@ -37,6 +37,8 @@ const typeDef = `
     description: String!
     list: [ListItem]!
     id: ID!
+    createdAt: String
+    updatedAt: String
   }
 `
 
@@ -47,7 +49,7 @@ const resolvers ={
     //  no populate for now, just need all text
     //  1 primary title, 2 list description 3 reason on each movie
     allMovieLists: async () => {
-      const allLists = await MovieList.find({})
+      const allLists = await MovieList.find({}).sort({ updatedAt: -1 })
         // .populate('user')
         // .populate({
         //   path: 'list.movieId',
