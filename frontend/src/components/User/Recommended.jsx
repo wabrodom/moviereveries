@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/client'
-import { Link } from 'react-router-dom'
 import { ALL_MOVIES, CURRENT_USER } from '../../graphql/queries'
+import MovieWithPlot from '../Common/MovieWithPlot'
 
 const Recommended = () => {
   const [currentUser, setCurrentUser] = useState(null)
@@ -24,14 +24,21 @@ const Recommended = () => {
 
   resultFilterMovies.refetch()
 
-  const allDirectorsName = (arr) => arr.map(obj => obj.display_name).join(', ')
-
   return (
     <div>
       <h2>Recommendations</h2>
       <p>movies in your favorite genre: <strong>{currentUser.favoriteGenre}</strong> </p>
+      <MovieWithPlot movies={filteredMovies}/>
 
-      <table>
+    </div>
+  )
+}
+
+export default Recommended
+
+
+/*
+   <table>
         <tbody>
           <tr>
             <th></th>
@@ -56,8 +63,6 @@ const Recommended = () => {
 
         </tbody>
       </table>
-    </div>
-  )
-}
 
-export default Recommended
+
+*/

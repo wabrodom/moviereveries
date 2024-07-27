@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FIND_DIRECTOR_MOVIES } from '../../graphql/queries'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import MovieWithPlot from '../Common/MovieWithPlot'
 
 const DirectorMovies = () => {
   const directorId = useParams().id
@@ -16,11 +17,12 @@ const DirectorMovies = () => {
     return <div>loading...</div>
   }
   const directorMovies = allDirectorMovies.data.findMoviesImdbByDirectorId
-  const directorName = directorMovies[0].directorsAddedUse.display_name
+  const directorName = directorMovies[0].directorsAddedUse[0].display_name
 
   const handleGoBack = () => {
     navigate('..', { relative: 'path' })
   }
+
 
   return (
     <div>
@@ -31,7 +33,16 @@ const DirectorMovies = () => {
 
         <button onClick={handleGoBack}>go back</button>
       </div>
-      <table>
+      <MovieWithPlot movies={directorMovies} />
+    </div>
+  )
+}
+
+export default DirectorMovies
+
+
+/*
+ <table>
         <tbody>
           <tr>
             <th>Title</th>
@@ -55,8 +66,4 @@ const DirectorMovies = () => {
           ))}
         </tbody>
       </table>
-    </div>
-  )
-}
-
-export default DirectorMovies
+ */
