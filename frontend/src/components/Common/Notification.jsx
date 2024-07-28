@@ -3,8 +3,8 @@ import Stack from '@mui/material/Stack'
 
 const notificationStyle = {
   width: '60%',
-  position: 'absolute',
-  top: '50%',
+  position: 'fixed',
+  top: '60%',
   left: '50%',
   transform: 'translateX(-50%)',
   zIndex: 9999,

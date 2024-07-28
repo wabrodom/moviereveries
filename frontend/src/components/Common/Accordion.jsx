@@ -4,6 +4,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 const ToggleContext = createContext()
 
+// const inLine = { display: 'inline' }
+// const accordionInline = { display: 'inline-flex' }
+
 const Accordion = ({ children, ...restProps }) => {
   return (
     <Box {...restProps}>

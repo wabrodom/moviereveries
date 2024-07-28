@@ -1,3 +1,4 @@
+import ButtonSelfCenter from '../Common/ButtonSelfCenter'
 import { useAddMovieList } from '../../contexts/AddMovieListContext'
 import useNotification from '../../contexts/NotificationContext/useNotification'
 /*
@@ -30,9 +31,9 @@ const ButtonAddMovieToList = ({ movieInfo }) => {
 
 
   return (
-    <button onClick={handleClick}>
+    <ButtonSelfCenter onClick={handleClick}>
         Add to List
-    </button>
+    </ButtonSelfCenter>
   )
 }
 
