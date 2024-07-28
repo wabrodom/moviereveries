@@ -7,9 +7,10 @@ export const useAddMovieList = () => useContext(AddMovieListContext)
 
 export const AddMovieListContextProvider = ({ children }) => {
   const [movieList, setMovieList] = useState([])
+  const clearMovieLists = () => setMovieList([])
 
   return (
-    <AddMovieListContext.Provider value={{ movieList, setMovieList }}>
+    <AddMovieListContext.Provider value={{ movieList, setMovieList, clearMovieLists }}>
       {children}
     </AddMovieListContext.Provider>
   )

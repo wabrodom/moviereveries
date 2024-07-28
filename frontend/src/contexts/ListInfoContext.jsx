@@ -18,9 +18,10 @@ export const ListInfoContextProvider = ({ children }) => {
   ]
 
   const [listInfo, setListInfo] = useState(initialState)
+  const clearListIfo = () => setListInfo(initialState)
 
   return (
-    <ListInfoContext.Provider value={{ listInfo, setListInfo }}>
+    <ListInfoContext.Provider value={{ listInfo, setListInfo, clearListIfo }}>
       {children}
     </ListInfoContext.Provider>
   )
