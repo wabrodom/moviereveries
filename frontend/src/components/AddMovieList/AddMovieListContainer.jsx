@@ -1,8 +1,11 @@
-import { useAddMovieList } from '../../contexts/AddMovieListContext'
-import ImpressionInput from './ImpressionInput'
 import { useState } from 'react'
+import { Box, Button } from '@mui/material/'
+import ImpressionInput from './ImpressionInput'
 import ListInfoInput from './ListInfoInput'
+import { useAddMovieList } from '../../contexts/AddMovieListContext'
+import { useListInfo } from '../../contexts/ListInfoContext'
 import useNotification from '../../contexts/NotificationContext/useNotification'
+import FlexSpaceAround from '../Common/FlexSpaceAround'
 
 /* conxtext structure
   movieList = [
@@ -27,9 +30,10 @@ import useNotification from '../../contexts/NotificationContext/useNotification'
   ]
 */
 
-const AddMovieListContainer = ({ handleAddMovie }) => {
+const AddMovieListContainer = ({ handleAddMovie, disabledSubmit }) => {
   const [trigger, setTrigger] = useState(0)
-  const { movieList } = useAddMovieList()
+  const { movieList, clearMovieLists } = useAddMovieList()
+  const { clearListIfo } = useListInfo()
   const { notify } = useNotification()
 
   //state change in parent -> child useState watch the change
@@ -37,8 +41,14 @@ const AddMovieListContainer = ({ handleAddMovie }) => {
     setTrigger(trigger + 1)
     notify('info' , 'save current data to all the list contexts cache')
   }
+  const clearAllListsInfo = () => {
+    clearMovieLists()
+    clearListIfo()
+  }
 
   const ListNameAndDescription = ['listName', 'description']
+  const centerButton = { margin: 'auto' }
+  const isDisabled = movieList.length === 0 || disabledSubmit
 
   return (
     <div>
@@ -89,14 +99,30 @@ const AddMovieListContainer = ({ handleAddMovie }) => {
             </tbody>
           </table>
 
-          <button type="button" onClick={handleTrigger}>
+
+          <FlexSpaceAround>
+            <button type="button" onClick={handleTrigger}>
               save to cache
-          </button>
+            </button>
+            <button type="button" onClick={clearAllListsInfo}>
+              clear cache
+            </button>
+          </FlexSpaceAround>
 
 
         </div>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Button variant="outlined" type='submit' sx={centerButton} disabled={isDisabled}>
+            Create new list
+          </Button>
 
-        <button type='submit'>Create new list</button>
+        </Box>
       </form>
 
 

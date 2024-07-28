@@ -42,11 +42,12 @@ const AddMovieList = () => {
     }
     await addMovieList({ variables })
   }
+  const disabledSubmit = listName.length === 0 || description.length === 0
 
   // console.log('AddMovieList parent render')
   return (
     <div>
-      <AddMovieListContainer handleAddMovie={handleAddMovie} />
+      <AddMovieListContainer handleAddMovie={handleAddMovie} disabledSubmit={disabledSubmit} />
     </div>
   )
 }
