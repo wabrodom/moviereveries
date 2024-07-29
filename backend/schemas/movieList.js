@@ -13,6 +13,9 @@ const typeDef = `
       description: String!
       list: [ListItemInput]!
     ): MovieList
+
+    saveMovieList(listId: String!): MovieList
+
     clearMovieList: Int!
   }
 
@@ -105,6 +108,60 @@ const resolvers ={
 
       
 
+    },
+
+    saveMovieList: async (root, args, { currentUser }) => {
+      if ( !currentUser) { 
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+      // find Movielist from its listId, not found -> send meaningful error
+      const movieListToSave = await MovieList.findById(args.listId)
+      if (movieListToSave === null) {
+        throw new GraphQLError('movie list id not found', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
+      if (movieListToSave.user.toString() === currentUser.id) {
+        throw new GraphQLError('you create this movie list', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
+      if (currentUser.saveLists.includes(movieListToSave._id)) {
+        throw new GraphQLError('this movie list already in your list', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
+      try {
+        // just append to the array of ObjectId 
+        currentUser.saveLists.push(movieListToSave._id)
+        await currentUser.save()
+
+        return movieListToSave
+      } catch (error) {
+        throw new GraphQLError('failed to save to your "Save List"', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            inValidArgs: args.listId,
+            error
+          }
+        })
+      }
+      
+
+ 
     },
 
     clearMovieList: async() => {

@@ -57,6 +57,7 @@ const typeDef = `
     favoriteGenre: String!
  
     movieLists: [MovieList]!
+    saveLists: [MovieList]!
     id: ID!
   }
 
@@ -72,7 +73,9 @@ const resolvers = {
     },
 
     meFull: async (root, args, { currentUser }) => {
-      const userFullPopulated = await User.findById(currentUser.id).populate('movieLists')
+      const userFullPopulated = await User.findById(currentUser.id).
+        populate('movieLists').populate('saveLists')
+
       return userFullPopulated
     },
 
