@@ -12,6 +12,7 @@ const typeDef = `
     me: User
     meFull: FullUser
     allUser: [ExposableUser]!
+    userSavedMovieList: [MovieList]!
   }
 
   extend type Mutation { 
@@ -86,7 +87,30 @@ const resolvers = {
         favoriteGenre:1,
       })
       return users
-    }
+    },
+
+    userSavedMovieList: async (root, args, { currentUser }) => {
+      // const userToPopulate =  await User.findById(currentUser.id).populate('saveLists')
+      // return userToPopulate
+
+      // if ( !currentUser) { 
+      //   throw new GraphQLError('not authenticated', {
+      //     extensions: {
+      //       code: 'BAD_USER_INPUT'
+      //     }
+      //   })
+      // }
+
+      await currentUser.populate({
+        path: 'saveLists',
+        options: { sort : { updatedAt: -1 }}
+      })
+
+      const arrayOfObject = currentUser.saveLists
+
+      return arrayOfObject
+    },
+
   },
 
   Mutation: {
