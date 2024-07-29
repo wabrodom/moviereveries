@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
   Routes, Route,
-  Navigate
+  Navigate, useNavigate
 } from 'react-router-dom'
 
 import { useApolloClient } from '@apollo/client'
@@ -25,17 +25,32 @@ import Notification from './components/Common/Notification'
 import useNotification from './contexts/NotificationContext/useNotification'
 import Account from './components/User/Account'
 import GoTopButton from './components/Common/GoToTopButton'
+import { useAddMovieList } from './contexts/AddMovieListContext'
+import { useListInfo } from './contexts/ListInfoContext'
 
 
 const AllRoutes = () => {
   const [token, setToken] = useState(null)
-  const { notification } = useNotification()
+  const { notify, notification } = useNotification()
   const client = useApolloClient()
+  const navigate = useNavigate()
+  const { clearMovieLists } = useAddMovieList()
+  const { clearListIfo } = useListInfo()
 
-  const logOut = () => {
+  /*  important to clear everything */
+  const logOut =  () => {
     setToken(null)
     localStorage.removeItem('moviereveries-user-token')
-    client.resetStore()
+    clearMovieLists()
+    clearListIfo()
+    try {
+      // if use client.resetStore, async method. wrap it in try-catch
+      client.clearStore()
+      navigate('/login', { replace: true })
+    } catch (error) {
+      notify('error', 'log out error')
+      // console.error('Error during logout:', error)
+    }
   }
   return (
     <div>
