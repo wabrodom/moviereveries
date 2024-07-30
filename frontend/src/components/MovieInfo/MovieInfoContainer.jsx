@@ -1,6 +1,9 @@
-import { Paper, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
-
+import {
+  Paper, Box,Typography,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import ButtonSelfCenter from '../Common/ButtonSelfCenter'
 import { useNavigate } from 'react-router-dom'
+import FlexSpaceAround from '../Common/FlexSpaceAround'
 import ButtonAddMovieToList from './ButtonAddMovieToList'
 
 const MovieInfoContainer = ({ movieDetails }) => {
@@ -44,22 +47,28 @@ const MovieInfoContainer = ({ movieDetails }) => {
 
   return (
     <Paper sx={{ padding: 2, margin: 2 }}>
-      <>
-        <button onClick={handleGoBack}>go back</button>
-        <ButtonAddMovieToList movieInfo={movieInfoForList} />
-      </>
+      <Typography variant="h4" sx={{ marginTop: 2 }}>
+        {primary_title}
+      </Typography>
+
+
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {postersUse &&
+        <FlexSpaceAround>
+          <ButtonSelfCenter onClick={handleGoBack}>
+            go back
+          </ButtonSelfCenter>
+
+          {postersUse &&
+
           <img
             src={posterUrl}
             alt={primary_title}
             style={{ width: '100%', maxWidth: '300px', borderRadius: 4 }}
           />
-        }
+          }
 
-        <Typography variant="h4" sx={{ marginTop: 2 }}>
-          {primary_title}
-        </Typography>
+          <ButtonAddMovieToList movieInfo={movieInfoForList} />
+        </FlexSpaceAround>
 
         {original_title &&
           <Typography variant="subtitle1" sx={{ fontStyle: 'italic' }}>
