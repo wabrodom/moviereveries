@@ -14,9 +14,9 @@ import { useListInfo } from '../../contexts/ListInfoContext'
   ]
 */
 const ListInfoInput = ({ name, label, trigger }) => {
-  const [text, setText] = useState('')
-
   const { listInfo, setListInfo } = useListInfo()
+  const initialText = listInfo.find(obj => obj.name === name).value
+  const [text, setText] = useState(initialText)
 
   useEffect(() => {
     const newListInfo  = listInfo.map(obj => {
@@ -37,6 +37,7 @@ const ListInfoInput = ({ name, label, trigger }) => {
     <label>
       { label }:  <input
         type="text"
+        value={text}
         onChange={(e) => setText(e.target.value) }
       />
     </label>
