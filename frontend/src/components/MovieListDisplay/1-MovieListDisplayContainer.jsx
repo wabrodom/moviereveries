@@ -15,7 +15,7 @@ const MovieListDisplayContainer = ({ allMovieLists }) => {
           </Accordion.ItemHeader>
 
           <Accordion.Body>
-            <SingleMovieListBody data={list} />
+            <SingleMovieListBody list={list} />
           </Accordion.Body>
 
         </Accordion.Item>

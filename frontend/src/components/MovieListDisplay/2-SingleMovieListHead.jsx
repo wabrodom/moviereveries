@@ -1,17 +1,17 @@
-import { Typography, Box } from '@mui/material'
+import { Typography } from '@mui/material'
 
-const style = { p: 1 }
+const typoGraphyInline = {
+  display: 'inline-block',
+  backgroundColor: 'lightgrey',
+  padding: 0.5,
+  borderRadius: 1,
+}
 
 const SingleMovieListHead = ({ list }) => {
   return (
-    <Box sx={style}>
-      <Typography variant="h4" gutterBottom>
-        {list.listName}
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom>
-        {list.description}
-      </Typography>
-    </Box>
+    <Typography variant="h4" gutterBottom sx={typoGraphyInline}>
+      {list.listName}
+    </Typography>
   )
 }
 

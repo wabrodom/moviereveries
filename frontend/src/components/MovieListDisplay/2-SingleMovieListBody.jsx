@@ -6,13 +6,29 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Box
+  Box,
+  Typography,
 } from '@mui/material'
+import ButtonSaveList from './ButtonSaveList'
 
 
-const SingleMovieListBody = ({ data }) => {
+const flexEnd = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  p: 2,
+}
+
+const SingleMovieListBody = ({ list }) => {
   return (
     <Box sx={{ p: 1 }}>
+
+      <Box sx={flexEnd}>
+        <Typography variant="subtitle1" gutterBottom>
+          {list.description}
+        </Typography>
+
+        <ButtonSaveList list={list} />
+      </Box>
 
       <TableContainer component={Paper}>
         <Table>
@@ -23,7 +39,7 @@ const SingleMovieListBody = ({ data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.list.map((movie) => (
+            {list.list.map((movie) => (
               <TableRow key={movie.movieId}>
                 <TableCell>{movie.primary_title}</TableCell>
                 <TableCell>{movie.impression}</TableCell>

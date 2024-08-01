@@ -4,6 +4,7 @@ import { ALL_MOVIES, CURRENT_USER_FULL, CURRENT_USER } from '../../graphql/queri
 import { CHANGE_FAVORITE_GENRE } from '../../graphql/mutations'
 import ChangeGenreInput from './ChangeGenreInput'
 import useNotification from '../../contexts/NotificationContext/useNotification'
+import SaveList from './SaveList'
 
 
 /*
@@ -16,6 +17,7 @@ import useNotification from '../../contexts/NotificationContext/useNotification'
 const Account = () => {
   const [currentUser, setCurrentUser] = useState(null)
   const [filteredMovies, setFilteredMovies] = useState(null)
+  const [saveListLength, setSaveListLength] = useState(0) // this hook, cause +2 renders
   const { notify } = useNotification()
 
   useQuery(CURRENT_USER_FULL, {
@@ -28,7 +30,7 @@ const Account = () => {
   const [ changeGenre ]  = useMutation(CHANGE_FAVORITE_GENRE, {
     refetchQueries: [ { query: ALL_MOVIES }, { query: CURRENT_USER_FULL }, { query: CURRENT_USER }],
     onError: (error) => {
-      // console.log(error)
+      console.log('in Account',error)
       // console.log(error.graphQLErrors[0].message)
       notify('error', error.graphQLErrors[0].message)
     },
@@ -94,6 +96,15 @@ const Account = () => {
 
         </ul>
       </section>
+
+      <section>
+        <h3>You saved  {saveListLength} list{saveListLength > 1 && 's'}</h3>
+        <SaveList setSaveListLength={setSaveListLength} />
+      </section>
+      {/* <section>
+        <h3>Your saved list</h3>
+        <SaveList />
+      </section> */}
 
     </div>
   )

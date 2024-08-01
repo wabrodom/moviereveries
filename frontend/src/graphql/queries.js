@@ -286,3 +286,27 @@ export const MOVIE_ADDED = gql`
   }
   ${MOVIE_IMDB_DETAILS}
 `
+
+export const USER_SAVED_MOVIE_LIST = gql`
+  query UserSavedMovieList {
+    userSavedMovieList {
+      ...MovieListDetails
+      createdAt
+      updatedAt
+    }
+
+  }
+  ${MOVIE_LIST_DETAILS} 
+`
+
+export const VALIDATE_TOKEN = gql`
+  query ValidateToken($token: String!) {
+  validateToken(token: $token) {
+    username
+    name
+    favoriteGenre
+    movieLists
+    id
+  }
+}
+`

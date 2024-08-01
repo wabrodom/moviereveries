@@ -12,7 +12,17 @@ export const ADD_MOVIE_LIST = gql`
 export const CHANGE_FAVORITE_GENRE = gql`
   mutation Mutation($genre: String!) {
     changeFavoriteGenre(genre: $genre)
-}
+  }
 `
-
+export const SAVE_MOVIE_LIST = gql`
+  mutation SaveMovieList($listId: String!) {
+    saveMovieList(listId: $listId) {
+      ...MovieListDetails
+      
+      createdAt
+      updatedAt
+    }
+  }
+  ${MOVIE_LIST_DETAILS} 
+`
 
