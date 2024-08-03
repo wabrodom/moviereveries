@@ -1,6 +1,6 @@
 const { GraphQLError } = require('graphql')
 // const { gql } = require('apollo/server')
-const jwt =require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const { bcrypt, bcryptVerify } = require('hash-wasm')
 const crypto = require('crypto')
 
@@ -13,6 +13,7 @@ const typeDef = `
     meFull: FullUser
     allUser: [ExposableUser]!
     userSavedMovieList: [MovieList]!
+    validateToken(token: String!): User
   }
 
   extend type Mutation { 
@@ -111,6 +112,19 @@ const resolvers = {
       return arrayOfObject
     },
 
+    validateToken: async (roor, args) => {
+      const inputToken = args.token
+      try {
+        const decodedToken = jwt.verify(inputToken, config.JWT_SECRET)
+        const currentUser = await User.findById(decodedToken.id)
+        return currentUser
+      } catch (error) {
+        // TokenExpiredError
+        // return error
+      }
+      
+    },
+
   },
 
   Mutation: {
@@ -173,7 +187,8 @@ const resolvers = {
       }
 
       const userForToken = { username: user.username, id: user._id}
-      return { value: jwt.sign(userForToken, config.JWT_SECRET)}
+      const expireIn = { expiresIn: 60 }
+      return { value: jwt.sign(userForToken, config.JWT_SECRET,  expireIn)}
     },
 
     changeFavoriteGenre: async (root, args, { currentUser }) => {

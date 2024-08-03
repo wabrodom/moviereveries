@@ -10,16 +10,15 @@ export const LOGIN = gql`
 `
 
 export const SIGNUP = gql`
-  mutation CreateUser($username: String!, $name: String!, $favoriteGenre: String!, $password: String!) {
-    createUser(username: $username, name: $name, favoriteGenre: $favoriteGenre, password: $password) {
-      name
-      passwordHash
-      movies
-      id
-      favoriteGenre
-      username
-    }
+  mutation Mutation($username: String!, $name: String!, $favoriteGenre: String!, $password: String!) {
+  createUser(username: $username, name: $name, favoriteGenre: $favoriteGenre, password: $password) {
+    username
+    name
+    favoriteGenre
+    movieLists
+    id
   }
+}
 `
 
 export const ALL_DIRECTORS = gql`
