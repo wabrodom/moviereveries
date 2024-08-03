@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { ADD_MOVIE_LIST } from '../../graphql/mutations'
-import { ALL_MOVIES_LIST } from '../../graphql/queries'
+import { ALL_MOVIES_LIST, CURRENT_USER_FULL } from '../../graphql/queries'
 import { useAddMovieList } from '../../contexts/AddMovieListContext'
 import { useListInfo } from '../../contexts/ListInfoContext'
 
@@ -10,7 +10,7 @@ import useNotification from '../../contexts/NotificationContext/useNotification'
 const AddMovieList = () => {
   const { notify } = useNotification()
   const [ addMovieList ]  = useMutation(ADD_MOVIE_LIST, {
-    refetchQueries: [ { query: ALL_MOVIES_LIST, }],
+    refetchQueries: [ { query: ALL_MOVIES_LIST }, { query: CURRENT_USER_FULL }],
     onError: (error) => {
       // console.log(error)
       // console.log(error.graphQLErrors[0].message)
