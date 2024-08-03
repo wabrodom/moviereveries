@@ -21,6 +21,7 @@
     "formik": "^2.4.6",
     "graphql": "^16.8.1",
     "graphql-ws": "^5.15.0",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.2",
