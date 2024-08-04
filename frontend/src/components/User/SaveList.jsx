@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { Link } from 'react-router-dom'
 import { USER_SAVED_MOVIE_LIST } from '../../graphql/queries'
 import useNotification from '../../contexts/NotificationContext/useNotification'
 
@@ -24,7 +25,9 @@ const SaveList = ({ setSaveListLength }) => {
         {userSavedMovieList.map(obj => {
           return (
             <li key={obj.id}>
-              {obj.listName}
+              <Link to={`/movielist/${obj.id}`}  state={{ isOwn: true }} >
+                {obj.listName}
+              </Link>
             </li>
           )
         })}

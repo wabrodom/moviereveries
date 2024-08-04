@@ -5,7 +5,7 @@ import { CHANGE_FAVORITE_GENRE } from '../../graphql/mutations'
 import ChangeGenreInput from './ChangeGenreInput'
 import useNotification from '../../contexts/NotificationContext/useNotification'
 import SaveList from './SaveList'
-
+import { Link } from 'react-router-dom'
 
 /*
   1. name of the user
@@ -88,7 +88,9 @@ const Account = () => {
           {movieLists.map(obj => {
             return (
               <li key={obj.id}>
-                {obj.listName}
+                <Link to={`/movielist/${obj.id}`} state={{ isOwn: true }}>
+                  {obj.listName}
+                </Link>
               </li>
             )
           })
@@ -101,10 +103,6 @@ const Account = () => {
         <h3>You saved  {saveListLength} list{saveListLength > 1 && 's'}</h3>
         <SaveList setSaveListLength={setSaveListLength} />
       </section>
-      {/* <section>
-        <h3>Your saved list</h3>
-        <SaveList />
-      </section> */}
 
     </div>
   )

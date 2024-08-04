@@ -19,6 +19,7 @@ import MovieListDisplay from '../MovieListDisplay/0-MovieListDisplay'
 
 import Account from '../User/Account'
 import { useToken } from '../../contexts/TokenContext'
+import SingleMovieList from '../MovieListDisplay/SingleMovieList/SingleMovieList'
 
 
 
@@ -46,6 +47,7 @@ const AllRoutes = () => {
       />
 
       <Route path='/movielist' element={<MovieListDisplay />} />
+      <Route path='/movielist/:id' element={<SingleMovieList />} />
 
       <Route path='/account'
         element={token ? <Account /> : <Navigate replace to ='/login'/>}

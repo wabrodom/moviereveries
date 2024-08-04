@@ -10,6 +10,8 @@ import {
   Typography,
 } from '@mui/material'
 import ButtonSaveList from './ButtonSaveList'
+import BackButton from '../Common/BackButton'
+import { useLocation } from 'react-router-dom'
 
 
 const flexEnd = {
@@ -19,6 +21,9 @@ const flexEnd = {
 }
 
 const SingleMovieListBody = ({ list }) => {
+  const { state } = useLocation()
+  const isOwn = state ? state.isOwn : false
+
   return (
     <Box sx={{ p: 1 }}>
 
@@ -27,7 +32,8 @@ const SingleMovieListBody = ({ list }) => {
           {list.description}
         </Typography>
 
-        <ButtonSaveList list={list} />
+        {isOwn ? <BackButton /> : <ButtonSaveList list={list} />}
+
       </Box>
 
       <TableContainer component={Paper}>
