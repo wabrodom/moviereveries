@@ -5,6 +5,7 @@ const typeDef = `
   extend type Query {
     MovieListCount: Int!
     allMovieLists: [MovieList]!
+    findMovieListById(id: String!): MovieList
   }
 
   extend type Mutation {
@@ -59,6 +60,11 @@ const resolvers ={
         //   model: 'MovieImdb'
         // })
       return allLists
+    },
+
+    findMovieListById: async (root, args) => {
+      const foundList = await MovieList.findById(args.id)
+      return foundList
     },
   },
 

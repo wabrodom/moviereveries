@@ -112,6 +112,18 @@ export const FIND_DIRECTOR_MOVIES = gql`
   ${MOVIE_IMDB_DETAILS}
 `
 
+export const FIND_MOVIE_LIST_BY_ID = gql`
+  query FindMovieListById($findMovieListByIdId: String!) {
+    findMovieListById(id: $findMovieListByIdId) {
+      ...MovieListDetails
+      createdAt
+      updatedAt
+    }
+
+  }
+  ${MOVIE_LIST_DETAILS}  
+`
+
 export const NEW_MOVIE_DETAILS = gql`
    query ($titleId: ID!) {
     title(id: $titleId) {
@@ -310,3 +322,4 @@ export const VALIDATE_TOKEN = gql`
   }
 }
 `
+
