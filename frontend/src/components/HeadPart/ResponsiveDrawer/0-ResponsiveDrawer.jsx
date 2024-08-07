@@ -1,7 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
@@ -10,6 +9,7 @@ import List from '@mui/material/List'
 import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 import ListItemGenerate from './1-ListItemGenerate'
 
@@ -17,7 +17,6 @@ import ListItemGenerate from './1-ListItemGenerate'
 const drawerWidth = 240
 
 function ResponsiveDrawer(props) {
-  const { window } = props
   const { logOut, token } = props
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [isClosing, setIsClosing] = React.useState(false)
@@ -92,10 +91,10 @@ function ResponsiveDrawer(props) {
   )
 
   // Remove this const when copying and pasting into your project.
-  const container = window !== undefined ? () => window().document.body : undefined
-
+  // const container = window !== undefined ? () => window().document.body : undefined
+  console.log('-- -- ResponsiveDrawer rendered')
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -126,7 +125,7 @@ function ResponsiveDrawer(props) {
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
+          // container={container}
           variant="temporary"
           open={mobileOpen}
           onTransitionEnd={handleDrawerTransitionEnd}
@@ -152,13 +151,7 @@ function ResponsiveDrawer(props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-      >
-        <Toolbar />
-        {props.children}
-      </Box>
+
     </Box>
   )
 }

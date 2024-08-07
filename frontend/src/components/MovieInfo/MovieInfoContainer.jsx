@@ -5,6 +5,7 @@ import ButtonSelfCenter from '../Common/ButtonSelfCenter'
 import { useNavigate } from 'react-router-dom'
 import FlexSpaceAround from '../Common/FlexSpaceAround'
 import ButtonAddMovieToList from './ButtonAddMovieToList'
+import TableCellHead from '../Common/TypoGraphy/TableCellHead'
 
 const MovieInfoContainer = ({ movieDetails }) => {
   const navigate = useNavigate()
@@ -84,8 +85,8 @@ const MovieInfoContainer = ({ movieDetails }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Category</TableCell>
-                <TableCell>Details</TableCell>
+                <TableCellHead>Category</TableCellHead>
+                <TableCellHead>Details</TableCellHead>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -12,6 +12,7 @@ import {
 import ButtonSaveList from './ButtonSaveList'
 import BackButton from '../Common/BackButton'
 import { useLocation } from 'react-router-dom'
+import TableCellHead from '../Common/TypoGraphy/TableCellHead'
 
 
 const flexEnd = {
@@ -32,7 +33,7 @@ const SingleMovieListBody = ({ list }) => {
           {list.description}
         </Typography>
 
-        {isOwn ? <BackButton /> : <ButtonSaveList list={list} />}
+        {isOwn ? null : <ButtonSaveList list={list} />}
 
       </Box>
 
@@ -40,8 +41,8 @@ const SingleMovieListBody = ({ list }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Primary Title</TableCell>
-              <TableCell>Impression</TableCell>
+              <TableCellHead>Title</TableCellHead>
+              <TableCellHead>Impression</TableCellHead>
             </TableRow>
           </TableHead>
           <TableBody>
