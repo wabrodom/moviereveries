@@ -1,0 +1,49 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: white;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 450px) {
+  .container {
+    flex-direction: row;
+  }
+}
+
+.some-network {
+  vertical-align: top;
+  display: inline-block;
+  align-self: center;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.some-network__share-count {
+  display: inline-flex;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: visible;
+  width: 0;
+  margin-top: 3px;
+  font-size: 12px;
+}
+
+.some-network__share-button {
+  cursor: pointer;
+}
+
+.some-network__share-button:hover:not(:active) {
+  opacity: 0.75;
+}
+
+.some-network__custom-icon {
+  width: 32px;
+  height: 32px;
+}
