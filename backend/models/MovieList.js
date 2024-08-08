@@ -36,7 +36,19 @@ const listSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  }
+  },
+
+  deletedByUser: {
+    type: Boolean,
+    default: false,
+  },
+
+  savedUser: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ]
   
 },
   { timestamps: true }
