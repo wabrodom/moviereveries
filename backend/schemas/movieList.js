@@ -15,8 +15,9 @@ const typeDef = `
       list: [ListItemInput]!
     ): MovieList
 
+    removeMovieList(listId: String!): MovieList
     saveMovieList(listId: String!): MovieList
-
+    unSaveMovieList(listId: String!): MovieList
     clearMovieList: Int!
   }
 
@@ -43,6 +44,7 @@ const typeDef = `
     id: ID!
     createdAt: String
     updatedAt: String
+    deletedByUser: Boolean
   }
 `
 
@@ -53,7 +55,8 @@ const resolvers ={
     //  no populate for now, just need all text
     //  1 primary title, 2 list description 3 reason on each movie
     allMovieLists: async () => {
-      const allLists = await MovieList.find({}).sort({ updatedAt: -1 })
+      const query = MovieList.where({ deletedByUser: false }) // prior object will be undefined
+      const allLists = await query.find().sort({ updatedAt: -1 })
         // .populate('user')
         // .populate({
         //   path: 'list.movieId',
@@ -78,7 +81,6 @@ const resolvers ={
           }
         })
       }
-      console.log('currentUser' , currentUser)
       
       const listNameDuplicate = await MovieList.findOne( { listName: args.listName })
     
@@ -93,6 +95,7 @@ const resolvers ={
         user: currentUser._id
       })
 
+      console.log(currentUser)
 
       try {
         await newMovieList.save()
@@ -115,6 +118,52 @@ const resolvers ={
       
 
     },
+
+    removeMovieList: async (root, args, { currentUser }) => {
+      if ( !currentUser) { 
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
+      try {
+        const listToRemove = await MovieList.findById(args.listId)
+        if (listToRemove.user.toString() !== currentUser._id.toString()) {
+          throw new GraphQLError('Not authorized. Other user cannot remove the list', {
+            extensions: {
+              code: 'BAD_USER_INPUT'
+            }
+          })
+        }
+        
+        listToRemove.deletedByUser = true
+        await listToRemove.save()
+
+        // if nobody save this list anymore, then remove it
+        if (listToRemove.length === 0) {
+          const foundId  = currentUser.movieLists.find(e => e.toString() === args.listId)
+          const filter = currentUser.movieLists.filter(id => id !== foundId)
+          currentUser.movieLists = filter
+          await currentUser.save()
+          await MovieList.findByIdAndDelete(args.listId)
+        }
+        
+  
+        return listToRemove
+
+      } catch (error) {
+        throw new GraphQLError('failed to remove your List', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            inValidArgs: args.listId,
+            error
+          }
+        })
+      }
+    },
+
 
     saveMovieList: async (root, args, { currentUser }) => {
       if ( !currentUser) { 
@@ -158,6 +207,64 @@ const resolvers ={
         return movieListToSave
       } catch (error) {
         throw new GraphQLError('failed to save to your "Save List"', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            inValidArgs: args.listId,
+            error
+          }
+        })
+      }
+      
+
+ 
+    },
+
+
+    unSaveMovieList: async (root, args, { currentUser }) => {
+      if ( !currentUser) { 
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+      // find Movielist from its listId, not found -> send meaningful error
+      const movieLisToUnSave = await MovieList.findById(args.listId)
+      if (movieLisToUnSave === null) {
+        throw new GraphQLError('movie list id not found', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
+      if (movieLisToUnSave.user.toString() === currentUser.id) {
+        throw new GraphQLError('you create this movie list, you could remove this list', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
+
+      const foundId  = currentUser.saveLists.find(e => e.toString() === args.listId)
+      if (!foundId) {
+        throw new GraphQLError('The movie list is not in your list', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
+      try {
+        // filter out this objectId
+        const filter = currentUser.saveLists.filter(id => id !== foundId)
+        currentUser.saveLists = filter
+        await currentUser.save()
+
+        return movieLisToUnSave
+      } catch (error) {
+        throw new GraphQLError('failed to unsave to your "Saved List"', {
           extensions: {
             code: 'BAD_USER_INPUT',
             inValidArgs: args.listId,
