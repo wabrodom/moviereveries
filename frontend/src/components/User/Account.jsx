@@ -4,8 +4,8 @@ import { ALL_MOVIES, CURRENT_USER_FULL, CURRENT_USER } from '../../graphql/queri
 import { CHANGE_FAVORITE_GENRE } from '../../graphql/mutations'
 import ChangeGenreInput from './ChangeGenreInput'
 import useNotification from '../../contexts/NotificationContext/useNotification'
-import SaveList from './SaveList'
-import { Link } from 'react-router-dom'
+import ListSaved from './ListSaved'
+import ListCreated from './ListCreated'
 
 /*
   1. name of the user
@@ -84,24 +84,12 @@ const Account = () => {
 
       <section>
         <h3>You created {listCount} list{listCount > 1 && 's'}. </h3>
-        <ul>
-          {movieLists.map(obj => {
-            return (
-              <li key={obj.id}>
-                <Link to={`/movielist/${obj.id}`} state={{ isOwn: true }}>
-                  {obj.listName}
-                </Link>
-              </li>
-            )
-          })
-          }
-
-        </ul>
+        <ListCreated />
       </section>
 
       <section>
         <h3>You saved  {saveListLength} list{saveListLength > 1 && 's'}</h3>
-        <SaveList setSaveListLength={setSaveListLength} />
+        <ListSaved setSaveListLength={setSaveListLength} />
       </section>
 
     </div>

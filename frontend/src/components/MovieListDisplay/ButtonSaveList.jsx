@@ -1,12 +1,14 @@
 import { Button } from '@mui/material'
 import { useMutation } from '@apollo/client'
 import { SAVE_MOVIE_LIST } from '../../graphql/mutations'
+import { USER_SAVED_MOVIE_LIST } from '../../graphql/queries'
 import useNotification from '../../contexts/NotificationContext/useNotification'
 
 
 const ButtonSaveList = ({ list }) => {
   const { notify } = useNotification()
   const [saveMovieList] = useMutation(SAVE_MOVIE_LIST, {
+    refetchQueries: [ { query: USER_SAVED_MOVIE_LIST }],
     onCompleted: (data) => {
       notify('success', `Added "${data.saveMovieList.listName}" to your list!`)
     },
