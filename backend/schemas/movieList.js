@@ -45,6 +45,7 @@ const typeDef = `
     createdAt: String
     updatedAt: String
     deletedByUser: Boolean
+    savedUser: [String]!
   }
 `
 
@@ -142,12 +143,13 @@ const resolvers ={
         await listToRemove.save()
 
         // if nobody save this list anymore, then remove it
-        if (listToRemove.length === 0) {
+        // will make frontend check if deleted true, and no one saved it. To delete Again
+        if (listToRemove.savedUser.length === 0) {
           const foundId  = currentUser.movieLists.find(e => e.toString() === args.listId)
           const filter = currentUser.movieLists.filter(id => id !== foundId)
           currentUser.movieLists = filter
-          await currentUser.save()
           await MovieList.findByIdAndDelete(args.listId)
+          await currentUser.save()
         }
         
   
@@ -201,9 +203,11 @@ const resolvers ={
 
       try {
         // just append to the array of ObjectId 
+        movieListToSave.savedUser.push(currentUser.id)
+        await movieListToSave.save()
         currentUser.saveLists.push(movieListToSave._id)
         await currentUser.save()
-
+        
         return movieListToSave
       } catch (error) {
         throw new GraphQLError('failed to save to your "Save List"', {
