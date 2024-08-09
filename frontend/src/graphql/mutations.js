@@ -25,4 +25,27 @@ export const SAVE_MOVIE_LIST = gql`
   }
   ${MOVIE_LIST_DETAILS} 
 `
+export const UNSAVE_MOVIE_LIST = gql`
+  mutation UnSaveMovieList($listId: String!) {
+    unSaveMovieList(listId: $listId) {
+      ...MovieListDetails
+      
+      createdAt
+      updatedAt
+    }
+  }
+  ${MOVIE_LIST_DETAILS} 
+`
 
+export const REMOVE_MOVIE_LIST =gql`
+  mutation RemoveMovieList($listId: String!) {
+    removeMovieList(listId: $listId) {
+       ...MovieListDetails
+      createdAt
+      updatedAt
+
+      deletedByUser
+    }
+  }
+  ${MOVIE_LIST_DETAILS} 
+`

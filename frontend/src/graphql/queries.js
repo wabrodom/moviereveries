@@ -311,6 +311,20 @@ export const USER_SAVED_MOVIE_LIST = gql`
   ${MOVIE_LIST_DETAILS} 
 `
 
+export const USER_CREATED_MOVIE_LIST = gql`
+  query UserCreatedMovieList {
+    userCreatedMovieList {
+      ...MovieListDetails
+      createdAt
+      updatedAt
+      deletedByUser
+      
+      savedUser
+    }
+  }
+  ${MOVIE_LIST_DETAILS} 
+`
+
 export const VALIDATE_TOKEN = gql`
   query ValidateToken($token: String!) {
   validateToken(token: $token) {
