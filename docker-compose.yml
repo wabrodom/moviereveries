@@ -6,10 +6,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_BACKEND_URL: http://localhost:8989/api/
-        VITE_GRAPHQLWSLINK: ws://localhost:8989/api/
+        VITE_BACKEND_URL: http://moviereveries.fly.dev/
+        VITE_GRAPHQLWSLINK: ws://moviereveries.fly.dev/
     volumes:
-      - ./frontend/:/usr/src/app
+      - ./frontend/dist:/usr/src/app
       - /usr/src/app/node_modules
     expose:
       - "80"
