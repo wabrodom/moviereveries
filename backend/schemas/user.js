@@ -13,6 +13,7 @@ const typeDef = `
     meFull: FullUser
     allUser: [ExposableUser]!
     userSavedMovieList: [MovieList]!
+    userCreatedMovieList: [MovieList]!
     validateToken(token: String!): User
   }
 
@@ -75,8 +76,11 @@ const resolvers = {
     },
 
     meFull: async (root, args, { currentUser }) => {
-      const userFullPopulated = await User.findById(currentUser.id).
-        populate('movieLists').populate('saveLists')
+      const userFullPopulated = await User.findById(currentUser.id)
+        .populate({
+          path: 'movieLists',
+        })
+        .populate('saveLists')
 
       return userFullPopulated
     },
@@ -108,6 +112,18 @@ const resolvers = {
       })
 
       const arrayOfObject = currentUser.saveLists
+
+      return arrayOfObject
+    },
+
+    userCreatedMovieList: async (root, args, { currentUser }) => {
+      await currentUser.populate({
+        path: 'movieLists',
+        // match: { deletedByUser: false },
+        options: { sort : { updatedAt: -1 }},
+      })
+
+      const arrayOfObject = currentUser.movieLists
 
       return arrayOfObject
     },
@@ -187,7 +203,7 @@ const resolvers = {
       }
 
       const userForToken = { username: user.username, id: user._id}
-      const expireIn = { expiresIn: 60 }
+      const expireIn = { expiresIn: 60 *60 }
       return { value: jwt.sign(userForToken, config.JWT_SECRET,  expireIn)}
     },
 
