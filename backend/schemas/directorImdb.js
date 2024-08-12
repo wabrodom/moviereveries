@@ -12,8 +12,6 @@ const typeDef = `
       name: String!
       setBornTo: Int!
     ): DirectorImdb
- 
-    clearDirectorImdb: Int!
   }
 
   type DirectorImdb {
@@ -91,10 +89,7 @@ const resolvers ={
       return await DirectorImdb.populate(directorToEdit, {path: 'movies'})
     },
 
-    clearDirectorImdb: async() => {
-      await DirectorImdb.deleteMany({})
-      return DirectorImdb.collection.countDocuments()
-    }
+
   }
 }
 

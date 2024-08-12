@@ -13,7 +13,6 @@ const typeDef = `
     editGenre(oldLowText: String!, newLowText: String!): Genre
     fillGenres: [Genre]!
     deleteGenre(lowText: String!): Genre
-    clearGenre: Int!
   }
 
   type Genre {
@@ -35,13 +34,13 @@ const resolvers ={
   Mutation: {
     addGenre: async (root, args, { currentUser }) => {
       // // if it works. will check user token
-      // if ( !currentUser) { 
-      //   throw new GraphQLError('not authenticated', {
-      //     extensions: {
-      //       code: 'BAD_USER_INPUT'
-      //     }
-      //   })
-      // }
+      if ( !currentUser) { 
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
       
       const genreIsExist = await Genre.findOne( { genre: args.lowText })
     
@@ -66,13 +65,14 @@ const resolvers ={
 
     editGenre: async (root, args, { currentUser }) => {
       // // if it works. will check if user have a valid token
-      // if ( !currentUser) { 
-      //   throw new GraphQLError('not authenticated', {
-      //     extensions: {
-      //       code: 'BAD_USER_INPUT'
-      //     }
-      //   })
-      // }
+      if ( !currentUser) { 
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
+
       const genreToEdit = await Genre.findOne( { genre: args.oldLowText })
       if (genreToEdit === null) {
         return null
@@ -130,13 +130,13 @@ const resolvers ={
 
     deleteGenre: async (root, args, { currentUser }) => {
       // // if it works. will check valid user
-      // if ( !currentUser) { 
-      //   throw new GraphQLError('not authenticated', {
-      //     extensions: {
-      //       code: 'BAD_USER_INPUT'
-      //     }
-      //   })
-      // }
+      if ( !currentUser) { 
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
 
       try {
         const genreToDelete = await Genre.findOneAndDelete({ genre: args.lowText })
@@ -151,10 +151,6 @@ const resolvers ={
       }
     },
 
-    clearGenre: async() => {
-      await Genre.deleteMany({})
-      return Genre.collection.countDocuments()
-    }
   }
 }
 

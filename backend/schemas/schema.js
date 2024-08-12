@@ -1,8 +1,7 @@
 const { makeExecutableSchema } = require("@graphql-tools/schema")
 const { merge } = require('lodash')
+const { IS_NOT_PRODUCTION } = require('../utils/config')
 
-const { typeDef: Director, resolvers: directorResolvers } = require('./director')
-const { typeDef: Movie, resolvers: movieResolvers } =require('./movie')
 const { typeDef: Genre, resolvers: genreResolvers } = require('./genre')
 const { typeDef: User, resolvers: userResolvers } = require('./user')
 const { typeDef: Movie_Omdb_Api_Fetched, resolvers: Movie_Omdb_Api_FetchedResolvers } = require('./movie_omdb_api')
@@ -11,6 +10,51 @@ const { typeDef: MovieImdb, resolvers: movieImdbResolvers } = require('./movieIm
 const { typeDef: DirectorImdb, resolvers: directorImdbResolvers } = require('./directorImdb')
 const { typeDef: MovieList, resolvers: movieListResolvers } = require('./movieList')
 
+const { typeDef: TestAndDev, resolvers: TestAndDevResolvers } = require('./testing_and_dev')
+
+const Query = `
+  type Query {
+    _empty: String
+  }
+
+  type Mutation {
+    _empty: String
+  }
+
+  type Subscription {
+    _empty: String
+  }
+`
+
+const schema = makeExecutableSchema({
+  typeDefs: [ 
+    Query, 
+    Genre,
+    User, 
+    Movie_Omdb_Api_Fetched,
+    Movie_Imdb_Api_queried,
+    MovieImdb,
+    DirectorImdb,
+    MovieList,
+    IS_NOT_PRODUCTION ? TestAndDev : ``,
+  ],
+  resolvers: merge(
+    genreResolvers,
+    userResolvers, 
+    Movie_Omdb_Api_FetchedResolvers,
+    Movie_Imdb_Api_queriedResolvers,
+    movieImdbResolvers,
+    directorImdbResolvers,
+    movieListResolvers,
+    IS_NOT_PRODUCTION ? TestAndDevResolvers : {},
+  )
+})
+
+module.exports = schema
+
+
+
+/* old old typeDefs
 const typeDefs = `
   // type Director {
   //   name: String!
@@ -76,44 +120,6 @@ const typeDefs = `
   // }
 
 `
-const Query = `
-  type Query {
-    _empty: String
-  }
 
-  type Mutation {
-    _empty: String
-  }
 
-  type Subscription {
-    _empty: String
-  }
-`
-
-const schema = makeExecutableSchema({
-  typeDefs: [ 
-    Query, 
-    Director, 
-    Movie, 
-    Genre,
-    User, 
-    Movie_Omdb_Api_Fetched,
-    Movie_Imdb_Api_queried,
-    MovieImdb,
-    DirectorImdb,
-    MovieList,
-  ],
-  resolvers: merge(
-    directorResolvers, 
-    movieResolvers, 
-    genreResolvers,
-    userResolvers, 
-    Movie_Omdb_Api_FetchedResolvers,
-    Movie_Imdb_Api_queriedResolvers,
-    movieImdbResolvers,
-    directorImdbResolvers,
-    movieListResolvers,
-  )
-})
-
-module.exports = schema
+*/

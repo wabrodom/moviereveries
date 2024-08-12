@@ -18,7 +18,7 @@ const typeDef = `
     removeMovieList(listId: String!): MovieList
     saveMovieList(listId: String!): MovieList
     unSaveMovieList(listId: String!): MovieList
-    clearMovieList: Int!
+    
   }
 
   type ListItem {
@@ -281,10 +281,7 @@ const resolvers ={
  
     },
 
-    clearMovieList: async() => {
-      await MovieList.deleteMany({})
-      return MovieList.collection.countDocuments()
-    }
+
   }
 }
 

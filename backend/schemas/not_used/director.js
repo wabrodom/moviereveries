@@ -1,5 +1,5 @@
 const { GraphQLError } = require('graphql')
-const Director = require('../models/Director')
+const Director = require('../../models/Director')
 
 const typeDef = `
   extend type Query {
