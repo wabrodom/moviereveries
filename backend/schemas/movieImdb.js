@@ -32,7 +32,7 @@ const typeDef =`
       directorsAddedUse: [DirectorsAddedUseInput]
     ): MovieImdb!
 
-    clearMovieImdb: Int!
+    
   }
 
   extend type Subscription {
@@ -167,13 +167,13 @@ const resolvers = {
 
   Mutation: {
     addMovieImdb: async (root, args, { currentUser }) => {
-      // if ( !currentUser) { 
-      //   throw new GraphQLError('not authenticated', {
-      //     extensions: {
-      //       code: 'BAD_USER_INPUT'
-      //     }
-      //   })
-      // }
+      if ( !currentUser) { 
+        throw new GraphQLError('not authenticated', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        })
+      }
 
       const duplicatedImdbId = await MovieImdb.findOne({ imdb_id: args.imdb_id })
       if (duplicatedImdbId) {
@@ -299,10 +299,7 @@ const resolvers = {
       return populated
     },
     
-    clearMovieImdb: async() => {
-      await MovieImdb.deleteMany({})
-      return MovieImdb.collection.countDocuments()
-    },
+
   },
 
   Subscription: {

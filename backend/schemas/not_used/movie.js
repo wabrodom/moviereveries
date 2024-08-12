@@ -1,7 +1,7 @@
 const { GraphQLError } = require('graphql')
-const Director = require('../models/Director')
-const Movie = require('../models/Movie')
-const User = require('../models/User')
+const Director = require('../../models/Director')
+const Movie = require('../../models/Movie')
+const User = require('../../models/User')
 
 const { PubSub } = require('graphql-subscriptions')
 const pubsub = new PubSub()

@@ -32,7 +32,6 @@ const typeDef = `
 
     changeFavoriteGenre(genre: String!): String!
 
-    clearUser: Int!
   }
 
   interface BasedUser {
@@ -115,7 +114,12 @@ const resolvers = {
 
       return arrayOfObject
     },
-
+    /* 
+      show all of they list, if they deleted but still showed, 
+      indicated that some user have saved the list, 
+      so they just soft deleted.  
+      The list will still saw by them untill they delete again
+    */
     userCreatedMovieList: async (root, args, { currentUser }) => {
       await currentUser.populate({
         path: 'movieLists',
@@ -223,10 +227,6 @@ const resolvers = {
       return user.favoriteGenre
     },
 
-    clearUser: async() => {
-      await User.deleteMany({})
-      return User.collection.countDocuments()
-    },
   }
 
 }

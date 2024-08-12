@@ -1,0 +1,17 @@
+{
+  "name": "moviereveries",
+  "version": "1.0.0",
+  "description": "- [App Purpose](#app-purpose) \r  - [User Benefits](#user-benefits) \r  - [Technologies Used](#technologies-used) \r  - [Minimum Viable Base Functionality](#minimum-viable-base-functionality) \r  - [Actual Take](#actual-take) \r  - [Further Improvements if Time Allows](#further-improvements-if-time-allows)",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test --project chromium",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.46.0",
+    "@types/node": "^22.2.0"
+  }
+}
