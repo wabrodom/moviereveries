@@ -11,7 +11,7 @@ export const TokenExpireContextProvider = ({ children }) => {
   const { token } = useToken()
   const [expireIn, setExpireIn] = useState(0)
 
-  console.log('TokenExpireContextProvider rendered, everytime its state change', expireIn)
+  // console.log('TokenExpireContextProvider rendered, everytime its state change', expireIn)
 
   useEffect(() => {
     const storedToken = localStorage.getItem('moviereveries-user-token')

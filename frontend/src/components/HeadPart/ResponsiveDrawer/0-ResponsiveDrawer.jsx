@@ -92,7 +92,7 @@ function ResponsiveDrawer(props) {
 
   // Remove this const when copying and pasting into your project.
   // const container = window !== undefined ? () => window().document.body : undefined
-  console.log('-- -- ResponsiveDrawer rendered')
+  // console.log('-- -- ResponsiveDrawer rendered')
   return (
     <Box>
       <CssBaseline />

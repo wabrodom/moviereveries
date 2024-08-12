@@ -30,7 +30,7 @@ const Account = () => {
   const [ changeGenre ]  = useMutation(CHANGE_FAVORITE_GENRE, {
     refetchQueries: [ { query: ALL_MOVIES }, { query: CURRENT_USER_FULL }, { query: CURRENT_USER }],
     onError: (error) => {
-      console.log('in Account',error)
+      // console.log('in Account',error)
       // console.log(error.graphQLErrors[0].message)
       notify('error', error.graphQLErrors[0].message)
     },
