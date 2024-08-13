@@ -48,6 +48,7 @@ const start =  async () => {
   
   const server = new ApolloServer({
     schema,
+    introspection: IS_NOT_PRODUCTION,
     plugins: [
       IS_NOT_PRODUCTION
         ? ApolloServerPluginLandingPageLocalDefault({ footer: false })
