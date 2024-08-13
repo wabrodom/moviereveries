@@ -12,6 +12,7 @@ const typeDef =`
     movieImdbCount: Int!
     allMoviesImdb(director: String, genre: String): [MovieImdb]!
     findMoviesImdb(text: String): [MovieImdb]!
+    findMoviesImdbPlusGenre(text: String, genre: String): [MovieImdb]!
     findMoviesImdbByImdb(imdb_id: String): MovieImdb
     findMoviesImdbByDirectorId(directorId: String): [MovieImdb]!
   }
@@ -144,6 +145,53 @@ const resolvers = {
       }
 
       return foundMovies
+    },
+
+    findMoviesImdbPlusGenre: async (root, args) => {
+      if (!args.text && !args.genre) {
+        const allMoviesImdbPopulated = await MovieImdb.find({}).populate('directorsAddedUse')
+        return allMoviesImdbPopulated
+      }
+
+      if (args.text && !args.genre) {
+        const foundMovies = await MovieImdb
+          .find({ 
+            primary_title: 
+              { "$regex": args.text , "$options": "i" } 
+          })
+          .populate('directorsAddedUse')
+  
+        if (foundMovies.length === 0) {
+          const findOriginalTitle = await MovieImdb
+            .find({ 
+              original_title: 
+                { "$regex": args.text , "$options": "i" } 
+            })
+            .populate('directorsAddedUse')
+          return findOriginalTitle
+        }
+  
+        return foundMovies  
+      }
+
+      if (!args.text && args.genre) {
+        const matchGenre = await MovieImdb
+          .find({ genres: 
+            { "$regex": args.genre , "$options": "i" } 
+          })
+          .populate('directorsAddedUse')
+        return matchGenre
+      }
+
+      const matchGenreAndText = await MovieImdb
+        .find({ genres: { "$regex": args.genre , "$options": "i" } })
+        .find({ 
+          primary_title: 
+            { "$regex": args.text , "$options": "i" } 
+        })
+        .populate('directorsAddedUse')
+
+      return matchGenreAndText
     },
 
     findMoviesImdbByImdb: async (root, args) => {
