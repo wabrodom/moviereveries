@@ -12,7 +12,7 @@ const typeDef =`
     movieImdbCount: Int!
     allMoviesImdb(director: String, genre: String): [MovieImdb]!
     findMoviesImdb(text: String): [MovieImdb]!
-    findMoviesImdbPlusGenre(text: String, genre: String): [MovieImdb]!
+    findMoviesImdbPlusGenres(text: String, genres: [String]): [MovieImdb]!
     findMoviesImdbByImdb(imdb_id: String): MovieImdb
     findMoviesImdbByDirectorId(directorId: String): [MovieImdb]!
   }
@@ -147,13 +147,15 @@ const resolvers = {
       return foundMovies
     },
 
-    findMoviesImdbPlusGenre: async (root, args) => {
-      if (!args.text && !args.genre) {
+    findMoviesImdbPlusGenres: async (root, args) => {
+      // const genreLength = args.genre.length
+      // args.genre need to be array length >=1 , $and $or of mongoose not work on empty arr
+      if (!args.text && !args.genres) {
         const allMoviesImdbPopulated = await MovieImdb.find({}).populate('directorsAddedUse')
         return allMoviesImdbPopulated
       }
 
-      if (args.text && !args.genre) {
+      if (args.text && !args.genres) {
         const foundMovies = await MovieImdb
           .find({ 
             primary_title: 
@@ -174,17 +176,27 @@ const resolvers = {
         return foundMovies  
       }
 
-      if (!args.text && args.genre) {
-        const matchGenre = await MovieImdb
-          .find({ genres: 
-            { "$regex": args.genre , "$options": "i" } 
-          })
-          .populate('directorsAddedUse')
+      if (!args.text && args.genres) {
+        const matchGenre = await MovieImdb.find({ 
+          $and: args.genres.map(genre => ({
+            genres: { 
+              $regex: genre, 
+              $options: "i" 
+            }
+          }))
+        })
+        .populate('directorsAddedUse')
         return matchGenre
       }
-
-      const matchGenreAndText = await MovieImdb
-        .find({ genres: { "$regex": args.genre , "$options": "i" } })
+   
+      const matchGenreAndText = await MovieImdb.find({ 
+        $and: args.genres.map(genre => ({
+          genres: { 
+            $regex: genre, 
+            $options: "i" 
+          }
+        }))
+      })
         .find({ 
           primary_title: 
             { "$regex": args.text , "$options": "i" } 
@@ -361,3 +373,12 @@ const resolvers = {
 }
 
 module.exports = { typeDef, resolvers }
+
+
+
+/* 
+  $all value is array of string, no regex 
+  const foundMovies = await MovieImdb.find({ 
+    primary_title: { "$regex": args.text , "$options": "i" } 
+  })
+*/
