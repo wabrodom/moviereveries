@@ -94,6 +94,15 @@ export const FIND_MOVIES = gql`
   ${MOVIE_IMDB_DETAILS}
 `
 
+export const FIND_MOVIE_IMDB_PLUS_GENRE = gql`
+  query FindMoviesImdbPlusGenres($genres: [String], $text: String) {
+    findMoviesImdbPlusGenres(genres: $genres, text: $text) {
+      ...MovieImdbDetails
+      }
+    }
+  ${MOVIE_IMDB_DETAILS}
+`
+
 export const FIND_MOVIE_BY_IMDB = gql`
   query FindMoviesImdbByImdb($imdbId: String) {
     findMoviesImdbByImdb(imdb_id: $imdbId) {
