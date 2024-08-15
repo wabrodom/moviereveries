@@ -40,15 +40,14 @@ function ResponsiveDrawer(props) {
   const mainMenu = [
     { to:'/' , label: 'movies' },
     { to:'/movielist' , label: 'movie lists' },
-    { to:'/directors' , label: 'directors' },
-    { to:'/find' , label: 'find movies' },
   ]
 
   const logedInMenu = [
+    { to:'/movie-outer-api' , label: 'search and add movies to db' },
     { to:'/addlist' , label: 'add movie list' },
     { to:'/recommended' , label: 'recommended' },
-    { to:'/account' , label: 'Your account' },
-    { to:'/movie-outer-api' , label: 'search movies from outside api' },
+    { to:'/account' , label: 'your account' },
+    { to:'/directors' , label: 'directors' },
     { to:'/logout' , label: 'log out' },
   ]
 

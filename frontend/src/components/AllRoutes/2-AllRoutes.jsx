@@ -6,10 +6,8 @@ import {
 import LogIn from '../LogIn/LogIn'
 import SignUp from '../SignUp/SignUp'
 import Directors from '../Directors/Directors'
-import Movies from '../Movies/Movies'
 import DirectorMovies from '../Directors/DirectorMovies'
 import Recommended from '../User/Recommended'
-import FindMovies from '../FindMovies/FindMovies'
 
 import SearchMoviesToAddMain from '../SearchMoviesToAdd/0-SearchMoviesToAddMain'
 import MovieInfo from '../MovieInfo/MovieInfo'
@@ -20,6 +18,7 @@ import MovieListDisplay from '../MovieListDisplay/0-MovieListDisplay'
 import Account from '../User/Account'
 import { useToken } from '../../contexts/TokenContext'
 import SingleMovieList from '../MovieListDisplay/SingleMovieList/SingleMovieList'
+import MoviesFindPlusGenre from '../Movies/MoviesFindPlusGenre'
 
 
 
@@ -30,15 +29,11 @@ const AllRoutes = () => {
 
   return (
     <Routes>
-      <Route path='/' element={<Movies/>} />
-
-      <Route path='/find' element={<FindMovies/>} />
+      <Route path='/' element={<MoviesFindPlusGenre />} />
 
       <Route path='/movie-outer-api/*' element={<SearchMoviesToAddMain hasToken={token !== null} /> } />
 
       <Route path='/movies/:imdbid' element={<MovieInfo /> } />
-
-      <Route path='/directors' element={<Directors />} />
 
       <Route path='/directors/:id' element={<DirectorMovies />} />
 
@@ -57,6 +52,9 @@ const AllRoutes = () => {
       <Route path='/recommended'
         element={token ? <Recommended/> : <Navigate replace to ='/login'/>}
       />
+
+      <Route path='/directors'
+        element={token ? <Directors /> :  <Navigate replace to ='/login'/>} />
 
       <Route path='/login'
         element={token ? <Navigate replace to ='/' /> : <LogIn setToken={setToken} /> }
