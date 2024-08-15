@@ -27,7 +27,9 @@ const NewMovieByImdbId = new Schema({
       ref: 'DirectorImdb'
     }
   ],
-});
+},
+  { timestamps: true }
+);
 
 NewMovieByImdbId.plugin(uniqueValidator)
 

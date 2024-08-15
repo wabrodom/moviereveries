@@ -151,7 +151,12 @@ const resolvers = {
       // const genreLength = args.genre.length
       // args.genre need to be array length >=1 , $and $or of mongoose not work on empty arr
       if (!args.text && !args.genres) {
-        const allMoviesImdbPopulated = await MovieImdb.find({}).populate('directorsAddedUse')
+        const allMoviesImdbPopulated = await MovieImdb.find({})
+          .sort({ createdAt: 1 })
+          .limit(20)
+          .populate('directorsAddedUse')
+
+        console.log(allMoviesImdbPopulated)
         return allMoviesImdbPopulated
       }
 
@@ -161,6 +166,8 @@ const resolvers = {
             primary_title: 
               { "$regex": args.text , "$options": "i" } 
           })
+          .sort({ createdAt: 1 })
+          .limit(20)
           .populate('directorsAddedUse')
   
         if (foundMovies.length === 0) {
@@ -169,6 +176,8 @@ const resolvers = {
               original_title: 
                 { "$regex": args.text , "$options": "i" } 
             })
+            .sort({ createdAt: 1 })
+            .limit(20)
             .populate('directorsAddedUse')
           return findOriginalTitle
         }
@@ -185,6 +194,8 @@ const resolvers = {
             }
           }))
         })
+        .sort({ createdAt: 1 })
+        .limit(20)
         .populate('directorsAddedUse')
         return matchGenre
       }
@@ -201,6 +212,8 @@ const resolvers = {
           primary_title: 
             { "$regex": args.text , "$options": "i" } 
         })
+        .sort({ createdAt: 1 })
+        .limit(20)
         .populate('directorsAddedUse')
 
       return matchGenreAndText
