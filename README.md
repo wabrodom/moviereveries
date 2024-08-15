@@ -91,6 +91,10 @@ However, my actual actions partly deviated from the plan:
 [..🔝..](#movie-reveries-a-comprehensive-overview)
 ## Further Improvements if Time Allows
 
+#### Pagination
+
+Currently using Mongoose's `find` method with the `limit` option to reduce the load on the database. Implementing cursor-based pagination is planned for more efficient data handling.
+
 #### Reduce Re-rendering
 
 Closely observe the state of the overall app to reduce re-rendering by moving custom hooks as close to the consumer components as possible.
@@ -106,6 +110,7 @@ Consider adopting best practices from well-known React applications for improved
 
 Currently using bcrypt (via hash-wasm library) to generate hash in server then store hashes in the database.
 Using jsonwebtoken to sign and decode access tokens for every request between frontend and backend. When a token expired, the user is forced to re-login. Potential improvements include:
+  - Invalidate old tokens when a new token is issued.
   - Implement refresh token concept for better user experience.
   - Consider using Passport.js to cover multiple authentication strategies and increase user coverage.
 
