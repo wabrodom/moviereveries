@@ -31,6 +31,7 @@ const LoginContainer = ({ handleLogin }) => {
     <div>
       <h1>Log In</h1>
       <input
+        data-testid='username'
         placeholder="Username"
         onChange={formik.handleChange('username')}
         value={formik.values.username}
@@ -40,6 +41,7 @@ const LoginContainer = ({ handleLogin }) => {
       )}
 
       <input
+        data-testid='password'
         placeholder="Password"
         onChange={formik.handleChange('password')}
         value={formik.values.password}
