@@ -133,6 +133,12 @@ export const FIND_MOVIE_LIST_BY_ID = gql`
   ${MOVIE_LIST_DETAILS}  
 `
 
+export const GENRE_COUNT = gql`
+  query Query {
+    genreCount
+  }
+`
+
 export const NEW_MOVIE_DETAILS = gql`
    query ($titleId: ID!) {
     title(id: $titleId) {
@@ -296,8 +302,11 @@ export const CURRENT_USER_FULL = gql`
   }
   ${MOVIE_LIST_DETAILS}
 `
-
-
+export const MOVIE_IMDB_COUNT = gql`
+  query Query {
+    movieImdbCount
+  }
+`
 
 export const MOVIE_ADDED = gql`
   subscription {
