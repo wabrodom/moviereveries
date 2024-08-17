@@ -1,5 +1,6 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
+const { IS_TEST_LOCAL } = require('./utils/config');
 
 /**
  * Read environment variables from file.
@@ -27,7 +28,7 @@ module.exports = defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:8888', // when use docker-compose.test.yml
-    baseURL: 'http://localhost:5173',
+    baseURL: IS_TEST_LOCAL ? 'http://localhost:8888' : 'http://localhost:5173',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -72,7 +73,7 @@ module.exports = defineConfig({
   ],
 
   /* Run your local dev server before starting the tests // when use docker-compose.test.yml dont need this*/
-  webServer: [
+  webServer: IS_TEST_LOCAL ? undefined : [
     {
       // Change to the backend directory and run npm command
       command: 'cd ../backend && npm run start:test',

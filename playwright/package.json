@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test --project chromium",
+    "test:local": "cross-env NODE_ENV=testlocal playwright test --project chromium",
     "test:report": "playwright show-report"
   },
   "keywords": [],
@@ -13,5 +14,9 @@
   "devDependencies": {
     "@playwright/test": "^1.46.0",
     "@types/node": "^22.2.0"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5"
   }
 }
