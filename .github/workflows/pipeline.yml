@@ -8,6 +8,13 @@ on:
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-22.04
+    concurrency: deploy-group    # optional: ensure only one action runs at a time
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET}}
+      PORT_FOR_TEST: ${{ secrets.PORT_FOR_TEST }}
+      VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL}}
+      VITE_GRAPHQLWSLINK: ${{ secrets.VITE_GRAPHQLWSLINK}}
     steps:
       - uses: actions/checkout@v4     # checkouts the project source code from Git.
       - uses: actions/setup-node@v4   # set up Node.js, with version 22
@@ -18,21 +25,23 @@ jobs:
         run: |
           cd ./backend
           npm ci
+        env: 
+          TEST_MONGODB_URI: ${{env.TEST_MONGODB_URI}}
+          PORT_FOR_TEST: ${{ env.PORT_FOR_TEST }}
+          JWT_SECRET: ${{ env.JWT_SECRET}}
+
       - name: install dependencies on frontend
         run: |
           cd ./frontend
           npm ci
+        env: 
+          VITE_BACKEND_URL: ${{env.VITE_BACKEND_URL}}
+          VITE_GRAPHQLWSLINK: ${{ env.VITE_GRAPHQLWSLINK }}
      
       - name: check style
         run: |
           cd ./frontend
           npm run lint
-
-
-      - name: e2e test
-        run: |
-          cd ./playwright
-          npm run test
 
       - name: Install Playwright Browsers
         run: |

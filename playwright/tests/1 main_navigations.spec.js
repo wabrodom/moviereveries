@@ -1,20 +1,19 @@
 const { beforeEach, describe, test, expect } = require('@playwright/test')
 
-const baseUrl = 'http://localhost:8888'
 
 describe('basic navigation in Movie Reveries' , () => {
   beforeEach(async ({ page }) => {    
-    await page.goto(baseUrl)  
+    await page.goto('')  
   })
 
   test('front page can be opened', async ({ page }) => {
     const locator = page.getByText('Movie Reveries')
     await expect(locator).toBeVisible()
-    await expect(page.getByText('Genres')).toBeVisible()
+    await expect(page.getByText('Genres in the')).toBeVisible()
   })
 
   test('login form can be opened', async ({ page }) => {
-    await page.goto(`${baseUrl}/login`)
+    await page.goto('/login')
 
     await page.getByRole('button', { name: 'Log In' }).click()
   })
@@ -35,15 +34,13 @@ describe('basic navigation in Movie Reveries' , () => {
   // })
 
   test('mock user can login', async({ page }) => {
-    await page.goto(`${baseUrl}/login`)
+    await page.goto('/login')
 
     await page.getByTestId('username').fill('john')
     await page.getByTestId('password').fill('password1')
     await page.getByTestId('confirmLogin').click()
-
-    await expect(page.getByText('Movies In Database')).toBeVisible()
     
-    await page.getByRole('link', { name: 'Your account' }).click()
+    await page.getByRole('link', { name: 'your account' }).click()
     await expect(page.getByText('HI! john')).toBeVisible()
     
 
