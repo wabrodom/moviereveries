@@ -1,0 +1,50 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4     # checkouts the project source code from Git.
+      - uses: actions/setup-node@v4   # set up Node.js, with version 22
+        with:                         # parameter for the action
+          node-version: '22'
+           
+      - name: install dependencies on backend
+        run: |
+          cd ./backend
+          npm ci
+      - name: install dependencies on frontend
+        run: |
+          cd ./frontend
+          npm ci
+     
+      - name: check style
+        run: |
+          cd ./frontend
+          npm run lint
+
+
+      - name: e2e test
+        run: |
+          cd ./playwright
+          npm run test
+
+      - name: Install Playwright Browsers
+        run: |
+          cd ./playwright
+          npx playwright install --with-deps chromium
+      - name: Run Playwright tests on chromium
+        run: |
+          cd ./playwright
+          npx playwright test --project=chromium
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
