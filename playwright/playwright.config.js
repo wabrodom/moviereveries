@@ -81,7 +81,7 @@ module.exports = defineConfig({
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: 'cd ../frontend && npm run dev -- --host',
+      command: 'cd ../frontend && npm run dev',
       url: 'http://localhost:5173/',
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
