@@ -44,7 +44,7 @@ services:
   nginx:
     image: nginx:1.27
     volumes:
-      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.test.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 8888:80
     container_name: my-app-reverse-proxy-test
