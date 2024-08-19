@@ -20,7 +20,8 @@ jobs:
     env:
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
       JWT_SECRET: ${{ secrets.JWT_SECRET}}
-      PORT: ${{ secrets.PORT_FOR_TEST }}
+      PORT: ${{ secrets.PORT }}
+      OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_BACKEND }}
     steps:
       - name: Check PR_IS_MERGED value. if true should mean the pull is merged
@@ -41,6 +42,7 @@ jobs:
           MONGODB_URI: ${{env.MONGODB_URI}}
           PORT: ${{ env.PORT }}
           JWT_SECRET: ${{ env.JWT_SECRET}}
+          OMDB_API_KEY: ${{ env.OMDB_API_KEY }}
 
       - name: use GitHub Action for flyctl 
         uses: superfly/flyctl-actions/setup-flyctl@master
