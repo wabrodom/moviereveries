@@ -22,6 +22,7 @@ jobs:
       PORT_FOR_TEST: ${{ secrets.PORT_FOR_TEST }}
       VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL}}
       VITE_GRAPHQLWSLINK: ${{ secrets.VITE_GRAPHQLWSLINK}}
+      OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
     steps:
       - uses: actions/checkout@v4     # checkouts the project source code from Git.
       - uses: actions/setup-node@v4   # set up Node.js, with version 22
@@ -36,6 +37,7 @@ jobs:
           TEST_MONGODB_URI: ${{env.TEST_MONGODB_URI}}
           PORT_FOR_TEST: ${{ env.PORT_FOR_TEST }}
           JWT_SECRET: ${{ env.JWT_SECRET}}
+          OMDB_API_KEY: ${{ env.OMDB_API_KEY }}
 
       - name: install dependencies on frontend
         run: |
