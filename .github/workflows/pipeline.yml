@@ -8,10 +8,14 @@ on:
     branches: [main]
     types: [opened, synchronize]
 
+concurrency:
+  group: ci-${{ github.ref }} # eg. ci-refs/heads/main
+  cancel-in-progress: true
+
 jobs:
   built_and_test:
     runs-on: ubuntu-22.04
-    concurrency: deploy-group    # optional: ensure only one action runs at a time
+    concurrency: deploy-group    #  ensure only only a single job or workflow using the same concurrency group will run at a time.
     env:
       TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
       JWT_SECRET: ${{ secrets.JWT_SECRET}}
@@ -56,12 +60,12 @@ jobs:
           cd ./playwright
           npx playwright test --project=chromium
           
-      # - uses: actions/upload-artifact@v4
-      #   if: ${{ !cancelled() }}
-      #   with:
-      #     name: playwright-report
-      #     path: playwright-report/
-      #     retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
      
           
       - name: no failed steps
