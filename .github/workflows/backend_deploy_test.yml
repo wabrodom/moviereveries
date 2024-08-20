@@ -1,0 +1,37 @@
+name: backend deploy
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+defaults:
+  run:
+    working-directory: ./backend
+
+  
+jobs:
+  backend_deployment:
+    runs-on: ubuntu-22.04
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET}}
+      PORT: ${{ secrets.PORT }}
+      OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_BACKEND }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: 
+          node-version: '22'
+
+      - name: install dependencies on backend
+        run: |
+          npm ci
+
+      - name: use GitHub Action for flyctl 
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --remote-only
