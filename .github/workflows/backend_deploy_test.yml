@@ -22,7 +22,8 @@ jobs:
 
     steps:
       - name: Verify MONGODB_URI env
-        run: echo "MONGOFB_URI: ${{ secrets.MONGODB_URI }}"
+        run: |
+          echo "MONGOFB_URI: ${{ secrets.MONGODB_URI }}"
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
