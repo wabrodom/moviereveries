@@ -9,7 +9,7 @@ defaults:
   run:
     working-directory: ./backend
 
-  
+
 jobs:
   backend_deployment:
     runs-on: ubuntu-22.04
