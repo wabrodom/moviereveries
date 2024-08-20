@@ -1,4 +1,4 @@
-name: backend deploy
+name: Test backend deploy
 
 on:
   pull_request:
@@ -21,14 +21,17 @@ jobs:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_BACKEND }}
 
     steps:
+      - name: Verify MONGODB_URI env
+        run: echo "MONGOFB_URI: ${{ secrets.MONGODB_URI }}"
+
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: 
           node-version: '22'
-
-      - name: install dependencies on backend
-        run: |
-          npm ci
+      
+      # - name: install dependencies on backend
+      #   run: |
+      #     npm ci
 
       - name: use GitHub Action for flyctl 
         uses: superfly/flyctl-actions/setup-flyctl@master
