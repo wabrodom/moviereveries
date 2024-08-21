@@ -1,0 +1,15 @@
+name: test conditions
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  test-conditions:
+    if: ${{ (contains(join(github.event.commits.*.message), '#frontdeploy') || contains(join(github.event.commits.*.message), '#fulldeploy')) }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display message
+        run: echo "frontdeploy or fulldeploy in the commit"
