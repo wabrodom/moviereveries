@@ -11,10 +11,18 @@ defaults:
 
 jobs:
   frontend_deployment:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && (contains(join(github.event.commits.*.message), '#frontdeploy') || contains(join(github.event.commits.*.message), '#fulldeploy')) }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && contains(join(github.event.commits.*.message), '#frontdeploy') }}
     runs-on: ubuntu-22.04
     concurrency: frontend-deploy-group
     steps:
+      - name: display commit message
+        run: |
+          echo ${{ join(github.event.commits.*.message, ', ') }}
+
+      - name: frontdeploy in commit
+        if: ${{ contains(join(github.event.commits.*.message), '#frontdeploy') }}
+        run: echo "yes frontdeploy in the commit"
+
       - uses: actions/checkout@v4
 
       - name: use GitHub Action for flyctl 
