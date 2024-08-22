@@ -23,5 +23,6 @@ RUN npm run build
 FROM nginx:1.27-alpine AS production-stage
 
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
