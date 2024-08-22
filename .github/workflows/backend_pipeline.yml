@@ -14,7 +14,7 @@ env:
   
 jobs:
   backend_deployment:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && (contains(join(github.event.commits.*.message), '#backdeploy') || contains(join(github.event.commits.*.message), '#fulldeploy')) }}
     runs-on: ubuntu-22.04
     concurrency: backend-deploy-group
     steps:
