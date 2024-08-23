@@ -8,6 +8,7 @@ defaults:
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v4
     - name: use GitHub Action for flyctl 
       uses: superfly/flyctl-actions/setup-flyctl@master
 

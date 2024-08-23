@@ -78,8 +78,6 @@ jobs:
     if: ${{ needs.built_and_test.result == 'success' && github.event_name == 'push'}}
     runs-on: ubuntu-22.04
     steps: 
-      - uses: actions/checkout@v4
-
       - name: frontdeploy in commit -> deploy frontend
         if: ${{ contains(join(github.event.commits.*.message), '#frontdeploy') }}
         uses: ./.github/actions/frontend-composite-action
