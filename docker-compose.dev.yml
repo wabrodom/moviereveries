@@ -6,8 +6,8 @@ services:
       context: ./frontend
       dockerfile: dev.Dockerfile
     environment:
-      - VITE_BACKEND_URL=http://localhost:9999/api/api
-      - VITE_GRAPHQLWSLINK=ws://localhost:9999/api/api
+      - VITE_BACKEND_URL=http://localhost:9090/api/api
+      - VITE_GRAPHQLWSLINK=ws://localhost:9090/api/api
     volumes:
       - ./frontend/:/usr/src/app
       - /usr/src/app/node_modules
@@ -46,7 +46,7 @@ services:
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
     ports:
-      - 9999:80
+      - 9090:80
     container_name: my-app-reverse-proxy
     depends_on:
       - app

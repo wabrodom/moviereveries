@@ -68,8 +68,31 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-     
-          
+  
       - name: no failed steps
         if: success()
         run: echo "no failed steps"
+
+  deployment:
+    needs: [built_and_test]
+    if: ${{ needs.built_and_test.result == 'success' && github.event_name == 'push'}}
+    runs-on: ubuntu-22.04
+    steps: 
+      - uses: actions/checkout@v4
+
+      - name: frontdeploy in commit -> deploy frontend
+        if: ${{ contains(join(github.event.commits.*.message), '#frontdeploy') }}
+        uses: ./.github/actions/frontend-composite-action
+
+      - name: backdeploy in commit -> deploy backend
+        if: ${{ contains(join(github.event.commits.*.message), '#backdeploy') }}
+        uses: ./.github/actions/backend-composite-action
+
+      - name: fulldeploy in commit -> 1.deploy backend
+        if: ${{ contains(join(github.event.commits.*.message), '#fulldeploy') }}
+        uses: ./.github/actions/backend-composite-action
+      - name: fulldeploy in commit -> 2.deploy frontend
+        if: ${{ contains(join(github.event.commits.*.message), '#fulldeploy') }}
+        uses: ./.github/actions/frontend-composite-action/
+
+  

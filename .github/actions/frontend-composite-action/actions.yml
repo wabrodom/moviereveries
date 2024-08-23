@@ -1,0 +1,17 @@
+name: 'frontend-deploy-composite-action'
+description: 'deploy frontend'
+
+defaults:
+  run:
+    working-directory: ./frontend
+
+runs:
+  using: "composite"
+  steps:
+    - name: use GitHub Action for flyctl 
+      uses: superfly/flyctl-actions/setup-flyctl@master
+
+    - name: Deploy to Fly.io
+      run: flyctl deploy --remote-only
+      env:
+        FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_FRONTEND }}
