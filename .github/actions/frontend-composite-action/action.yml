@@ -4,7 +4,8 @@ description: 'deploy frontend'
 defaults:
   run:
     working-directory: ./frontend
-    shell: bash 
+    shell: bash
+
 inputs:
   FLY_API_TOKEN:
     required: true

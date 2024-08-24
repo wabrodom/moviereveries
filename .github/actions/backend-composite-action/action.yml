@@ -4,7 +4,8 @@ description: 'deploy backend'
 defaults:
   run:
     working-directory: ./backend
-    shell: bash 
+    shell: bash
+
 inputs:
   FLY_API_TOKEN:
     required: true
