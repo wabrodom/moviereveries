@@ -1,9 +1,9 @@
 name: 'backend-deploy-composite-action'
 description: 'deploy backend'
 
-defaults:
-  run:
-    working-directory: ./backend
+# defaults:
+#   run:
+#     working-directory: ./backend
 
 inputs:
   FLY_API_TOKEN:
@@ -17,6 +17,7 @@ runs:
       uses: superfly/flyctl-actions/setup-flyctl@master
 
     - name: Deploy to Fly.io
+      working-directory: ./backend
       run: flyctl deploy --remote-only
       shell: bash
       env:
