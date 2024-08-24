@@ -83,16 +83,25 @@ jobs:
       - name: frontdeploy in commit -> deploy frontend
         if: ${{ contains(join(github.event.commits.*.message), '#frontdeploy') }}
         uses: ./.github/actions/frontend-composite-action
+        with: 
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_FRONTEND }}
 
       - name: backdeploy in commit -> deploy backend
         if: ${{ contains(join(github.event.commits.*.message), '#backdeploy') }}
         uses: ./.github/actions/backend-composite-action
+        with:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_BACKEND }}
 
       - name: fulldeploy in commit -> 1.deploy backend
         if: ${{ contains(join(github.event.commits.*.message), '#fulldeploy') }}
         uses: ./.github/actions/backend-composite-action
+        with:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_BACKEND }}
+          
       - name: fulldeploy in commit -> 2.deploy frontend
         if: ${{ contains(join(github.event.commits.*.message), '#fulldeploy') }}
         uses: ./.github/actions/frontend-composite-action/
+        with: 
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_FRONTEND }}
 
   
