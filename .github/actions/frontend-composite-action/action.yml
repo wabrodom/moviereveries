@@ -4,7 +4,6 @@ description: 'deploy frontend'
 defaults:
   run:
     working-directory: ./frontend
-    shell: bash
 
 inputs:
   FLY_API_TOKEN:
@@ -16,8 +15,10 @@ runs:
 
     - name: use GitHub Action for flyctl 
       uses: superfly/flyctl-actions/setup-flyctl@master
+      shell: bash
 
     - name: Deploy to Fly.io
       run: flyctl deploy --remote-only
+      shell: bash
       env:
         FLY_API_TOKEN: ${{ inputs.FLY_API_TOKEN }}
