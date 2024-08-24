@@ -15,7 +15,6 @@ runs:
 
     - name: use GitHub Action for flyctl 
       uses: superfly/flyctl-actions/setup-flyctl@master
-      shell: bash
 
     - name: Deploy to Fly.io
       run: flyctl deploy --remote-only
