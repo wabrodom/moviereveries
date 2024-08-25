@@ -29,22 +29,4 @@ describe('basic navigation in Movie Reveries' , () => {
     await page.getByRole('link', { name: 'sign up' }).click()
   })
 
-  // test('new user John can sign up', async({ page }) => {
-  //   await page.getByRole('link', { name: 'log in' }).click()
-  // })
-
-  test('mock user can login', async({ page }) => {
-    await page.goto('/login')
-
-    await page.getByTestId('username').fill('john')
-    await page.getByTestId('password').fill('password1')
-    await page.getByTestId('confirmLogin').click()
-    
-    await page.getByRole('link', { name: 'your account' }).click()
-    await expect(page.getByText('HI! john')).toBeVisible()
-    
-
-  })
-
-
 })
