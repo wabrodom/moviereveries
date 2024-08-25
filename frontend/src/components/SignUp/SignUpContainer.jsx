@@ -45,6 +45,7 @@ const SingUpContainer = ({ handleSubmit }) => {
         <div>
           <input
             placeholder="Username"
+            data-testid='signup-username'
             onChange={formik.handleChange('username')}
             value={formik.values.username}
           />
@@ -56,6 +57,7 @@ const SingUpContainer = ({ handleSubmit }) => {
         <div>
           <input
             placeholder="Name"
+            data-testid='signup-name'
             onChange={formik.handleChange('name')}
             value={formik.values.name}
           />
@@ -67,6 +69,7 @@ const SingUpContainer = ({ handleSubmit }) => {
         <div>
           <input
             placeholder="Password"
+            data-testid='signup-password'
             onChange={formik.handleChange('password')}
             value={formik.values.password}
             type='password'
@@ -79,9 +82,10 @@ const SingUpContainer = ({ handleSubmit }) => {
         <div>
           <input
             placeholder="PasswordConfirm"
+            data-testid='signup-password-confirm'
             onChange={formik.handleChange('passwordConfirm')}
             value={formik.values.passwordConfirm}
-            type='passwordConfirm'
+            type='password'
           />
           {formik.touched.passwordConfirm && formik.errors.passwordConfirm && (
             <span >{formik.errors.passwordConfirm}</span>
@@ -91,17 +95,17 @@ const SingUpContainer = ({ handleSubmit }) => {
 
         <div>
           <input
-            placeholder="favoriteGenre"
+            placeholder="FavoriteGenre"
+            data-testid='signup-favorite-genre'
             onChange={formik.handleChange('favoriteGenre')}
             value={formik.values.favoriteGenre}
-            type='favoriteGenre'
           />
           {formik.touched.favoriteGenre && formik.errors.favoriteGenre && (
             <span >{formik.errors.favoriteGenre}</span>
           )}
         </div>
 
-        <button type="submit">
+        <button type="submit" data-testid='signup-submit'>
             Sign up
         </button>
 

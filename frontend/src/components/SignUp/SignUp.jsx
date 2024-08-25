@@ -4,10 +4,10 @@ import { SIGNUP, LOGIN } from '../../queries'
 import useNotification from '../../contexts/NotificationContext/useNotification'
 
 const SignUp = ({ setToken }) => {
-  const { notification } = useNotification()
+  const { notify } = useNotification()
   const [signup] = useMutation(SIGNUP, {
     onError: (error) => {
-      notification('error', error.graphQLErrors[0].message)
+      notify('error', error.graphQLErrors[0].message)
     }
   })
   const [login] = useMutation(LOGIN, {
@@ -17,7 +17,7 @@ const SignUp = ({ setToken }) => {
       localStorage.setItem('moviereveries-user-token', token)
     },
     onError: (error) => {
-      notification('error', error.graphQLErrors[0].message)
+      notify('error', error.graphQLErrors[0].message)
     }
   })
 
