@@ -164,10 +164,9 @@ const resolvers = {
 
       const user = new User({ 
         username: args.username,
-        name: args.username,
+        name: args.name,
         favoriteGenre: args.favoriteGenre || 'mystery',
         passwordHash: passwordHash,
-        movies: [],
       })
     
       return user.save().catch(error => {
