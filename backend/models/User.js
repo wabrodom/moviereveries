@@ -15,9 +15,8 @@ const userSchema = new mongoose.Schema({
   },
   favoriteGenre: {
     type: String,
+    minLengh: 3,
     require: true,
-    default: 'memoir',
-    minLengh: 3
   },
   passwordHash : {
     type: String,
