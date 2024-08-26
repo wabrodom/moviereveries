@@ -1,8 +1,8 @@
-const { beforeEach, describe, test, expect } = require('@playwright/test')
+const { test, expect } = require('@playwright/test')
 
 
-describe('basic navigation in Movie Reveries' , () => {
-  beforeEach(async ({ page }) => {    
+test.describe('basic navigation in Movie Reveries' , () => {
+  test.beforeEach(async ({ page }) => {    
     await page.goto('')  
   })
 

@@ -15,7 +15,7 @@ const Notification = ({ severity, text }) =>  {
     return null
   }
   return (
-    <Stack sx={notificationStyle} spacing={2}>
+    <Stack sx={notificationStyle} spacing={2} className='notification'>
       <Alert severity={severity}>{text}</Alert>
     </Stack>
   )
