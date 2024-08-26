@@ -42,10 +42,24 @@ const SearchMoviesContainer =  ( { onSubmit, oldSearchQuery }) => {
 const SearchMoviesForm = ({ onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
-      <FormikInput name='title' placeholder='title' />
-      <FormikInput name='type' placeholder='type' />
-      <FormikInput name='year' placeholder='year' />
-      <button type='submit'>search for movies</button>
+      <FormikInput
+        name='title'
+        placeholder='title'
+        data-testid='search-outer-api-title'
+      />
+      <FormikInput name='type'
+        placeholder='type'
+        data-testid='search-outer-api-type'
+      />
+      <FormikInput name='year'
+        placeholder='year'
+        data-testid='search-outer-api-year'
+      />
+      <button type='submit'
+        data-testid='search-outer-api-submit'
+      >
+        search for movies
+      </button>
     </form>
   )
 }
