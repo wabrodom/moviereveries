@@ -76,8 +76,8 @@ module.exports = defineConfig({
   webServer: IS_TEST_LOCAL ? undefined : [
     {
       // Change to the backend directory and run npm command
-      command: 'cd ../backend && npm run start:test',
-      url: 'http://localhost:4002/api',
+      command: 'cd ../backend && npm run start:test',   //  NODE_ENV=test
+      url: 'http://localhost:4002/', // when run in nginx passed to /api, just remove /api
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
     },
