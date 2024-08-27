@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test')
 const { BACKEND_ENDPOINT } = require('../utils/config')
 
-test.describe.only('can sign up and log in' , () => {
+test.describe('can sign up and log in' , () => {
   const mockUser = {
     username: "john",
     name: "jonathan",  
