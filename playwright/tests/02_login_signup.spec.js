@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test')
 const { BACKEND_ENDPOINT } = require('../utils/config')
 
-test.describe('can sign up and log in' , () => {
+test.describe.only('can sign up and log in' , () => {
   const mockUser = {
     username: "john",
     name: "jonathan",  
@@ -11,7 +11,7 @@ test.describe('can sign up and log in' , () => {
 
   test.beforeEach(async ({ page, request }) => {
 
-    await request.post(BACKEND_ENDPOINT, {
+    const clearData = await request.post(BACKEND_ENDPOINT, {
       data: { 
         query: `
           mutation Mutation {
@@ -24,8 +24,10 @@ test.describe('can sign up and log in' , () => {
         `
       }  
     })
+    const wantedData = await clearData.json()
+    console.log('mutation clea response', wantedData)
 
-    await request.post(BACKEND_ENDPOINT, {
+    const registered = await request.post(BACKEND_ENDPOINT, {
       data: {
         query: `
           mutation CreateUser($username: String!, $name: String!, $favoriteGenre: String!, $password: String!) {
@@ -47,6 +49,9 @@ test.describe('can sign up and log in' , () => {
       }
 
     })
+    const resiteredResponse = await registered.json()
+
+    console.log("registered", resiteredResponse)
   })
 
 
