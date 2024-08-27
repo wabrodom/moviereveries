@@ -77,15 +77,15 @@ However, my actual actions partly deviated from the plan:
 
 1. I set up and developed the application in containers using Docker.
 2. I haven't implemented Test-Driven Development (TDD) practices.
-3. End-to-end tests have not been implemented yet.
-4. CI/CD implementation is still in progress.
+3. End-to-end tests is still in progress.
+4. CI/CD implementation is competent.
 ```
 
 ###  My current plan is to:
-1. Implement all base functionality of the app.
-2. Write tests after completing the functionality.
-3. Reduce manual testing. Use End-to-End (e2e) Testing
-4. Proceed with setting up the CI/CD pipeline once testing is in place. 
+1. Implement all base functionality of the app.✅
+2. Write tests after completing the functionality.⬜️
+3. Reduce manual testing. Use End-to-End (e2e) Testing✅
+4. Proceed with setting up the CI/CD pipeline once testing is in place. ✅
 
 
 [..🔝..](#movie-reveries-a-comprehensive-overview)
