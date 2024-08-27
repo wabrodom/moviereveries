@@ -7,6 +7,7 @@
  - [Further Improvements if Time Allows](#further-improvements-if-time-allows) 
 
 
+
 ## App Purpose
 
 This application allows users to add new movies to the database. Once a movie is in the database, users can create lists of these movies and share them with others. The main features include:
@@ -15,6 +16,8 @@ This application allows users to add new movies to the database. Once a movie is
 - [x] **Create Movie Lists**: Users can select movies from the database to make custom lists.
 - [x] **Share Lists**: Users have the option to share their created lists with others.
 - [x] **Download Lists**: Users can download their movie lists for offline access.
+
+> Visit: https://movie-reveries.fly.dev/
 
 ### User Benefits
 
