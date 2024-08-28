@@ -25,6 +25,8 @@ test.describe('can sign up and log in' , () => {
       }  
     })
 
+
+    // const registered = 
     await request.post(BACKEND_ENDPOINT, {
       data: {
         query: `
@@ -47,6 +49,8 @@ test.describe('can sign up and log in' , () => {
       }
 
     })
+    // const resiteredResponse = await registered.json()
+
   })
 
 
@@ -57,7 +61,10 @@ test.describe('can sign up and log in' , () => {
     await page.getByTestId('password').fill(mockUser.password)
     await page.getByTestId('confirmLogin').click()
     
-    await page.getByRole('link', { name: 'your account' }).click()
+    const yourAccount = page.getByRole('link', { name: 'your account' })
+    await expect(yourAccount).toBeVisible()
+    await yourAccount.click()
+
     await expect(page.getByText(mockUser.name)).toBeVisible()
   })
 
@@ -71,7 +78,10 @@ test.describe('can sign up and log in' , () => {
     await page.getByTestId('signup-favorite-genre').fill('mystery')
     await page.getByTestId('signup-submit').click()
 
-    await page.getByRole('link', { name: 'your account' }).click()
+    const yourAccount = page.getByRole('link', { name: 'your account' })
+    await expect(yourAccount).toBeVisible()
+    await yourAccount.click()
+
     await expect(page.getByText('Chris Wolstenholme')).toBeVisible()
   })
 })

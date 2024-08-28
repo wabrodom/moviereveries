@@ -80,7 +80,9 @@ test.describe('user can add movies to db' , () => {
     const notification = page.locator('.notification')
     await expect(notification).toContainText(/Added/i)
 
-    //add same movie again -> 'the movie already in the database'
+    //add same movie again make sure it trigger notification -> 'the movie already in the database'
+    await addToDbButton.click()
+    await addToDbButton.click()
     await addToDbButton.click()
     const notification2 = page.locator('.notification')
     await expect(notification2).toContainText(/already/i)
