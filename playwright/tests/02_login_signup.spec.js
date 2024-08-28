@@ -11,7 +11,7 @@ test.describe('can sign up and log in' , () => {
 
   test.beforeEach(async ({ page, request }) => {
 
-    const clearData = await request.post(BACKEND_ENDPOINT, {
+    await request.post(BACKEND_ENDPOINT, {
       data: { 
         query: `
           mutation Mutation {
@@ -24,10 +24,10 @@ test.describe('can sign up and log in' , () => {
         `
       }  
     })
-    const wantedData = await clearData.json()
-    console.log('mutation clea response', wantedData)
 
-    const registered = await request.post(BACKEND_ENDPOINT, {
+
+    // const registered = 
+    await request.post(BACKEND_ENDPOINT, {
       data: {
         query: `
           mutation CreateUser($username: String!, $name: String!, $favoriteGenre: String!, $password: String!) {
@@ -49,9 +49,8 @@ test.describe('can sign up and log in' , () => {
       }
 
     })
-    const resiteredResponse = await registered.json()
+    // const resiteredResponse = await registered.json()
 
-    console.log("registered", resiteredResponse)
   })
 
 
@@ -62,7 +61,10 @@ test.describe('can sign up and log in' , () => {
     await page.getByTestId('password').fill(mockUser.password)
     await page.getByTestId('confirmLogin').click()
     
-    await page.getByRole('link', { name: 'your account' }).click()
+    const yourAccount = page.getByRole('link', { name: 'your account' })
+    await expect(yourAccount).toBeVisible()
+    await yourAccount.click()
+
     await expect(page.getByText(mockUser.name)).toBeVisible()
   })
 
@@ -76,7 +78,10 @@ test.describe('can sign up and log in' , () => {
     await page.getByTestId('signup-favorite-genre').fill('mystery')
     await page.getByTestId('signup-submit').click()
 
-    await page.getByRole('link', { name: 'your account' }).click()
+    const yourAccount = page.getByRole('link', { name: 'your account' })
+    await expect(yourAccount).toBeVisible()
+    await yourAccount.click()
+
     await expect(page.getByText('Chris Wolstenholme')).toBeVisible()
   })
 })
