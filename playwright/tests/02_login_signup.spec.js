@@ -65,7 +65,6 @@ test.describe('can sign up and log in' , () => {
     await expect(yourAccount).toBeVisible()
     await yourAccount.click()
 
-    await page.screenshot({ path: 'screenshot.png', fullPage: true })
     await expect(page.getByText(/hi!/i)).toBeVisible({ timeout: 10000 })
   })
 
