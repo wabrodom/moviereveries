@@ -77,13 +77,13 @@ module.exports = defineConfig({
     {
       // Change to the backend directory and run npm command
       command: 'cd ../backend && npm run start:test',   //  NODE_ENV=test
-      url: 'http://localhost:4002/', // when run in nginx passed to /api, just remove /api
+      url: 'http://localhost:4002', // when run in nginx passed to /api, just remove /api
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
     },
     {
       command: 'cd ../frontend && npm run dev',
-      url: 'http://localhost:5173/',
+      url: 'http://localhost:5173',
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
     },
