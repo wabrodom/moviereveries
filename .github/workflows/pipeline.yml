@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   built_and_test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     concurrency: deploy-group    #  ensure only only a single job or workflow using the same concurrency group will run at a time.
     env:
       TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}

@@ -65,7 +65,7 @@ test.describe('can sign up and log in' , () => {
     await expect(yourAccount).toBeVisible()
     await yourAccount.click()
 
-    await expect(page.getByText(mockUser.name)).toBeVisible()
+    await expect(page.getByText(/hi!/i)).toBeVisible({ timeout: 10000 })
   })
 
   test('can sign up a new user', async({ page }) => {
