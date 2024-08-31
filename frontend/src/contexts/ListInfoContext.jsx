@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 const ListInfoContext = createContext()
 
@@ -17,8 +17,17 @@ export const ListInfoContextProvider = ({ children }) => {
     }
   ]
 
-  const [listInfo, setListInfo] = useState(initialState)
+  const [listInfo, setListInfo] = useState(() => {
+    const savedListInfo = sessionStorage.getItem('listInfo')
+    return savedListInfo ? JSON.parse(savedListInfo) : initialState
+  })
   const clearListIfo = () => setListInfo(initialState)
+
+
+  useEffect(() => {
+    sessionStorage.setItem('listInfo', JSON.stringify(listInfo))
+  }, [listInfo])
+
 
   return (
     <ListInfoContext.Provider value={{ listInfo, setListInfo, clearListIfo }}>

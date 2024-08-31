@@ -23,9 +23,13 @@ import MoviesFindPlusGenre from '../Movies/MoviesFindPlusGenre'
 
 
 const AllRoutes = () => {
-  const { token, setToken } = useToken()
+  const { token, setToken, tokenReady } = useToken()
 
   // console.log('-- Allroute rendered when token change' , token)
+
+  if (tokenReady === false ) {
+    return <div>Loading...</div>
+  }
 
   return (
     <Routes>

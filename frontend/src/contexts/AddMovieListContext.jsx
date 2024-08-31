@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 const AddMovieListContext = createContext()
 
@@ -6,8 +6,15 @@ const AddMovieListContext = createContext()
 export const useAddMovieList = () => useContext(AddMovieListContext)
 
 export const AddMovieListContextProvider = ({ children }) => {
-  const [movieList, setMovieList] = useState([])
+  const [movieList, setMovieList] = useState(() => {
+    const savedMovieList = sessionStorage.getItem('movieList')
+    return savedMovieList ? JSON.parse(savedMovieList) : []
+  })
   const clearMovieLists = () => setMovieList([])
+
+  useEffect(() => {
+    sessionStorage.setItem('movieList', JSON.stringify(movieList))
+  },[movieList] )
 
   return (
     <AddMovieListContext.Provider value={{ movieList, setMovieList, clearMovieLists }}>

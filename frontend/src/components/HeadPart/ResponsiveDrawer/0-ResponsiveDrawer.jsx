@@ -43,12 +43,12 @@ function ResponsiveDrawer(props) {
   ]
 
   const logedInMenu = [
-    { to:'/movie-outer-api' , label: 'search and add movies to db' },
-    { to:'/addlist' , label: 'add movie list' },
-    { to:'/recommended' , label: 'recommended' },
-    { to:'/account' , label: 'your account' },
-    { to:'/directors' , label: 'directors' },
-    { to:'/logout' , label: 'log out' },
+    { to:'/movie-outer-api' , label: 'search and add movies to db', testid: 'link-movie-outer-api' },
+    { to:'/addlist' , label: 'add movie list' , testid: 'link-addlist' },
+    { to:'/recommended' , label: 'recommended' , testid: 'link-recommended' },
+    { to:'/account' , label: 'your account', testid: 'link-account' },
+    { to:'/directors' , label: 'directors', testid: 'link-directors' },
+    { to:'/logout' , label: 'log out', testid: 'link-logout' },
   ]
 
   const noToken = [
