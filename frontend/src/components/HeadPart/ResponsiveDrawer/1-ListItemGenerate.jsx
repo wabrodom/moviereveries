@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 const ListItemGenerate = ({ obj, index, onClick }) => {
   return (
     <ListItem disablePadding>
-      <ListItemButton component={Link} to={obj.to} onClick={onClick} data-testid={obj.label}>
+      <ListItemButton component={Link} to={obj.to} onClick={onClick} data-testid={obj.testid}>
         <ListItemIcon>
           {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
         </ListItemIcon>

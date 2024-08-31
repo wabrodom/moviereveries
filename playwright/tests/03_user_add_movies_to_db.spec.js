@@ -59,7 +59,11 @@ test.describe('user can add movies to db' , () => {
     await expect(page.getByText(/in the Database/i)).toBeVisible()
   })
 
-  test('user can search movie from outer API and add result to db', async({ page }) => {
+    /*
+    * the api is likely down in day time UTC +7, you can test in the evening .So test can be flaky 
+    * disable  for now
+    */
+  test.fixme('user can search movie from outer API and add result to db', async({ page }) => {
     await page.goto('/movie-outer-api')
 
     await page.getByTestId('search-outer-api-title').fill('god father')
@@ -70,6 +74,7 @@ test.describe('user can add movies to db' , () => {
     const moreDetails = await page.getByText('more detail').all()
 
     // grab the first index and click
+  
     await moreDetails[0].click()
     await expect(page.getByText(/Category/i)).toBeVisible()
 

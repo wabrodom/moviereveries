@@ -19,8 +19,9 @@ const AddMovieList = () => {
     onCompleted: () => notify('success', `Added your new list "${listName}" to DB`),
     update: (cache, response) => {
       cache.updateQuery({ query: ALL_MOVIES_LIST }, (data) => {
+        const existingList = data?.allMovieLists || []
         return {
-          allMovieLists: data.allMovieLists.concat(response.data.addMovieList)
+          allMovieLists: existingList.concat(response.data.addMovieList)
         }
       })
     },

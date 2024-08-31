@@ -107,7 +107,7 @@ const NewMovieToAdd = () => {
       'postersUse': postersModify,
       'directorsAddedUse': directorAddedModify
     }
-    // console.log(variables)
+
     addMovieImdb({ variables })
   }
 

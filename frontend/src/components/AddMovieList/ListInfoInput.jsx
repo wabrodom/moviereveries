@@ -32,6 +32,23 @@ const ListInfoInput = ({ name, label, trigger }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger])
 
+  if (name === 'description') {
+    return (
+      <div>
+        <p>
+          { label }:
+        </p>
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value) }
+          rows="3" cols="33"
+        >
+        ...
+        </textarea>
+      </div>
+    )
+  }
+
 
   return (
     <label>

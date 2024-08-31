@@ -46,7 +46,11 @@ const AddMovieListContainer = ({ handleAddMovie, disabledSubmit }) => {
     clearListIfo()
   }
 
-  const ListNameAndDescription = ['listName', 'description']
+  const ListNameAndDescription = [
+    { name: 'listName', label: 'List Name' },
+    { name: 'description', label: 'Your Description' }
+  ]
+
   const centerButton = { margin: 'auto' }
   const isDisabled = movieList.length === 0 || disabledSubmit
 
@@ -59,10 +63,10 @@ const AddMovieListContainer = ({ handleAddMovie, disabledSubmit }) => {
             ListNameAndDescription.map(e => {
               return (
 
-                <div key={e} >
+                <div key={e.name} >
                   <ListInfoInput
-                    name={e}
-                    label={e}
+                    name={e.name}
+                    label={e.label}
                     trigger={trigger}
                   />
                 </div>
