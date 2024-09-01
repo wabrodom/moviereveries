@@ -51,6 +51,9 @@ jobs:
         run: |
           cd ./frontend
           npm run lint
+          
+      - name: Fetch all branches
+        run: git fetch --all
 
       - name: Install Playwright Browsers
         run: |
