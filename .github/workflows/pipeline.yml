@@ -53,7 +53,7 @@ jobs:
           npm run lint
           
       - name: Fetch all branches
-        run: git fetch --all
+        run: git fetch origin +refs/heads/*:refs/remotes/origin/*
 
       - name: Install Playwright Browsers
         run: |
