@@ -9,6 +9,7 @@ import {
   Box,
   Typography,
 } from '@mui/material'
+import { Link } from 'react-router-dom'
 import ButtonSaveList from './ButtonSaveList'
 import { useLocation } from 'react-router-dom'
 import TableCellHead from '../Common/TypoGraphy/TableCellHead'
@@ -47,7 +48,11 @@ const SingleMovieListBody = ({ list }) => {
           <TableBody>
             {list.list.map((movie) => (
               <TableRow key={movie.movieId}>
-                <TableCell>{movie.primary_title}</TableCell>
+                <TableCell>
+                  <Link to={`/movies/${movie.imdb_id}`}>
+                    {movie.primary_title}
+                  </Link>
+                </TableCell>
                 <TableCell>{movie.impression}</TableCell>
               </TableRow>
             ))}

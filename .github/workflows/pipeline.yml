@@ -105,3 +105,12 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_FRONTEND }}
 
   
+
+        #   - name: Fetch all branches
+        #   run: git fetch origin ${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+  
+        # - name: Print base branch name
+        #   run: |
+        #     echo "Base branch: ${{ github.base_ref }}"
+
+        # npx playwright test --only-changed=${{ github.base_ref }} --project=chromium
