@@ -60,7 +60,7 @@ jobs:
       - name: Run Playwright tests on chromium
         run: |
           cd ./playwright
-          npx playwright test --only-changed=$GITHUB_BASE_REF --project=chromium
+          npx playwright test --only-changed=${{ github.base_ref }} --project=chromium
           
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
