@@ -6,7 +6,7 @@
  - [Actual Take](#actual-take) 
  - [Further Improvements if Time Allows](#further-improvements-if-time-allows) 
 
-
+Critical Error: backend service is not fully ready by the time the frontend makes the first request. Make trouble for users to have to reload again!! . I will fixed it soon.
 
 ## App Purpose
 
