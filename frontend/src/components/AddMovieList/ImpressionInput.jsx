@@ -33,6 +33,7 @@ const ImpressionInput = ({ movieId, trigger }) => {
 
     <input
       type="text"
+      name={movieId}
       value={impression}
       onChange={(e) => setImpression(e.target.value) }
     />
