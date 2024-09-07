@@ -1,12 +1,12 @@
 require('dotenv').config()
 
-const IS_TEST_LOCAL =  process.env.NODE_ENV === 'testlocal'
+const IS_TEST_CI =  process.env.NODE_ENV === 'testci'
 
-const BACKEND_ENDPOINT = process.env.NODE_ENV === 'testlocal' 
-  ? 'http://localhost:8888/api/api'
-  : 'http://localhost:4002/'
+const BACKEND_ENDPOINT = process.env.NODE_ENV === 'testci' 
+  ? 'http://localhost:4002/'
+  : 'http://localhost:8888/api/api'
 
 module.exports = {
-  IS_TEST_LOCAL,
+  IS_TEST_CI,
   BACKEND_ENDPOINT,
 }

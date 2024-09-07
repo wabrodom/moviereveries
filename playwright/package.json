@@ -4,7 +4,7 @@
   "description": "- [App Purpose](#app-purpose) \r  - [User Benefits](#user-benefits) \r  - [Technologies Used](#technologies-used) \r  - [Minimum Viable Base Functionality](#minimum-viable-base-functionality) \r  - [Actual Take](#actual-take) \r  - [Further Improvements if Time Allows](#further-improvements-if-time-allows)",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test --project chromium",
+    "test": "cross-env NODE_ENV=testci playwright test --project chromium",
     "test:local": "cross-env NODE_ENV=testlocal playwright test --project chromium",
     "test:report": "playwright show-report"
   },
