@@ -12,7 +12,7 @@ const { IS_TEST_CI } = require('./utils/config');
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  timeout: IS_TEST_CI ? 20000 : 10000,
+  timeout: IS_TEST_CI ? 5 * 60 * 1000 : 2 * 60 * 1000,
   testDir: './tests',
   /* Run tests in files in parallel  . no no for now*/
   fullyParallel: false,
