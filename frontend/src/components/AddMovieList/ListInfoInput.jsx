@@ -39,6 +39,7 @@ const ListInfoInput = ({ name, label, trigger }) => {
           { label }:
         </p>
         <textarea
+          data-testid={name}
           value={text}
           onChange={(e) => setText(e.target.value) }
           rows="3" cols="33"
@@ -53,6 +54,7 @@ const ListInfoInput = ({ name, label, trigger }) => {
   return (
     <label>
       { label }:  <input
+        data-testid={name}
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value) }

@@ -8,7 +8,7 @@ import { useAddMovieList } from '../../contexts/AddMovieListContext'
     },
   ]
 */
-const ImpressionInput = ({ movieId, trigger }) => {
+const ImpressionInput = ({ movieId, trigger, movieTitle }) => {
   const { movieList, setMovieList } = useAddMovieList()
   const currentMovieImpression = movieList.find(obj => obj.movieId === movieId).impression
   const [impression, setImpression] = useState(currentMovieImpression)
@@ -33,6 +33,7 @@ const ImpressionInput = ({ movieId, trigger }) => {
 
     <input
       type="text"
+      aria-label={movieTitle}
       value={impression}
       onChange={(e) => setImpression(e.target.value) }
     />

@@ -61,6 +61,8 @@ jobs:
         run: |
           cd ./playwright
           npx playwright test --project=chromium
+        env:
+          NODE_ENV: testci
           
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

@@ -1,6 +1,6 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
-const { IS_TEST_LOCAL } = require('./utils/config');
+const { IS_TEST_CI } = require('./utils/config');
 
 /**
  * Read environment variables from file.
@@ -12,7 +12,7 @@ const { IS_TEST_LOCAL } = require('./utils/config');
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  timeout: 20000,
+  timeout: IS_TEST_CI ? 5 * 60 * 1000 : 2 * 60 * 1000,
   testDir: './tests',
   /* Run tests in files in parallel  . no no for now*/
   fullyParallel: false,
@@ -28,7 +28,7 @@ module.exports = defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:8888', // when use docker-compose.test.yml
-    baseURL: IS_TEST_LOCAL ? 'http://localhost:8888' : 'http://localhost:5173',
+    baseURL: IS_TEST_CI ? 'http://localhost:5173' : 'http://localhost:8888' ,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -73,20 +73,22 @@ module.exports = defineConfig({
   ],
 
   /* Run your local dev server before starting the tests // when use docker-compose.test.yml dont need this*/
-  webServer: IS_TEST_LOCAL ? undefined : [
-    {
-      // Change to the backend directory and run npm command
-      command: 'cd ../backend && npm run start:test',   //  NODE_ENV=test
-      url: 'http://localhost:4002/', // when run in nginx passed to /api, just remove /api
-      timeout: 120 * 1000,
-      reuseExistingServer: !process.env.CI,
-    },
-    {
-      command: 'cd ../frontend && npm run dev',
-      url: 'http://localhost:5173/',
-      timeout: 120 * 1000,
-      reuseExistingServer: !process.env.CI,
-    },
-  ],
+  webServer: IS_TEST_CI 
+    ? [
+        {
+          // Change to the backend directory and run npm command
+          command: 'cd ../backend && npm run start:test',   //  NODE_ENV=test
+          url: 'http://localhost:4002/', // when run in nginx passed to /api, just remove /api
+          timeout: 120 * 1000,
+          reuseExistingServer: !process.env.CI,
+        },
+        {
+          command: 'cd ../frontend && npm run dev',
+          url: 'http://localhost:5173/',
+          timeout: 120 * 1000,
+          reuseExistingServer: !process.env.CI,
+        },
+      ]
+    : undefined
 });
 
