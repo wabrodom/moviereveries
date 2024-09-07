@@ -94,40 +94,59 @@ test.describe('can sign up and log in' , () => {
   })
 
 
-  test('user can create a list', async({ page }) => {
-     // login mockUser
-     await page.goto('/login')
-     await page.getByTestId('username').fill(mockUser.username)
-     await page.getByTestId('password').fill(mockUser.password)
-     await page.getByTestId('confirmLogin').click()
-     
-     await expect(page.getByText(/in the Database/i)).toBeVisible()
 
-    const clearFilter = page.getByRole('button', { name: /clear filter/i})
-    await clearFilter.click()
-
-    const mockLinks = page.getByRole('link', { name: '-mock', exact: false })
-
-    for (let i = 0; i < mockLinks.length; i++) {
-      if (i === 2) break
-      await mockLinks[i].click() // go inside 
-      await expect(page.getByText(/category/i)).toBeVisible()
+  test('login user can create a list from movie in the Db', async ({ page }) => {
+    // login mockUser
+    await page.goto('');
+    await page.getByRole('link', { name: 'log in' }).click();
+    await page.getByTestId('username').click();
+    await page.getByTestId('username').fill('john');
+    await page.getByTestId('username').press('Tab');
+    await page.getByTestId('password').fill('password1');
+    await page.getByTestId('confirmLogin').click();
+    await expect(page.getByRole('columnheader', { name: 'Title' })).toBeVisible()
   
-      const addToDbButton = page.getByRole('button', { name: /add to db/i})
-      await addToDbButton.click()
-      
-      const notification = page.locator('.notification')
-      await expect(notification).toContainText(/Added/i) // wait to make sure it added.
+    // add movie to context
+    await page.getByRole('link', { name: 'Rashomon-mock' }).click();
+    await page.getByRole('button', { name: 'Add to List' }).click();
+    await page.getByText('added "Rashomon-mock" to').click();
+    await page.getByRole('button', { name: 'go back' }).click();
+    await page.getByRole('link', { name: 'The Thing-mock' }).click();
+    await page.getByRole('button', { name: 'Add to List' }).click();
+    await page.getByText('added "The Thing-mock" to').click();
+    await page.getByRole('button', { name: 'go back' }).click();
+  
+    // go to add list component
+    await page.getByRole('link', { name: 'add movie list' }).click();
+    await page.getByTestId('listName').click();
+    await page.getByTestId('listName').fill('The list name');
+    await page.getByTestId('listName').press('Tab');
+    await page.getByTestId('description').fill('the description');
+    await page.getByTestId('description').press('Tab');
+    await page.getByLabel('Rashomon-mock').fill('1111');
+    await page.getByLabel('Rashomon-mock').press('Tab');
+    await page.getByLabel('The Thing-mock').fill('222');
+    await page.getByRole('button', { name: 'save to cache' }).click();
+    await page.getByText('save current data to all the').click();
+    await page.getByRole('button', { name: 'Create new list' }).click();
+    await page.getByText('Added your new list "The list name').click();
+    
+     // go to movie  list component
+    await page.getByRole('link', { name: 'movie lists' }).click();
+    await page.getByRole('button', { name: 'The list name' }).click();
+    await page.getByRole('heading', { name: 'the description' }).click();
+    await page.getByRole('button', { name: 'The list name' }).getByRole('button').click()
 
-      await page.goBack()
-    }
-    await page.goto('/addlist')
-
-    await expect(page.getByText(/impression/i)).toBeVisible()
-  })
+    await expect( page.getByRole('heading', { name: 'the description' }) ).toBeVisible()
+    await expect( page.getByRole('cell', { name: '1111' }) ).toBeVisible()
+  });
 
 
 })
+
+
+
+
 
 
 /*
@@ -166,3 +185,59 @@ test.describe('can sign up and log in' , () => {
     await page.goto('')  
   })
 */
+
+
+/**
+    test('user can create a list', async({ page }) => {
+     // login mockUser
+     await page.goto('/login')
+     await page.getByTestId('username').click();
+     await page.getByTestId('username').fill(mockUser.username);
+     await page.getByTestId('username').press('Tab');
+     await page.getByTestId('password').fill(mockUser.password);
+     await page.getByTestId('confirmLogin').click();
+     
+     await expect(page.getByText(/in the Database/i)).toBeVisible()
+
+    // const clearFilter = page.getByRole('button', { name: /clear filter/i})
+    // await clearFilter.click()
+ 
+    // add movie to context
+    await page.getByRole('link', { name: 'Rashomon-mock' }).click();
+    await page.getByRole('button', { name: 'Add to List' }).click();
+    await expect(page.getByText('added "Rashomon-mock" to')).toBeVisible() //wait for noti show
+
+    await page.getByRole('button', { name: 'go back' }).click();
+    await page.getByRole('link', { name: 'The Thing-mock' }).click();
+    await page.getByText('added "The Thing-mock" to').click();  //wait for noti show
+
+    await page.getByRole('button', { name: 'Add to List' }).click();
+    await page.getByRole('button', { name: 'go back' }).click();
+
+    // go to add list component
+    await page.goto('/addlist')
+    await expect(page.getByText(/impression/i)).toBeVisible() // wait to make sure page loaded
+
+    await page.getByTestId('listName').click();
+    await page.getByTestId('listName').fill('list name');
+    await page.getByTestId('listName').press('Tab');
+    await page.getByTestId('description').fill('the description');
+    await page.getByTestId('description').press('Tab');
+    await page.getByLabel('Rashomon-mock').fill('1111');
+    await page.getByLabel('Rashomon-mock').press('Tab');
+    await page.getByLabel('The Thing-mock').fill('222');
+    await page.getByRole('button', { name: 'save to cache' }).click();
+    await page.getByText('save current data to all the').click(); //wait for noti show
+    await page.getByRole('button', { name: 'Create new list' }).click();
+    await page.getByText('Added your new list "list').click();  //wait for noti show
+
+
+    // go to movie  list component
+    await page.goto('/movielist')
+    await page.getByRole('button', { name: 'The list name' }).click()   // element shown, so can click
+    await expect( page.getByRole('heading', { name: 'the description' }) ).toBeVisible()
+  
+  })
+
+
+ */

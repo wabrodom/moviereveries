@@ -54,6 +54,7 @@ const AddMovieListContainer = ({ handleAddMovie, disabledSubmit }) => {
   const centerButton = { margin: 'auto' }
   const isDisabled = movieList.length === 0 || disabledSubmit
 
+
   return (
     <div>
       <form onSubmit={handleAddMovie}>
@@ -95,6 +96,7 @@ const AddMovieListContainer = ({ handleAddMovie, disabledSubmit }) => {
                   <td>
                     <ImpressionInput
                       movieId={movie.movieId}
+                      movieTitle={movie.primary_title}
                       trigger={trigger}
                     />
                   </td>
