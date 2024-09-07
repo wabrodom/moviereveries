@@ -109,11 +109,13 @@ test.describe('can sign up and log in' , () => {
     // add movie to context
     await page.getByRole('link', { name: 'Rashomon-mock' }).click();
     await page.getByRole('button', { name: 'Add to List' }).click();
-    await page.getByText('added "Rashomon-mock" to').click();
-    await page.getByRole('button', { name: 'go back' }).click();
+    await expect( page.getByText('added "Rashomon-mock" to') ).toBeVisible()
+    await page.getByRole('button', { name: 'go back' }).click()
+    
     await page.getByRole('link', { name: 'The Thing-mock' }).click();
     await page.getByRole('button', { name: 'Add to List' }).click();
-    await page.getByText('added "The Thing-mock" to').click();
+    await expect( page.getByText('added "The Thing-mock" to') ).toBeVisible()
+
     await page.getByRole('button', { name: 'go back' }).click();
   
     // go to add list component
@@ -126,10 +128,13 @@ test.describe('can sign up and log in' , () => {
     await page.getByLabel('Rashomon-mock').fill('1111');
     await page.getByLabel('Rashomon-mock').press('Tab');
     await page.getByLabel('The Thing-mock').fill('222');
+    
     await page.getByRole('button', { name: 'save to cache' }).click();
-    await page.getByText('save current data to all the').click();
+    await expect( page.getByText('save current data to all the') ).toBeVisible()
+
     await page.getByRole('button', { name: 'Create new list' }).click();
-    await page.getByText('Added your new list "The list name').click();
+    await expect( page.getByText('Added your new list "The list name') ).toBeVisible()
+
     
      // go to movie  list component
     await page.getByRole('link', { name: 'movie lists' }).click();
