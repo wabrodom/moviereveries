@@ -21,7 +21,9 @@ const MovieListDisplayContainer = ({ allMovieLists }) => {
             <SingleMovieHead list={list} />
 
             <ToggleOnHover>
-              <Button onClick={(e) => handleButtonClick(e, list)}>
+              <Button onClick={(e) => handleButtonClick(e, list)}
+                // aria-label='enter-button'
+              >
                 <ShortcutIcon/>
               </Button>
             </ToggleOnHover>

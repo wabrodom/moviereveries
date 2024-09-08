@@ -12,6 +12,7 @@ import {
 } from 'react-share'
 
 import './ShareButtons.css'
+import CopyUrl from '../CopyUrl'
 
 const ShareButtons = ({ shareUrl, title }) => {
 
@@ -62,6 +63,8 @@ const ShareButtons = ({ shareUrl, title }) => {
           <LineIcon size={32} round />
         </LineShareButton>
       </div>
+
+      <CopyUrl />
 
     </div>
   )

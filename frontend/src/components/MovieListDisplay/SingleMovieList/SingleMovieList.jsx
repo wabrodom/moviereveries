@@ -19,15 +19,20 @@ const buttonContainerStyle = {
 const SingleMovieList = () => {
   const id = useParams().id
   const { loading, data } = useQuery(FIND_MOVIE_LIST_BY_ID, {
-    variables: { findMovieListByIdId: id }
+    variables: { findMovieListByIdId: id },
   })
   if (loading) {
     return (
       <p>loading... </p>
     )
   }
-
+  if (data.findMovieListById === null) {
+    return (
+      <p>The movie list is not found</p>
+    )
+  }
   const responseList = data.findMovieListById
+
   const titleImpressionArr = responseList.list.map((movie) =>  {
     return {
       Title: movie.primary_title,
