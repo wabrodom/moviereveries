@@ -2,15 +2,16 @@ const { test, expect } = require('@playwright/test')
 const { BACKEND_ENDPOINT } = require('../utils/config')
 import { moviesFromApi } from './mockdata/movies_from_api'
 
-test.describe('can sign up and log in' , () => {
+test.describe('Can view movie in db, create list, view list ' , () => {
   const mockUser = {
     username: "john",
     name: "jonathan",  
     favoriteGenre: "mystery",
     password: "password1"
   }
-
-  test.beforeEach('clear db + create 1 user' ,async ({ page, request }) => {
+  
+  test.beforeAll('clear db + create 1 user' ,async ({ request }) => {
+    // clear test db
     await request.post(BACKEND_ENDPOINT, {
       data: {
         query: `
@@ -24,7 +25,8 @@ test.describe('can sign up and log in' , () => {
         `
       }
     })
-
+  
+    // create 1 user
     await request.post(BACKEND_ENDPOINT, {
       data: {
         query: `
@@ -45,14 +47,14 @@ test.describe('can sign up and log in' , () => {
           "password": mockUser.password 
         }
       }
-
+  
     })
-
+  
     
   })
   
-
-  test.beforeEach('add 3 movie into db server way', async ({ page, request }) => {
+  test.beforeAll('add 3 movie into db server way', async ({ request }) => {
+    // log in and get token
     const loginResponse = await request.post(BACKEND_ENDPOINT, {
       data: {
         query: `
@@ -67,12 +69,13 @@ test.describe('can sign up and log in' , () => {
           "password": mockUser.password 
         }
       }
-
+  
     })
-
+  
     const loggedInResult = await loginResponse.json()
     const token = loggedInResult.data.login.value
-
+  
+    // use token to add mock movies to test DB
     for (let movie of moviesFromApi) {
       await request.post(BACKEND_ENDPOINT, {
         data: {
@@ -88,14 +91,31 @@ test.describe('can sign up and log in' , () => {
         headers: { Authorization: `Bearer ${token}` }
   
       })
-
+  
     }
+  
+  })
+
+  test('01. Shows all movies - to non-login user', async({ page }) => {
+    await page.goto('');
+    await expect( page.getByRole('heading', { name: '3 Movies and' }) ).toBeVisible()
+
+    await expect( page.getByRole('cell', { name: 'Rashomon-mock' }) ).toBeVisible()
+    await expect( page.getByRole('cell', { name: 'The Thing-mock' }) ).toBeVisible()
+    await expect( page.getByRole('cell', { name: 'Ferris Bueller\'s Day Off-mock' }) ).toBeVisible()
+  })
+
+  test('04. Search movies in the db - non-login can search', async({ page }) => {
+    await page.goto('');
+
+    await page.getByRole('textbox').fill('ferris')
+    await expect( page.getByRole('cell', { name: 'Ferris Bueller\'s Day Off-mock' }) ).toBeVisible()
+    await expect( page.getByRole('cell', { name: 'The Thing-mock' }) ).toBeHidden()
+    await expect( page.getByRole('cell', { name: 'Rashomon-mock' }) ).toBeHidden()
 
   })
 
-
-
-  test('login user can create a list from movie in the Db', async ({ page }) => {
+  test('12. Create Lists', async ({ page }) => {
     // login mockUser
     await page.goto('');
     await page.getByRole('link', { name: 'log in' }).click();
@@ -144,8 +164,40 @@ test.describe('can sign up and log in' , () => {
 
     await expect( page.getByRole('heading', { name: 'the description' }) ).toBeVisible()
     await expect( page.getByRole('cell', { name: '1111' }) ).toBeVisible()
-  });
 
+    // log out, act as non-login user
+
+  })
+
+  test('02. Shows all available lists' , async({ page, context}) => {
+    await page.goto('/movielist')
+
+    await page.getByRole('button', { name: 'The list name' }).click();
+    await page.getByRole('heading', { name: 'the description' }).click();
+    await page.getByRole('cell', { name: 'Rashomon-mock' }).click();
+    // double click to show toggle content
+    await page.getByRole('button', { name: 'The list name' }).getByRole('button').click()
+    await page.getByRole('button', { name: 'The list name' }).getByRole('button').click()
+
+    // inside single movie list 
+    await page.getByRole('heading', { name: 'The list name' }).click();
+    await page.getByRole('heading', { name: 'the description' }).click();
+    await page.getByRole('cell', { name: 'Rashomon-mock' }).click();
+    
+    await page.getByLabel('copy').click()
+    await page.getByLabel('copy').click()
+
+
+    // // in progress 03. display specific list by id 
+    // copy url from clipboard to test if non-login can access a list
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+
+    const handle = await page.evaluateHandle(() => navigator.clipboard.readText());
+    const clipboardContent = await handle.jsonValue();
+    
+    console.log("copy text", clipboardContent)
+    // in progress
+  })
 
 })
 

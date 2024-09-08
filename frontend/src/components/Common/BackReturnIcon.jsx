@@ -8,8 +8,8 @@ const BackReturnIcon = () => {
   const handleGoBack = () => navigate(-1)
 
   return (
-    <Button onClick={handleGoBack}>
-      <KeyboardReturnIcon />
+    <Button onClick={handleGoBack} aria-label='back-button'>
+      <KeyboardReturnIcon />back
     </Button>
   )
 }
