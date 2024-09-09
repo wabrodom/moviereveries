@@ -67,8 +67,18 @@ const resolvers ={
     },
 
     findMovieListById: async (root, args) => {
-      const foundList = await MovieList.findById(args.id)
-      return foundList
+      try {
+        const foundList = await MovieList.findById(args.id)
+        return foundList
+      } catch(error) {
+        throw new GraphQLError('The movie list ID is not found.', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            inValidArgs: args.list,
+            error
+          }
+        })
+      }
     },
   },
 

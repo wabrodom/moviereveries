@@ -9,7 +9,7 @@ test.describe('Can view movie in db, create list, view list ' , () => {
     favoriteGenre: "mystery",
     password: "password1"
   }
-  
+  let listUrl = ''// single movielist url for test non-login user view
   test.beforeAll('clear db + create 1 user' ,async ({ request }) => {
     // clear test db
     await request.post(BACKEND_ENDPOINT, {
@@ -171,32 +171,37 @@ test.describe('Can view movie in db, create list, view list ' , () => {
 
   test('02. Shows all available lists' , async({ page, context}) => {
     await page.goto('/movielist')
+    // 'A list is availble on path /movielist'
+    await page.getByRole('button', { name: 'The list name' }).click()
+    await page.getByRole('heading', { name: 'the description' }).click()
+    await page.getByRole('cell', { name: 'Rashomon-mock' }).click()
 
-    await page.getByRole('button', { name: 'The list name' }).click();
-    await page.getByRole('heading', { name: 'the description' }).click();
-    await page.getByRole('cell', { name: 'Rashomon-mock' }).click();
-    // double click to show toggle content
+    // 'user can go inside a movielist'
+    // double click to act like hover over toggle content
     await page.getByRole('button', { name: 'The list name' }).getByRole('button').click()
     await page.getByRole('button', { name: 'The list name' }).getByRole('button').click()
 
     // inside single movie list 
-    await page.getByRole('heading', { name: 'The list name' }).click();
-    await page.getByRole('heading', { name: 'the description' }).click();
-    await page.getByRole('cell', { name: 'Rashomon-mock' }).click();
+    await page.getByRole('heading', { name: 'The list name' }).click()
+    await page.getByRole('heading', { name: 'the description' }).click()
+    await page.getByRole('cell', { name: 'Rashomon-mock' }).click()
     
-    await page.getByLabel('copy').click()
-    await page.getByLabel('copy').click()
-
-
-    // // in progress 03. display specific list by id 
+    // grant permission for this test context
+    await context.grantPermissions(["clipboard-read", "clipboard-write"])
+    
     // copy url from clipboard to test if non-login can access a list
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await page.getByLabel('copy').click()
+    const handle = await page.evaluateHandle(() => navigator.clipboard.readText())
+    const clipboardContent = await handle.jsonValue()
 
-    const handle = await page.evaluateHandle(() => navigator.clipboard.readText());
-    const clipboardContent = await handle.jsonValue();
-    
-    console.log("copy text", clipboardContent)
-    // in progress
+    listUrl = clipboardContent // assign clipboard url to the scope
+  })
+
+  test('03. Displays a specific list - by copy url from the scope' ,async({ page }) => {
+    await page.goto(listUrl)
+    await expect( page.getByRole('heading', { name: 'The list name' }) ).toBeVisible()
+    await expect( page.getByRole('heading', { name: 'the description' }) ).toBeVisible()
+    await expect( page.getByRole('cell', { name: 'Rashomon-mock' }) ).toBeVisible()
   })
 
 })
