@@ -18,9 +18,20 @@ const buttonContainerStyle = {
 
 const SingleMovieList = () => {
   const id = useParams().id
-  const { loading, data } = useQuery(FIND_MOVIE_LIST_BY_ID, {
+  const { loading, data, error } = useQuery(FIND_MOVIE_LIST_BY_ID, {
     variables: { findMovieListByIdId: id },
   })
+  // console.log(JSON.stringify(error, null, 2))
+  if (error) {
+    return (
+      <p>
+        {error.graphQLErrors.map(({ message }, i) => (
+          <span key={i}>{message}</span>
+        ))}
+      </p>
+    )
+
+  }
   if (loading) {
     return (
       <p>loading... </p>
