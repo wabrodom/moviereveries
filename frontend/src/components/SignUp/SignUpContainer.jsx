@@ -2,7 +2,7 @@
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
-const SingUpContainer = ({ handleSubmit }) => {
+const SingUpContainer = ({ handleSubmit, setCredentials }) => {
 
   const initialValues = {
     username: '',
@@ -29,6 +29,7 @@ const SingUpContainer = ({ handleSubmit }) => {
 
   const onSubmit = (values, { resetForm }) => {
     handleSubmit(values)
+    setCredentials(values)
     resetForm()
   }
 

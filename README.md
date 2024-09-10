@@ -65,7 +65,7 @@ This section outlines the core functionalities of the application, which are ess
 
 | Function                          | Test |  Description |
 |-----------------------------------|------|--------------|
-|07. User Registration                 |     | Users can register an account.   |
+|07. User Registration                 | ☑    | Users can register an account.   |
 |08. User Login                        | ☑    | Users can log in to their account.      |
 |09. Manage Token Expiry               |     | Users are notified when their token is about to expire.    |
 |10. Search Movies from External API   |     | Users can search for movies from an external API.   |
