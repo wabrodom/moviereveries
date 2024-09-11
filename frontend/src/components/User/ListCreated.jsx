@@ -13,7 +13,6 @@ const ListCreated = () => {
   if (loading) return null
 
   if (error) {
-    // console.log(error)
     notify('error', error.graphQLErrors[0].message)
   }
 
@@ -33,8 +32,12 @@ const ListCreated = () => {
               </Link>
 
               { savedLength > 0
-                ? <span> {obj.savedUser.length} people save your list</span>
-                : <ButtonRemoveList list={obj} />
+                ?
+                <span>
+                   : {obj.savedUser.length} people save your list
+                  <ButtonRemoveList list={obj} text={'remove from public'} />
+                </span>
+                : <ButtonRemoveList list={obj} text={'❌ Remove List'} />
               }
 
             </li>

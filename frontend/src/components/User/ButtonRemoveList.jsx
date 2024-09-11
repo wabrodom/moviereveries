@@ -6,12 +6,18 @@ import { USER_CREATED_MOVIE_LIST } from '../../graphql/queries'
 import useNotification from '../../contexts/NotificationContext/useNotification'
 import ConfirmationDialog from '../Common/ConfirmationDialog'
 
-const ButtonRemoveList = ({ list }) => {
+const ButtonRemoveList = ({ list, text }) => {
   const { notify } = useNotification()
   const [ removeMovieList ] = useMutation(REMOVE_MOVIE_LIST, {
     refetchQueries: [ { query: USER_CREATED_MOVIE_LIST }],
     onCompleted: (data) => {
-      notify('success', `Removed "${data.removeMovieList.listName}" list!`)
+      const m = data.removeMovieList
+      if (m.savedUser.length ===0 ) {
+        notify('success', `Removed "${data.removeMovieList.listName}" list!`)
+      } else {
+        notify('success', `Soft Deleted "${data.removeMovieList.listName}" list!`)
+      }
+
     },
     onError: (error) => {
       notify('error',  `"${list.listName} "` + error.graphQLErrors[0].message)
@@ -34,7 +40,12 @@ const ButtonRemoveList = ({ list }) => {
   return (
     <>
       <Button onClick={handleOpenDialog} variant='text'>
-      ❌ Remove List
+        {list.deletedByUser === true
+          ? <span>soft deleted!</span>
+          : <span>{text}</span>
+
+        }
+
       </Button>
 
       <ConfirmationDialog
