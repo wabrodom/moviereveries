@@ -43,7 +43,8 @@ export const REMOVE_MOVIE_LIST =gql`
        ...MovieListDetails
       createdAt
       updatedAt
-
+      
+      savedUser
       deletedByUser
     }
   }
