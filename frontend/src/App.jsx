@@ -4,7 +4,9 @@ import {
   InMemoryCache,
   createHttpLink,
   split,
+  from,
 } from '@apollo/client'
+import { RetryLink } from '@apollo/client/link/retry'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
@@ -60,7 +62,16 @@ const App = () => {
 
   const httpLink = createHttpLink({ uri: import.meta.env.VITE_BACKEND_URL })
 
+  const httpLinkWithRetry = from([
+    new RetryLink(),
+    httpLink
+  ])
+
   const wsLink = new GraphQLWsLink(createClient({ url: import.meta.env.VITE_GRAPHQLWSLINK }))
+  const wsLinkWithRetry = from([
+    new RetryLink(),
+    wsLink
+  ])
 
   const splitLink = split(
     ({ query }) => {
@@ -70,8 +81,8 @@ const App = () => {
         definition.operation === 'subscription'
       )
     },
-    wsLink,
-    authLink.concat(httpLink),
+    wsLinkWithRetry,
+    authLink.concat(httpLinkWithRetry),
   )
 
   const client = new ApolloClient({
